@@ -36,11 +36,20 @@ namespace Horker.Notebook
             var thread = new Thread(() => {
                 var session = new Models.Session(sessionViewModel);
                 var exitCode = session.StartExecutionLoop();
+
+                Dispatcher.Invoke(() => {
+                    Close();
+                });
             });
 
             thread.SetApartmentState(ApartmentState.STA);
             thread.Name = "Notebook GUI thread";
             thread.Start();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

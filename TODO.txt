@@ -5,14 +5,17 @@ loading profile on startup
 status line (current directory)
 show progress
 make mouse wheel active
+contect menu -> delete roundtrip
+stop execution thread on closing window
+
 no highlight on cursor
 adjust page widths after resizing
-correct exit
 native executable
 hide empty output view after re-run
 Use ShareMyResult() method
 determine window width by console column width
 
+DONE correct exit
 DONE error/verbose/debug streams
 DONE hide the output area when the output is empty
 DONE WriteParagraph

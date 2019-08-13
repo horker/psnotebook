@@ -29,8 +29,7 @@ namespace Horker.Notebook.Models
                 window = new Window()
                 {
                     Title = "PowerShell Notebook",
-                    Content = sessionControl,
-                    Width = 1000
+                    Content = sessionControl
                 };
 
                 Dispatcher = window.Dispatcher;
@@ -59,8 +58,7 @@ namespace Horker.Notebook.Models
 
             Environment.ExitCode = exitCode;
 
-//            Console.WriteLine("PUsh enter key to exit");
-//            Console.ReadLine();
+            window.Close();
         }
     }
 }
