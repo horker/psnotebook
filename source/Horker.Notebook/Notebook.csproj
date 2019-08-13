@@ -64,11 +64,11 @@
     <Compile Include="Models\Roundtrip.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\Startup.cs" />
+    <Compile Include="PowerShell\ConsoleReadLine.cs" />
     <Compile Include="PowerShell\Host.cs" />
     <Compile Include="PowerShell\HostUserInterface.cs" />
     <Compile Include="PowerShell\HowRawUserInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Ref\ConsoleReadLine.cs" />
     <Compile Include="Ref\HostUtilities.cs" />
     <Compile Include="Ref\MyHost.cs" />
     <Compile Include="Ref\MyHostUserInterface.cs" />

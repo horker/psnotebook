@@ -44,9 +44,19 @@ namespace Horker.Notebook.Models
             _powerShell = PowerShell.Create();
             _powerShell.Runspace = _runspace;
 
-            // Import this module itself.
+            // Import this module itself to define cmdlets.
             _powerShell.AddCommand("Import-Module").AddParameter("Assembly", typeof(Startup).Assembly);
             _powerShell.Invoke();
+
+            // Load profile files.
+            // TODO: handle errors
+
+            PSCommand[] profileCommands = Microsoft.Samples.PowerShell.Host.HostUtilities.GetProfileCommands("Notebook");
+            foreach (PSCommand command in profileCommands)
+            {
+                _powerShell.Commands = command;
+                _powerShell.Invoke();
+            }
         }
 
         public void CreateNewRoundtrip()
