@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Horker.ViewModels;
+using Horker.Notebook.ViewModels;
 
-namespace Horker.Views
+namespace Horker.Notebook.Views
 {
     public partial class Roundtrip : UserControl
     {

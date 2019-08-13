@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Samples.PowerShell.Host
+namespace Microsoft.Samples.PowerShell.Host
 {
     using System;
     using System.Management.Automation.Host;

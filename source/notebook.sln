@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSNotebook", "Horker.Notebook\PSNotebook.csproj", "{4FCD69F5-A3D4-4170-92FB-B88798DAEA4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notebook", "Horker.Notebook\Notebook.csproj", "{4FCD69F5-A3D4-4170-92FB-B88798DAEA4D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotebookApp", "NotebookApp\NotebookApp.csproj", "{61DC062F-FDA0-4614-A87C-AABAA7CA8296}"
 EndProject

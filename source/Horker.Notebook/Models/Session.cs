@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using Horker.ViewModels;
+using Horker.Notebook.ViewModels;
 
-namespace Horker.Models
+namespace Horker.Notebook.Models
 {
     public class Session
     {

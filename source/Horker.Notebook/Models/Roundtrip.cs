@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Horker.ViewModels;
+using Horker.Notebook.ViewModels;
 
-namespace Horker.Models
+namespace Horker.Notebook.Models
 {
     public class Roundtrip
     {

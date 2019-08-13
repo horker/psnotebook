@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace Horker.ViewModels
+namespace Horker.Notebook.ViewModels
 {
     public class RoundtripViewModel : INotifyPropertyChanged
     {

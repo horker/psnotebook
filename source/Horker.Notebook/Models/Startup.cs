@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +6,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using Horker.Models;
-using Horker.ViewModels;
+using Horker.Notebook.Models;
+using Horker.Notebook.ViewModels;
 
-namespace Horker.Models
+namespace Horker.Notebook.Models
 {
     public class Startup
     {

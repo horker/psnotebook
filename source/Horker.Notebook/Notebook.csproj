@@ -7,7 +7,7 @@
     <ProjectGuid>{4FCD69F5-A3D4-4170-92FB-B88798DAEA4D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Horker</RootNamespace>
+    <RootNamespace>Horker.Notebook</RootNamespace>
     <AssemblyName>Horker.Notebook</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

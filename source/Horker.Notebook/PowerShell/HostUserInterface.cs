@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -9,9 +9,9 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using Horker.ViewModels;
+using Horker.Notebook.ViewModels;
 
-namespace Horker
+namespace Horker.Notebook
 {
     class HostUserInterface : PSHostUserInterface
     {

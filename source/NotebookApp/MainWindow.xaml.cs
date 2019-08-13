@@ -13,9 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Horker.ViewModels;
+using Horker.Notebook.ViewModels;
 
-namespace NotebookApp
+namespace Horker.Notebook
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
@@ -29,12 +29,12 @@ namespace NotebookApp
 
         private void Session_Loaded(object sender, RoutedEventArgs e)
         {
-            var sessionControl = (Horker.Views.Session)sender;
+            var sessionControl = (Views.Session)sender;
 
             var sessionViewModel = new SessionViewModel(sessionControl);
 
             var thread = new Thread(() => {
-                var session = new Horker.Models.Session(sessionViewModel);
+                var session = new Models.Session(sessionViewModel);
                 var exitCode = session.StartExecutionLoop();
             });
 

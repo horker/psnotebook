@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Horker.Views
+namespace Horker.Notebook.Views
 {
     // ref. https://stackoverflow.com/questions/12941707/keybinding-in-usercontrol-doesnt-work-when-textbox-has-the-focus
 
