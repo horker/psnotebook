@@ -29,7 +29,8 @@ namespace Horker.Notebook.Models
                 window = new Window()
                 {
                     Title = "PowerShell Notebook",
-                    Content = sessionControl
+                    Content = sessionControl,
+                    Width = Configuration.WindowWidth
                 };
 
                 Dispatcher = window.Dispatcher;

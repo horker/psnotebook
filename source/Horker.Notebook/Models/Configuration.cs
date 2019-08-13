@@ -40,6 +40,12 @@ namespace Horker.Notebook.Models
             }
         }
 
+        // Crude adjustment for the vertical scrollbar
+        public static double CommandLineWidth => ConsoleWidth + 30;
+
+        // Crude adjustment for the margins, paddings and borders
+        public static double WindowWidth => CommandLineWidth + 100;
+
         public static double MaxOutputHeight => FontSize * 25;
 
         // Helper methods

@@ -40,7 +40,7 @@
 
         <TextBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" x:Name="Index" Text="{Binding IndexString, Mode=OneWay}" Background="#FFD4D4D4" IsEnabled="false" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}"/>
 
-        <RichTextBox Grid.Column="1" Grid.Row="0" x:Name="CommandLine" VerticalAlignment="Top" Background="#FFFDFAEF" MinHeight="20" AcceptsReturn="true" AcceptsTab="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" MinWidth="{x:Static models:Configuration.ConsoleWidth}">
+        <RichTextBox Grid.Column="1" Grid.Row="0" x:Name="CommandLine" VerticalAlignment="Top" Background="#FFFDFAEF" MinHeight="20" AcceptsReturn="true" AcceptsTab="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" MinWidth="{x:Static models:Configuration.CommandLineWidth}">
             <FlowDocument PagePadding="0">
                 <FlowDocument.Resources>
                     <Style TargetType="{x:Type Paragraph}">
@@ -51,7 +51,7 @@
             </FlowDocument>
         </RichTextBox>
 
-        <FlowDocumentScrollViewer Grid.Column="1" Grid.Row="1" x:Name="Output" VerticalAlignment="Top" Background="#FFFFFFFF" MaxHeight="{x:Static models:Configuration.MaxOutputHeight}" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" VerticalScrollBarVisibility="Auto" Padding="6,0" Visibility="Collapsed" MinWidth="{x:Static models:Configuration.ConsoleWidth}">
+        <FlowDocumentScrollViewer Grid.Column="1" Grid.Row="1" x:Name="Output" VerticalAlignment="Top" Background="#FFFFFFFF" MaxHeight="{x:Static models:Configuration.MaxOutputHeight}" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" VerticalScrollBarVisibility="Auto" Padding="6,0" Visibility="Collapsed" MinWidth="{x:Static models:Configuration.CommandLineWidth}">
             <FlowDocument PagePadding="0">
                 <FlowDocument.Resources>
                     <Style TargetType="{x:Type Paragraph}">

@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotebookApp"
+        xmlns:models="clr-namespace:Horker.Notebook.Models;assembly=Horker.Notebook"
         xmlns:Views="clr-namespace:Horker.Notebook.Views;assembly=Horker.Notebook" x:Class="Horker.Notebook.MainWindow"
         mc:Ignorable="d"
-        Title="PowerShell Notebook" SizeToContent="Width" Height="900" Closed="Window_Closed">
+        Title="PowerShell Notebook" Width="{x:Static models:Configuration.WindowWidth}" Height="900" Closed="Window_Closed">
     <Grid>
 
         <Views:Session Loaded="Session_Loaded"/>
