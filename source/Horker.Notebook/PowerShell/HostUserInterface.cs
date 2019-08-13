@@ -79,8 +79,7 @@ namespace Horker.Notebook
         public override void WriteErrorLine(string message)
         {
             RoundtripViewModel.Active.WriteWholeLine(
-                string.Format(CultureInfo.CurrentCulture, "ERROR: {0}", message),
-                Brushes.IndianRed, null);
+                message, Brushes.IndianRed, null);
         }
 
         public override void WriteLine(string value)

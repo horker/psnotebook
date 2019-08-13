@@ -1,7 +1,6 @@
 prompt
 wpf output
 save/load
-loading profile on startup
 status line (current directory)
 show progress
 make mouse wheel active
@@ -14,7 +13,9 @@ Use ShareMyResult() method
 determine window width by console column width
 stop execution thread on closing window on Start-Notebook
 invalidate "Delete this" in the context menu when there is one roundtrip
+Handle errors on loading profile files
 
+DONE loading profile on startup
 DONE contect menu -> delete roundtrip
 DONE correct exit
 DONE error/verbose/debug streams

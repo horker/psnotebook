@@ -10,8 +10,8 @@ using Microsoft.PowerShell.Commands;
 
 namespace Horker.Notebook.Cmdlets
 {
-    [Cmdlet("Out", "NotebookString")]
-    public class OutNotebookString : OutStringCommand
+    [Cmdlet("Out", "NotebookInternal")]
+    public class OutNotebookInernal : OutDefaultCommand
     {
         protected override void ProcessRecord()
         {
