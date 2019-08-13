@@ -95,10 +95,9 @@ namespace Horker.Notebook.Views
             _commandLineControl.Focus();
         }
 
-        private void RoundtripControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void DeleteRoundtrip_Click(object sender, RoutedEventArgs e)
         {
-//            var control = sender as Roundtrip;
-
+            Container.ViewModel.RemoveRoundtrip(ViewModel);
         }
     }
 }

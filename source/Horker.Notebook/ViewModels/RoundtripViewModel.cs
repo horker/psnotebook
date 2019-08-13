@@ -16,15 +16,13 @@ namespace Horker.Notebook.ViewModels
     {
         public static RoundtripViewModel Active { get; private set; }
 
-        private static int nextIndex = 1;
-
         private Models.Roundtrip _model;
         private int _index;
         private Views.Roundtrip _control;
 
         public RoundtripViewModel(Models.Roundtrip r)
         {
-            _index = nextIndex++;
+            _index = 0; // Index is set by Session
             _model = r;
         }
         
@@ -45,10 +43,11 @@ namespace Horker.Notebook.ViewModels
             {
                 _index = value;
                 OnPropertyChanged(nameof(Index));
+                OnPropertyChanged(nameof(IndexString));
             }
         }
 
-        public string IndexString => _index.ToString("d4");
+        public string IndexString => (_index + 1).ToString("d4");
 
         public string CommandLine
         {
@@ -72,7 +71,7 @@ namespace Horker.Notebook.ViewModels
 
         protected void OnPropertyChanged(string info)
         {
-            _control.Dispatcher.Invoke(() => {
+            _control?.Dispatcher.Invoke(() => {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
             });
         }
@@ -194,8 +193,8 @@ namespace Horker.Notebook.ViewModels
 
         public void Focus()
         {
-            _control.Dispatcher.Invoke(() => {
-                _control?.CommandLineControl?.Focus();
+            _control?.Dispatcher.Invoke(() => {
+                _control.CommandLineControl?.Focus();
             });
         }
     }

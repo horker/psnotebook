@@ -7,7 +7,7 @@
              xmlns:models="clr-namespace:Horker.Notebook.Models"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             local:InputBindingsBehavior.TakesInputBindingPrecedence="true" Loaded="RoundtripControl_Loaded" SizeChanged="RoundtripControl_SizeChanged">
+             local:InputBindingsBehavior.TakesInputBindingPrecedence="true" Loaded="RoundtripControl_Loaded">
 
     <UserControl.Resources>
         <RoutedCommand x:Key="InvokeCommandLineCommand" />
@@ -38,7 +38,13 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" x:Name="Index" Text="{Binding IndexString, Mode=OneWay}" Background="#FFD4D4D4" IsEnabled="false" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}"/>
+        <TextBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" x:Name="Index" Text="{Binding IndexString, Mode=OneWay}" Background="#FFD4D4D4" IsReadOnly="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" Foreground="#FF9E9E9E">
+            <TextBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete this" x:Name="DeleteRoundtrip" Click="DeleteRoundtrip_Click" />
+                </ContextMenu>
+            </TextBox.ContextMenu>
+        </TextBox>
 
         <RichTextBox Grid.Column="1" Grid.Row="0" x:Name="CommandLine" VerticalAlignment="Top" Background="#FFFDFAEF" MinHeight="20" AcceptsReturn="true" AcceptsTab="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" MinWidth="{x:Static models:Configuration.CommandLineWidth}">
             <FlowDocument PagePadding="0">

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -29,23 +30,14 @@ namespace Horker.Notebook.ViewModels
         public void AddRoundtripViewModel(RoundtripViewModel r)
         {
             _sessionControl.Dispatcher.Invoke(() => {
+                r.Index = _sessionControl.Items.Count;
                 _sessionControl.Items.Add(r);
             });
         }
 
         public RoundtripViewModel GetNextRoundtripViewModel(RoundtripViewModel r)
         {
-            var i = r.Index - 1; // Roundtrip indexes begin at 1.
-            _sessionControl.Dispatcher.Invoke(() => {
-                RoundtripViewModel rr = null;
-                while (i >= 0)
-                {
-                    rr = _sessionControl.Items[i];
-                    if (r == rr)
-                        break;
-                    --i;
-                }
-            });
+            var i = r.Index;
 
             if (i >= _sessionControl.Items.Count - 1)
                 return _sessionControl.Items.Last();
@@ -57,6 +49,26 @@ namespace Horker.Notebook.ViewModels
         {
             _sessionControl.Dispatcher.Invoke(() => {
                 _sessionControl.ScrollViewer.ScrollToBottom();
+            });
+        }
+
+        public void RemoveRoundtrip(RoundtripViewModel r)
+        {
+            if (_sessionControl.Items.Count <= 1)
+                return;
+
+            _sessionControl.Dispatcher.Invoke(() => {
+                var index = r.Index;
+                Debug.Assert(index == _sessionControl.Items.IndexOf(r));
+                _sessionControl.Items.RemoveAt(index);
+
+                for (var i = index; i < _sessionControl.Items.Count; ++i)
+                    _sessionControl.Items[i].Index = i;
+
+                if (index == _sessionControl.Items.Count)
+                    _sessionControl.Items.Last().Focus();
+                else
+                    _sessionControl.Items[index].Focus();
             });
         }
     }
