@@ -12,7 +12,7 @@ namespace Horker.Notebook.Cmdlets
     {
         protected override void BeginProcessing()
         {
-            WriteObject(Models.Startup.Dispatcher);
+            WriteObject(Models.CurrentState.Dispatcher);
         }
     }
 }

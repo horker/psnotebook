@@ -30,8 +30,9 @@ namespace Horker.Notebook
         private void Session_Loaded(object sender, RoutedEventArgs e)
         {
             var sessionControl = (Views.Session)sender;
-
             var sessionViewModel = new SessionViewModel(sessionControl);
+
+            Models.CurrentState.Dispatcher = Dispatcher;
 
             var thread = new Thread(() => {
                 var session = new Models.Session(sessionViewModel);

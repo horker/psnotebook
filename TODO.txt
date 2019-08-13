@@ -9,12 +9,13 @@ no highlight on cursor
 adjust page widths after resizing
 native executable
 hide empty output view after re-run
-Use ShareMyResult() method
 determine window width by console column width
 stop execution thread on closing window on Start-Notebook
 invalidate "Delete this" in the context menu when there is one roundtrip
 Handle errors on loading profile files
+Display an error correctly when $ErrorActionPreference = "Stop"
 
+DONE Use MergeMyResult() method
 DONE loading profile on startup
 DONE contect menu -> delete roundtrip
 DONE correct exit

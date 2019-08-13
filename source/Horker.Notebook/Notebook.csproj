@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cmdlets\GetNotebookWindowDispatcher.cs" />
+    <Compile Include="Cmdlets\GetWpfImage.cs" />
     <Compile Include="Cmdlets\OutNotebookString.cs" />
     <Compile Include="Cmdlets\StartNotebook.cs" />
     <Compile Include="Models\Configuration.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Models\Roundtrip.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\Startup.cs" />
+    <Compile Include="Models\CurrentState.cs" />
     <Compile Include="PowerShell\ConsoleReadLine.cs" />
     <Compile Include="PowerShell\Host.cs" />
     <Compile Include="PowerShell\HostUserInterface.cs" />

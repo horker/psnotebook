@@ -13,8 +13,6 @@ namespace Horker.Notebook.Models
 {
     public class Startup
     {
-        public static Dispatcher Dispatcher { get; set; }
-
         public static void Start()
         {
             Window window = null;
@@ -33,7 +31,7 @@ namespace Horker.Notebook.Models
                     Width = Configuration.WindowWidth
                 };
 
-                Dispatcher = window.Dispatcher;
+                CurrentState.Dispatcher = window.Dispatcher;
 
                 try
                 {
