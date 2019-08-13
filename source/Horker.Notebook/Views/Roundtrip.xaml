@@ -1,0 +1,67 @@
+﻿<UserControl x:Name="RoundtripControl" x:Class="Horker.Views.Roundtrip"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Horker.Views"
+             xmlns:models="clr-namespace:Horker.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             local:InputBindingsBehavior.TakesInputBindingPrecedence="true" Loaded="RoundtripControl_Loaded" SizeChanged="RoundtripControl_SizeChanged">
+
+    <UserControl.Resources>
+        <RoutedCommand x:Key="InvokeCommandLineCommand" />
+        <RoutedCommand x:Key="PreviousRoundtripCommand" />
+        <RoutedCommand x:Key="NextRoundtripCommand" />
+    </UserControl.Resources>
+
+    <UserControl.CommandBindings>
+        <CommandBinding Command="{StaticResource InvokeCommandLineCommand}" Executed="InvokeCommandLineCommand_Execute"/>
+        <CommandBinding Command="{StaticResource PreviousRoundtripCommand}" Executed="PreviousRoundtripCommand_Execute"/>
+        <CommandBinding Command="{StaticResource NextRoundtripCommand}" Executed="NextRoundtripCommand_Execute"/>
+    </UserControl.CommandBindings>
+
+    <UserControl.InputBindings>
+        <KeyBinding Gesture="Ctrl+Enter" Command="{StaticResource InvokeCommandLineCommand}"/>
+        <KeyBinding Gesture="Ctrl+Up" Command="{StaticResource PreviousRoundtripCommand}"/>
+        <KeyBinding Gesture="Ctrl+Down" Command="{StaticResource NextRoundtripCommand}"/>
+    </UserControl.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <TextBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" x:Name="Index" Text="{Binding IndexString, Mode=OneWay}" Background="#FFD4D4D4" IsEnabled="false" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}"/>
+
+        <RichTextBox Grid.Column="1" Grid.Row="0" x:Name="CommandLine" VerticalAlignment="Top" Background="#FFFDFAEF" MinHeight="20" AcceptsReturn="true" AcceptsTab="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" MinWidth="{x:Static models:Configuration.ConsoleWidth}">
+            <FlowDocument PagePadding="0">
+                <FlowDocument.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="Padding" Value="0"/>
+                    </Style>
+                </FlowDocument.Resources>
+            </FlowDocument>
+        </RichTextBox>
+
+        <FlowDocumentScrollViewer Grid.Column="1" Grid.Row="1" x:Name="Output" VerticalAlignment="Top" Background="#FFFFFFFF" MaxHeight="{x:Static models:Configuration.MaxOutputHeight}" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" VerticalScrollBarVisibility="Auto" Padding="6,0" Visibility="Collapsed" MinWidth="{x:Static models:Configuration.ConsoleWidth}">
+            <FlowDocument PagePadding="0">
+                <FlowDocument.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="FontFamily" Value="{x:Static models:Configuration.FontFamily}"/>
+                        <Setter Property="FontSize" Value="{x:Static models:Configuration.FontSize}"/>
+                    </Style>
+                </FlowDocument.Resources>
+            </FlowDocument>
+        </FlowDocumentScrollViewer>
+    </Grid>
+</UserControl>
