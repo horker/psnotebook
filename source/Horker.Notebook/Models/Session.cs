@@ -124,6 +124,7 @@ namespace Horker.Notebook.Models
                     _powerShell.AddCommand("Out-NotebookInternal");
                     _powerShell.Commands.Commands[0].MergeMyResults(PipelineResultTypes.Error, PipelineResultTypes.Output);
 
+                    roundtrip.ViewModel.Hidden();
                     roundtrip.ViewModel.Clear();
 
                     try
