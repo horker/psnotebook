@@ -63,6 +63,33 @@ namespace Horker.Notebook.ViewModels
             }
         }
 
+        private string _progressMessage;
+
+        public string ProgressMessage
+        {
+            get => _progressMessage;
+            set
+            {
+                _progressMessage = value;
+                OnPropertyChanged(nameof(ProgressMessage));
+            }
+        }
+
+        private double _progress;
+
+        public double Progress
+        {
+            get => _progress;
+            set
+            {
+                _progress = value;
+                OnPropertyChanged(nameof(Progress));
+                OnPropertyChanged(nameof(ProgressPercentString));
+            }
+        }
+
+        public string ProgressPercentString => $"{_progress}%";
+
         public SessionViewModel(Views.Session sessionControl)
         {
             _sessionControl = sessionControl;
@@ -132,6 +159,27 @@ namespace Horker.Notebook.ViewModels
                 else
                     Items[index].Focus();
             });
+        }
+
+        public void ShowProgress()
+        {
+            _sessionControl.Dispatcher.Invoke(() => {
+                _sessionControl.ShowProgress();
+            });
+        }
+
+        public void HideProgress()
+        {
+            _sessionControl.Dispatcher.Invoke(() => {
+                _sessionControl.HideProgress();
+            });
+        }
+
+        public void WriteProgress(string message, double progress)
+        {
+            ShowProgress();
+            ProgressMessage = message;
+            Progress = progress;
         }
     }
 }

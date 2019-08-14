@@ -8,6 +8,18 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <DockPanel>
+        <Grid DockPanel.Dock="Top" x:Name="ProgressBar" Visibility="Collapsed" Background="LightYellow" Margin="2,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="150" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" x:Name="ProgressMessage" Text="{Binding ProgressMessage}"/>
+            <TextBlock Grid.Column="1" x:Name="ProgressPercent" Text="{Binding ProgressPercentString}" Margin="0,0,2,0"/>
+            <ProgressBar Grid.Column="2" x:Name="ProgressMeter" Minimum="0" Maximum="100" Value="{Binding Progress}"/>
+        </Grid>
+
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>

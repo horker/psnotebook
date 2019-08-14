@@ -89,7 +89,13 @@ namespace Horker.Notebook
 
         public override void WriteProgress(long sourceId, ProgressRecord record)
         {
-            throw new NotImplementedException();
+            var message = record.Activity + " " + record.StatusDescription + " " + record.CurrentOperation;
+            if (record.SecondsRemaining > 0)
+                message += "(remaining " + record.SecondsRemaining + " seconds)";
+
+            var percent = record.PercentComplete >= 0 ? record.PercentComplete : 0;
+
+            _session.WriteProgress(message, percent);
         }
 
         public override void WriteVerboseLine(string message)

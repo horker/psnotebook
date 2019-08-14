@@ -158,7 +158,6 @@ namespace Horker.Notebook.Models
                             _sessionViewModel.ScrollToBottom();
 
                         _powerShell.EndInvoke(asyncResult);
-
                     }
                     catch (RuntimeException ex)
                     {
@@ -167,6 +166,8 @@ namespace Horker.Notebook.Models
 
                     stopWatch.Stop();
                     _sessionViewModel.TimeTaken = stopWatch.Elapsed;
+
+                    _sessionViewModel.HideProgress();
 
                     if (_sessionViewModel.IsLastItem(roundtrip.ViewModel))
                         CreateNewRoundtrip();

@@ -63,5 +63,15 @@ namespace Horker.Notebook.Views
 
             ViewModel.Items[index + 1].Focus();
         }
+
+        public void ShowProgress()
+        {
+            ProgressBar.Visibility = Visibility.Visible;
+        }
+
+        public void HideProgress()
+        {
+            ProgressBar.Visibility = Visibility.Collapsed;
+        }
     }
 }

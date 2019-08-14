@@ -1,6 +1,6 @@
 save/load
-show progress
 resize output pane
+Ctrl+C
 
 no highlight on cursor
 native executable
@@ -8,7 +8,9 @@ stop execution thread on closing window on Start-Notebook
 invalidate "Delete this" in the context menu when there is one roundtrip
 Display an error correctly when $ErrorActionPreference = "Stop"
 New-WpfWindow, New-WpfGrid, Out-Pane, etc.
+Hide progress bar when PercentComplete is not specified in Write-Progress
 
+DONE show progress
 DONE prompt
 DONE status line (current directory)
 DONE determine window width by console column width
