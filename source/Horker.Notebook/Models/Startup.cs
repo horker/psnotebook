@@ -49,7 +49,7 @@ namespace Horker.Notebook.Models
 
             e.WaitOne();
 
-            var sessionViewModel = new SessionViewModel(sessionControl);
+            var sessionViewModel = sessionControl.ViewModel;
 
             var session = new Models.Session(sessionViewModel);
 

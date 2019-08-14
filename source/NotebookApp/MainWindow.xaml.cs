@@ -34,7 +34,7 @@ namespace Horker.Notebook
             Directory.SetCurrentDirectory(homePath);
 
             var sessionControl = (Views.Session)sender;
-            var sessionViewModel = new SessionViewModel(sessionControl);
+            var sessionViewModel = sessionControl.ViewModel;
 
             Models.CurrentState.Dispatcher = Dispatcher;
 

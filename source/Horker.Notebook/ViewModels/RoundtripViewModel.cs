@@ -14,6 +14,17 @@ namespace Horker.Notebook.ViewModels
 {
     public class RoundtripViewModel : INotifyPropertyChanged
     {
+        // INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string info)
+        {
+            _control?.Dispatcher.Invoke(() => {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
+            });
+        }
+
         private Models.Roundtrip _model;
         private int _index;
         private Views.Roundtrip _control;
@@ -29,8 +40,6 @@ namespace Horker.Notebook.ViewModels
             get => _control;
             set => _control = value;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public Models.Roundtrip Model => _model;
 
@@ -65,13 +74,6 @@ namespace Horker.Notebook.ViewModels
                     _control.OutputControl.Document.ContentStart,
                     _control.OutputControl.Document.ContentEnd).Text;
             }
-        }
-
-        protected void OnPropertyChanged(string info)
-        {
-            _control?.Dispatcher.Invoke(() => {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
-            });
         }
 
         private Run GetRun(string text, Brush foreground = null, Brush background = null)

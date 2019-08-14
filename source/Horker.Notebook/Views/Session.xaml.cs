@@ -23,20 +23,19 @@ namespace Horker.Notebook.Views
     {
         public SessionViewModel ViewModel { get; set; }
 
-        public ObservableCollection<RoundtripViewModel> Items { get; private set; }
-
-        private Roundtrip GetActiveRoundtrip()
-        {
-            var rtb = Keyboard.FocusedElement as RichTextBox;
-            var grid = rtb?.Parent as Grid;
-            var r = grid?.Parent as Roundtrip;
-            return r;
-        }
-
         public Session()
         {
             InitializeComponent();
-            DataContext = Items = new ObservableCollection<RoundtripViewModel>();
+            DataContext = ViewModel = new SessionViewModel(this);
+        }
+
+        public Roundtrip GetActiveRoundtrip()
+        {
+            var rtb = Keyboard.FocusedElement as RichTextBox;
+            var grid1 = rtb?.Parent as Grid;
+            var grid2 = grid1?.Parent as Grid;
+            var r = grid2?.Parent as Roundtrip;
+            return r;
         }
 
         public void MoveToPreviousRoundtrip()
@@ -45,11 +44,11 @@ namespace Horker.Notebook.Views
             if (r == null)
                 return;
 
-            var index = Items.IndexOf(r.ViewModel);
+            var index = ViewModel.Items.IndexOf(r.ViewModel);
             if (index <= 0)
                 return;
 
-            Items[index - 1].Focus();
+            ViewModel.Items[index - 1].Focus();
         }
 
         public void MoveToNextRoundtrip()
@@ -58,11 +57,11 @@ namespace Horker.Notebook.Views
             if (r == null)
                 return;
 
-            var index = Items.IndexOf(r.ViewModel);
-            if (index == -1 || index == Items.Count - 1)
+            var index = ViewModel.Items.IndexOf(r.ViewModel);
+            if (index == -1 || index == ViewModel.Items.Count - 1)
                 return;
 
-            Items[index + 1].Focus();
+            ViewModel.Items[index + 1].Focus();
         }
     }
 }

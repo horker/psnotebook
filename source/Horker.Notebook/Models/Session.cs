@@ -71,7 +71,7 @@ namespace Horker.Notebook.Models
 
         private void InitializeCurrentSession()
         {
-            SessionViewModel.ActiveOutput = _sessionViewModel.LastItem();
+            SessionViewModel.ActiveOutput = _sessionViewModel.GetLastItem();
 
             try
             {
