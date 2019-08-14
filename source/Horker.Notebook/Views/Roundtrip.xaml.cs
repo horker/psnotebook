@@ -66,6 +66,11 @@ namespace Horker.Notebook.Views
             ViewModel.NotifyExecute();
         }
 
+        private void CancelCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            Container.ViewModel.NotifyCancel();
+        }
+
         private void PreviousRoundtripCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
             Container.MoveToPreviousRoundtrip();
@@ -74,6 +79,11 @@ namespace Horker.Notebook.Views
         private void NextRoundtripCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
             Container.MoveToNextRoundtrip();
+        }
+
+        private void DeleteRoundtrip_Click(object sender, RoutedEventArgs e)
+        {
+            Container.ViewModel.RemoveRoundtrip(ViewModel);
         }
 
         // Event handlers
@@ -93,11 +103,6 @@ namespace Horker.Notebook.Views
             _outputControl.Document.PageWidth = Models.Configuration.ConsoleWidth;
 
             _commandLineControl.Focus();
-        }
-
-        private void DeleteRoundtrip_Click(object sender, RoutedEventArgs e)
-        {
-            Container.ViewModel.RemoveRoundtrip(ViewModel);
         }
     }
 }

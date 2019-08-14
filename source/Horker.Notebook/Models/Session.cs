@@ -23,6 +23,9 @@ namespace Horker.Notebook.Models
         private Runspace _runspace;
         private PowerShell _powerShell;
 
+        private ManualResetEvent _cancelEvent;
+        private bool _cancelled;
+
         private Roundtrip _activeRoundtrip;
 
         public Roundtrip ActiveRoundtrip => _activeRoundtrip;
@@ -30,6 +33,7 @@ namespace Horker.Notebook.Models
         public Session(SessionViewModel sessionViewModel)
         {
             _sessionViewModel = sessionViewModel;
+            sessionViewModel.Model = this;
 
             _executionQueue = new ExecutionQueue();
 
@@ -44,6 +48,8 @@ namespace Horker.Notebook.Models
 
             _powerShell = PowerShell.Create();
             _powerShell.Runspace = _runspace;
+
+            _cancelEvent = new ManualResetEvent(false);
         }
 
         public void CreateNewRoundtrip()
@@ -150,12 +156,21 @@ namespace Horker.Notebook.Models
 
                     try
                     {
+                        ResetCancelState();
                         stopWatch.Restart();
 
                         var asyncResult = _powerShell.BeginInvoke(input, output);
 
                         if (_sessionViewModel.IsLastItem(roundtrip.ViewModel))
                             _sessionViewModel.ScrollToBottom();
+
+                        WaitHandle.WaitAny(new WaitHandle[] { asyncResult.AsyncWaitHandle, _cancelEvent });
+
+                        if (_cancelled)
+                        {
+                            _powerShell.Stop();
+                            roundtrip.ViewModel.WriteWholeLine("^C");
+                        }
 
                         _powerShell.EndInvoke(asyncResult);
                     }
@@ -185,6 +200,18 @@ namespace Horker.Notebook.Models
 
 
             return _exitCode;
+        }
+
+        public void ResetCancelState()
+        {
+            _cancelEvent.Reset();
+            _cancelled = false;
+        }
+
+        public void NotifyCancel()
+        {
+            _cancelEvent.Set();
+            _cancelled = true;
         }
     }
 }

@@ -11,18 +11,21 @@
 
     <UserControl.Resources>
         <RoutedCommand x:Key="InvokeCommandLineCommand" />
+        <RoutedCommand x:Key="CancelCommand" />
         <RoutedCommand x:Key="PreviousRoundtripCommand" />
         <RoutedCommand x:Key="NextRoundtripCommand" />
     </UserControl.Resources>
 
     <UserControl.CommandBindings>
         <CommandBinding Command="{StaticResource InvokeCommandLineCommand}" Executed="InvokeCommandLineCommand_Execute"/>
+        <CommandBinding Command="{StaticResource CancelCommand}" Executed="CancelCommand_Execute"/>
         <CommandBinding Command="{StaticResource PreviousRoundtripCommand}" Executed="PreviousRoundtripCommand_Execute"/>
         <CommandBinding Command="{StaticResource NextRoundtripCommand}" Executed="NextRoundtripCommand_Execute"/>
     </UserControl.CommandBindings>
 
     <UserControl.InputBindings>
         <KeyBinding Gesture="Ctrl+Enter" Command="{StaticResource InvokeCommandLineCommand}"/>
+        <KeyBinding Gesture="ESC" Command="{StaticResource CancelCommand}"/>
         <KeyBinding Gesture="Ctrl+Up" Command="{StaticResource PreviousRoundtripCommand}"/>
         <KeyBinding Gesture="Ctrl+Down" Command="{StaticResource NextRoundtripCommand}"/>
     </UserControl.InputBindings>

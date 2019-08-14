@@ -25,6 +25,14 @@ namespace Horker.Notebook.ViewModels
 
         private Views.Session _sessionControl;
 
+        private Models.Session _model;
+
+        public Models.Session Model
+        {
+            get => _model;
+            set => _model = value;
+        }
+
         public static RoundtripViewModel ActiveOutput { get; set; }
 
         private ObservableCollection<RoundtripViewModel> _items;
@@ -94,6 +102,11 @@ namespace Horker.Notebook.ViewModels
         {
             _sessionControl = sessionControl;
             _items = new ObservableCollection<RoundtripViewModel>();
+        }
+
+        public void NotifyCancel()
+        {
+            _model.NotifyCancel();
         }
 
         // Helper methods
