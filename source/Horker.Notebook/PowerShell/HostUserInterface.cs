@@ -59,32 +59,32 @@ namespace Horker.Notebook
 
         public override void Write(string value)
         {
-            RoundtripViewModel.Active.Write(value);
+            SessionViewModel.ActiveOutput.Write(value);
         }
 
         public override void Write(ConsoleColor foregroundColor, ConsoleColor backgroundColor, string value)
         {
-            RoundtripViewModel.Active.Write(value,
+            SessionViewModel.ActiveOutput.Write(value,
                 ConsoleColorToBrushConverter.GetBrush(foregroundColor),
                 ConsoleColorToBrushConverter.GetBrush(backgroundColor));
         }
 
         public override void WriteDebugLine(string message)
         {
-            RoundtripViewModel.Active.WriteWholeLine(
+            SessionViewModel.ActiveOutput.WriteWholeLine(
                 string.Format(CultureInfo.CurrentCulture, "DEBUG: {0}", message),
                 Brushes.Goldenrod, null);
         }
 
         public override void WriteErrorLine(string message)
         {
-            RoundtripViewModel.Active.WriteWholeLine(
+            SessionViewModel.ActiveOutput.WriteWholeLine(
                 message, Brushes.IndianRed, null);
         }
 
         public override void WriteLine(string value)
         {
-            RoundtripViewModel.Active.WriteLine(value);
+            SessionViewModel.ActiveOutput.WriteLine(value);
         }
 
         public override void WriteProgress(long sourceId, ProgressRecord record)
@@ -94,14 +94,14 @@ namespace Horker.Notebook
 
         public override void WriteVerboseLine(string message)
         {
-            RoundtripViewModel.Active.WriteWholeLine(
+            SessionViewModel.ActiveOutput.WriteWholeLine(
                 string.Format(CultureInfo.CurrentCulture, "VERBOSE: {0}", message),
                 Brushes.Goldenrod, null);
         }
 
         public override void WriteWarningLine(string message)
         {
-            RoundtripViewModel.Active.WriteWholeLine(
+            SessionViewModel.ActiveOutput.WriteWholeLine(
                 string.Format(CultureInfo.CurrentCulture, "WARNING: {0}", message),
                 Brushes.Goldenrod, null);
         }

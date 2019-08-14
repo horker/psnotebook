@@ -14,8 +14,6 @@ namespace Horker.Notebook.ViewModels
 {
     public class RoundtripViewModel : INotifyPropertyChanged
     {
-        public static RoundtripViewModel Active { get; private set; }
-
         private Models.Roundtrip _model;
         private int _index;
         private Views.Roundtrip _control;
@@ -141,7 +139,7 @@ namespace Horker.Notebook.ViewModels
                 var run = GetRun(text, foreground, background);
 
                 var par = (Paragraph)_control.OutputControl.Document.Blocks.LastBlock;
-                if (par.Inlines.Count > 0)
+                if (par == null || par.Inlines.Count > 0)
                 {
                     par = new Paragraph();
                     _control.OutputControl.Document.Blocks.Add(par);
@@ -187,7 +185,7 @@ namespace Horker.Notebook.ViewModels
 
         public void NotifyExecute()
         {
-            Active = this;
+            SessionViewModel.ActiveOutput = this;
             Model.NotifyExecute();
         }
 

@@ -4,6 +4,7 @@ save/load
 status line (current directory)
 show progress
 make mouse wheel active
+resize output pane
 
 no highlight on cursor
 adjust page widths after resizing
@@ -14,6 +15,7 @@ stop execution thread on closing window on Start-Notebook
 invalidate "Delete this" in the context menu when there is one roundtrip
 Handle errors on loading profile files
 Display an error correctly when $ErrorActionPreference = "Stop"
+New-WpfWindow, New-WpfGrid, Out-Pane, etc.
 
 DONE Use MergeMyResult() method
 DONE loading profile on startup

@@ -12,10 +12,21 @@ namespace Horker.Notebook.ViewModels
     {
         private Views.Session _sessionControl;
 
+        public static RoundtripViewModel ActiveOutput { get; set; }
+
         public SessionViewModel(Views.Session sessionControl)
         {
             _sessionControl = sessionControl;
             sessionControl.ViewModel = this;
+        }
+
+        public RoundtripViewModel LastItem()
+        {
+            RoundtripViewModel r = null;
+            _sessionControl.Dispatcher.Invoke(() => {
+                r = _sessionControl.Items.Last();
+            });
+            return r;
         }
 
         public bool IsLastItem(RoundtripViewModel r)

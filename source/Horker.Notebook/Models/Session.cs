@@ -43,20 +43,6 @@ namespace Horker.Notebook.Models
 
             _powerShell = PowerShell.Create();
             _powerShell.Runspace = _runspace;
-
-            // Import this module itself to define cmdlets.
-            _powerShell.AddCommand("Import-Module").AddParameter("Assembly", typeof(Startup).Assembly);
-            _powerShell.Invoke();
-
-            // Load profile files.
-            // TODO: handle errors
-
-            PSCommand[] profileCommands = Microsoft.Samples.PowerShell.Host.HostUtilities.GetProfileCommands("Notebook");
-            foreach (PSCommand command in profileCommands)
-            {
-                _powerShell.Commands = command;
-                _powerShell.Invoke();
-            }
         }
 
         public void CreateNewRoundtrip()
@@ -71,23 +57,54 @@ namespace Horker.Notebook.Models
             "    + CategoryInfo          : {2}\r\n" +
             "    + FullyQualifiedErrorId : {3}\r\n";
 
+        private void DisplayError(RuntimeException ex)
+        {
+            var message = string.Format(
+                _errorMessageFormat,
+                ex.ErrorRecord,
+                ex.ErrorRecord.InvocationInfo?.PositionMessage,
+                ex.ErrorRecord.CategoryInfo,
+                ex.ErrorRecord.FullyQualifiedErrorId);
+
+            SessionViewModel.ActiveOutput.WriteWholeLine(message, Brushes.IndianRed);
+        }
+
+        private void InitializeCurrentSession()
+        {
+            SessionViewModel.ActiveOutput = _sessionViewModel.LastItem();
+
+            try
+            {
+                // Import this module itself to define cmdlets.
+
+                _powerShell.AddCommand("Import-Module").AddParameter("Assembly", typeof(Startup).Assembly);
+                _powerShell.Commands.Commands[0].MergeMyResults(PipelineResultTypes.Error, PipelineResultTypes.Output);
+                _powerShell.Invoke();
+
+                // Load profile files.
+                // TODO: handle errors
+
+                PSCommand[] profileCommands = Microsoft.Samples.PowerShell.Host.HostUtilities.GetProfileCommands("Notebook");
+                foreach (PSCommand command in profileCommands)
+                {
+                    _powerShell.Commands = command;
+                    _powerShell.Commands.Commands[0].MergeMyResults(PipelineResultTypes.Error, PipelineResultTypes.Output);
+                    _powerShell.Invoke();
+                }
+            }
+            catch (RuntimeException ex)
+            {
+                DisplayError(ex);
+            }
+        }
+
         public int StartExecutionLoop()
         {
             Roundtrip roundtrip = null;
 
-//            _powerShell.Streams.Error.DataAdded += (object sender, DataAddedEventArgs args) => {
-//                var error = _powerShell.Streams.Error.Last();
-//                var message = string.Format(
-//                    _errorMessageFormat,
-//                    error,
-//                    error.InvocationInfo?.PositionMessage,
-//                    error.CategoryInfo,
-//                    error.FullyQualifiedErrorId);
-
-//                roundtrip.ViewModel.WriteWholeLine(message, Brushes.IndianRed);
-//            };
-
             CreateNewRoundtrip();
+
+            InitializeCurrentSession();
 
             try
             {
@@ -120,14 +137,7 @@ namespace Horker.Notebook.Models
                     }
                     catch (RuntimeException ex)
                     {
-                        var message = string.Format(
-                            _errorMessageFormat,
-                            ex.ErrorRecord,
-                            ex.ErrorRecord.InvocationInfo?.PositionMessage,
-                            ex.ErrorRecord.CategoryInfo,
-                            ex.ErrorRecord.FullyQualifiedErrorId);
-
-                        roundtrip.ViewModel.WriteWholeLine(message, Brushes.IndianRed);
+                        DisplayError(ex);
                     }
 
                     if (_sessionViewModel.IsLastItem(roundtrip.ViewModel))
