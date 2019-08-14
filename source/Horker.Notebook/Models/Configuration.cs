@@ -46,7 +46,9 @@ namespace Horker.Notebook.Models
         // Crude adjustment for the margins, paddings and borders
         public static double WindowWidth => CommandLineWidth + 100;
 
-        public static double MaxOutputHeight => FontSize * 25;
+        public static int MaxOutputHeightInLines { get; set; } = 30;
+
+        public static double MaxOutputHeight => FontSize * MaxOutputHeightInLines;
 
         // Helper methods
 
