@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -29,6 +30,9 @@ namespace Horker.Notebook
 
         private void Session_Loaded(object sender, RoutedEventArgs e)
         {
+            var homePath = Environment.GetEnvironmentVariable("HOMEDRIVE") + Environment.GetEnvironmentVariable("HOMEPATH");
+            Directory.SetCurrentDirectory(homePath);
+
             var sessionControl = (Views.Session)sender;
             var sessionViewModel = new SessionViewModel(sessionControl);
 
