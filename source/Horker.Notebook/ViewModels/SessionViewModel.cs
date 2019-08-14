@@ -201,11 +201,18 @@ namespace Horker.Notebook.ViewModels
             _model.NotifyCancel();
         }
 
-        public void SaveSession(string fileName)
+        public bool HasFileName()
+        {
+            return !string.IsNullOrEmpty(_model.FileNameToLoad);
+        }
+
+        public void SaveSession(string fileName = null)
         {
             try
             {
-                _model.SaveSession(fileName);
+                if (!string.IsNullOrEmpty(fileName))
+                    _model.FileNameToLoad = fileName;
+                _model.SaveSession();
             }
             catch (Exception ex)
             {

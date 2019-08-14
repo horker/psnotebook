@@ -80,6 +80,10 @@ namespace Horker.Notebook.Views
 
         private void SaveCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
+            if (!ViewModel.HasFileName())
+                SaveAsCommand_Execute(sender, e);
+            else
+                ViewModel.SaveSession();
         }
 
         private void SaveAsCommand_Execute(object sender, ExecutedRoutedEventArgs e)
@@ -92,7 +96,7 @@ namespace Horker.Notebook.Views
             };
 
             if (openFileDialog.ShowDialog() == true)
-                ViewModel.Model.SaveSession(openFileDialog.FileName);
+                ViewModel.SaveSession(openFileDialog.FileName);
         }
 
         private void LoadCommand_Execute(object sender, ExecutedRoutedEventArgs e)

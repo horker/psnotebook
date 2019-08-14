@@ -32,6 +32,14 @@ namespace Horker.Notebook.Models
 
         public Roundtrip ActiveRoundtrip => _activeRoundtrip;
 
+        private string _fileNameToLoad;
+
+        public string FileNameToLoad
+        {
+            get => _fileNameToLoad;
+            set => _fileNameToLoad = value;
+        }
+
         public Session(SessionViewModel sessionViewModel)
         {
             _sessionViewModel = sessionViewModel;
@@ -253,13 +261,15 @@ namespace Horker.Notebook.Models
             }
         }
 
-        public void SaveSession(string fileName)
+        public void SaveSession()
         {
-            using (var writer = new StreamWriter(fileName, false, Encoding.UTF8))
-                SaveSession(writer);
-        }
+            Debug.Assert(!string.IsNullOrEmpty(_fileNameToLoad));
 
-        private string _fileNameToLoad;
+            using (var writer = new StreamWriter(_fileNameToLoad, false, Encoding.UTF8))
+            {
+                SaveSession(writer);
+            }
+        }
 
         public void LoadSession(TextReader reader)
         {
