@@ -1,5 +1,4 @@
 prompt
-wpf output
 save/load
 status line (current directory)
 show progress
@@ -9,14 +8,15 @@ resize output pane
 no highlight on cursor
 adjust page widths after resizing
 native executable
-hide empty output view after re-run
 determine window width by console column width
 stop execution thread on closing window on Start-Notebook
 invalidate "Delete this" in the context menu when there is one roundtrip
-Handle errors on loading profile files
 Display an error correctly when $ErrorActionPreference = "Stop"
 New-WpfWindow, New-WpfGrid, Out-Pane, etc.
 
+DONE hide empty output view after re-run
+DONE Handle errors on loading profile files
+DONE wpf output
 DONE Use MergeMyResult() method
 DONE loading profile on startup
 DONE contect menu -> delete roundtrip

@@ -9,6 +9,11 @@
 
     <ScrollViewer x:Name="ScrollViewer">
         <ListBox x:Name="ListBox" ItemsSource="{Binding}" HorizontalContentAlignment="Stretch">
+            <ListBox.Template>
+                <ControlTemplate>
+                    <ItemsPresenter/>
+                </ControlTemplate>
+            </ListBox.Template>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <View:Roundtrip DataContext="{Binding}" Container="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type View:Session}}}"/>

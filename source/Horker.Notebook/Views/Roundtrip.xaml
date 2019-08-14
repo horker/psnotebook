@@ -28,17 +28,12 @@
     </UserControl.InputBindings>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" x:Name="Index" Text="{Binding IndexString, Mode=OneWay}" Background="#FFD4D4D4" IsReadOnly="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" Foreground="#FF9E9E9E">
+        <TextBox Grid.Column="0" x:Name="Index" Text="{Binding IndexString, Mode=OneWay}" Background="#FFD4D4D4" IsReadOnly="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" Foreground="#FF9E9E9E" Margin="0,0,2,0">
             <TextBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete this" x:Name="DeleteRoundtrip" Click="DeleteRoundtrip_Click" />
@@ -46,28 +41,35 @@
             </TextBox.ContextMenu>
         </TextBox>
 
-        <RichTextBox Grid.Column="1" Grid.Row="0" x:Name="CommandLine" VerticalAlignment="Top" Background="#FFFDFAEF" MinHeight="20" AcceptsReturn="true" AcceptsTab="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" MinWidth="{x:Static models:Configuration.CommandLineWidth}">
-            <FlowDocument PagePadding="0">
-                <FlowDocument.Resources>
-                    <Style TargetType="{x:Type Paragraph}">
-                        <Setter Property="Margin" Value="0"/>
-                        <Setter Property="Padding" Value="0"/>
-                    </Style>
-                </FlowDocument.Resources>
-            </FlowDocument>
-        </RichTextBox>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-        <FlowDocumentScrollViewer Grid.Column="1" Grid.Row="1" x:Name="Output" VerticalAlignment="Top" Background="#FFFFFFFF" MaxHeight="{x:Static models:Configuration.MaxOutputHeight}" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" VerticalScrollBarVisibility="Auto" Padding="6,0" Visibility="Collapsed" MinWidth="{x:Static models:Configuration.CommandLineWidth}">
-            <FlowDocument PagePadding="0">
-                <FlowDocument.Resources>
-                    <Style TargetType="{x:Type Paragraph}">
-                        <Setter Property="Margin" Value="0"/>
-                        <Setter Property="Padding" Value="0"/>
-                        <Setter Property="FontFamily" Value="{x:Static models:Configuration.FontFamily}"/>
-                        <Setter Property="FontSize" Value="{x:Static models:Configuration.FontSize}"/>
-                    </Style>
-                </FlowDocument.Resources>
-            </FlowDocument>
-        </FlowDocumentScrollViewer>
+            <RichTextBox Grid.Row="0" x:Name="CommandLine" VerticalAlignment="Top" Background="#FFFDFAEF" MinHeight="20" AcceptsReturn="true" AcceptsTab="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" MinWidth="{x:Static models:Configuration.CommandLineWidth}">
+                <FlowDocument PagePadding="0">
+                    <FlowDocument.Resources>
+                        <Style TargetType="{x:Type Paragraph}">
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="0"/>
+                        </Style>
+                    </FlowDocument.Resources>
+                </FlowDocument>
+            </RichTextBox>
+
+            <FlowDocumentScrollViewer Grid.Row="1" x:Name="Output" VerticalAlignment="Top" MaxHeight="{x:Static models:Configuration.MaxOutputHeight}" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" VerticalScrollBarVisibility="Auto" Margin="5,0" Visibility="Collapsed" MinWidth="{x:Static models:Configuration.CommandLineWidth}">
+                <FlowDocument PagePadding="0">
+                    <FlowDocument.Resources>
+                        <Style TargetType="{x:Type Paragraph}">
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="FontFamily" Value="{x:Static models:Configuration.FontFamily}"/>
+                            <Setter Property="FontSize" Value="{x:Static models:Configuration.FontSize}"/>
+                        </Style>
+                    </FlowDocument.Resources>
+                </FlowDocument>
+            </FlowDocumentScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>
