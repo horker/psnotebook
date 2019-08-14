@@ -68,8 +68,8 @@
     <Compile Include="Models\CurrentState.cs" />
     <Compile Include="PowerShell\ConsoleReadLine.cs" />
     <Compile Include="PowerShell\Host.cs" />
+    <Compile Include="PowerShell\HostRawUserInterface.cs" />
     <Compile Include="PowerShell\HostUserInterface.cs" />
-    <Compile Include="PowerShell\HowRawUserInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ref\HostUtilities.cs" />
     <Compile Include="Ref\MyHost.cs" />

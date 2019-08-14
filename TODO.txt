@@ -1,6 +1,4 @@
-prompt
 save/load
-status line (current directory)
 show progress
 resize output pane
 
@@ -11,6 +9,8 @@ invalidate "Delete this" in the context menu when there is one roundtrip
 Display an error correctly when $ErrorActionPreference = "Stop"
 New-WpfWindow, New-WpfGrid, Out-Pane, etc.
 
+DONE prompt
+DONE status line (current directory)
 DONE determine window width by console column width
 DONE make mouse wheel active
 DONE hide empty output view after re-run
