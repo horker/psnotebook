@@ -29,10 +29,15 @@ namespace Horker.Notebook.ViewModels
         private int _index;
         private Views.Roundtrip _control;
 
+        private ManualResetEvent _createdEvent;
+
+        public ManualResetEvent CreatedEvent => _createdEvent;
+
         public RoundtripViewModel(Models.Roundtrip r)
         {
             _index = 0; // Index is set by Session
             _model = r;
+            _createdEvent = new ManualResetEvent(false);
         }
         
         public Views.Roundtrip Control
@@ -91,7 +96,14 @@ namespace Horker.Notebook.ViewModels
 
         private bool _newlinePending;
 
-        public void ResolveNewline()
+        public void WriteCommandLine(string line)
+        {
+            _control.Dispatcher.Invoke(() => {
+                _control.CommandLineControl.Document.Blocks.Add(new Paragraph(new Run(line)));
+            });
+        }
+
+        private void ResolveNewline()
         {
             if (_newlinePending)
                 _control.OutputControl.Document.Blocks.Add(new Paragraph());

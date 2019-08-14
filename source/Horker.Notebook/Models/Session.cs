@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -52,10 +54,15 @@ namespace Horker.Notebook.Models
             _cancelEvent = new ManualResetEvent(false);
         }
 
-        public void CreateNewRoundtrip()
+        public Roundtrip CreateNewRoundtrip(bool wait)
         {
             var r = new Roundtrip(_executionQueue);
             _sessionViewModel.AddRoundtripViewModel(r.ViewModel);
+
+            if (wait)
+                r.ViewModel.CreatedEvent.WaitOne();
+
+            return r;
         }
 
         private static readonly string _errorMessageFormat =
@@ -125,7 +132,7 @@ namespace Horker.Notebook.Models
         {
             Roundtrip roundtrip = null;
 
-            CreateNewRoundtrip();
+            CreateNewRoundtrip(false);
 
             InitializeCurrentSession();
 
@@ -144,6 +151,12 @@ namespace Horker.Notebook.Models
 
                     roundtrip = _executionQueue.Dequeue();
                     _activeRoundtrip = roundtrip;
+
+                    if (_executionQueue.IsLoadSessionRequest(roundtrip))
+                    {
+                        LoadSession();
+                        continue;
+                    }
 
                     var commandLine = roundtrip.ViewModel.CommandLine;
                     _powerShell.Commands.Clear();
@@ -185,7 +198,7 @@ namespace Horker.Notebook.Models
                     _sessionViewModel.HideProgress();
 
                     if (_sessionViewModel.IsLastItem(roundtrip.ViewModel))
-                        CreateNewRoundtrip();
+                        CreateNewRoundtrip(false);
                     else
                     {
                         var rr = _sessionViewModel.GetNextRoundtripViewModel(roundtrip.ViewModel);
@@ -197,7 +210,6 @@ namespace Horker.Notebook.Models
             {
                 // pass
             }
-
 
             return _exitCode;
         }
@@ -212,6 +224,119 @@ namespace Horker.Notebook.Models
         {
             _cancelEvent.Set();
             _cancelled = true;
+        }
+
+        // Reader and writer
+
+        private static readonly string _fileHeader = "#!Notebook v1";
+        private static readonly string _commandLineHeader = "#!CommandLine";
+        private static readonly string _outputHeader = "#!Output";
+
+        public void SaveSession(TextWriter writer)
+        {
+            writer.WriteLine(_fileHeader);
+            writer.WriteLine();
+
+            foreach (var item in _sessionViewModel.Items)
+            {
+                writer.WriteLine(_commandLineHeader);
+                writer.Write(item.CommandLine);
+
+                writer.WriteLine(_outputHeader);
+
+                var lines = Regex.Split(item.Output, "\r?\n");
+                foreach (var line in lines)
+                {
+                    writer.Write("# ");
+                    writer.WriteLine(line);
+                }
+            }
+        }
+
+        public void SaveSession(string fileName)
+        {
+            using (var writer = new StreamWriter(fileName, false, Encoding.UTF8))
+                SaveSession(writer);
+        }
+
+        private string _fileNameToLoad;
+
+        public void LoadSession(TextReader reader)
+        {
+            _sessionViewModel.Clear();
+
+            var line = reader.ReadLine();
+            if (line != _fileHeader)
+                throw new ApplicationException("Invalid file format");
+
+            var state = 0;
+            var lineNumber = 0;
+            Roundtrip r = null;
+
+            while (true)
+            {
+                ++lineNumber;
+                line = reader.ReadLine();
+                if (line == null)
+                    break;
+
+                switch (state)
+                {
+                    case 0:
+                        if (string.IsNullOrEmpty(line))
+                            break;
+                        if (line == _commandLineHeader)
+                        {
+                            r = CreateNewRoundtrip(true);
+                            state = 1;
+                        }
+                        else
+                            throw new ApplicationException($"Invalid command line header at line {lineNumber}");
+                        break;
+
+                    case 1:
+                        if (line == _outputHeader)
+                            state = 2;
+                        else
+                            r.ViewModel.WriteCommandLine(line);
+                        break;
+
+                    case 2:
+                        if (line == _commandLineHeader)
+                        {
+                            r = CreateNewRoundtrip(true);
+                            state = 1;
+                        }
+                        break;
+
+                    default:
+                        throw new ApplicationException($"Internal state error at line {lineNumber}");
+                }
+            }
+
+            if (state != 2)
+                throw new ApplicationException($"Premature end of file at line {lineNumber}");
+        }
+
+        public void LoadSession()
+        {
+            try
+            {
+                using (var reader = new StreamReader(_fileNameToLoad, Encoding.UTF8))
+                {
+                    LoadSession(reader);
+                }
+            }
+            catch (Exception ex)
+            {
+                _sessionViewModel.ShowMessageBox(ex.Message, "Error occurred on loading");
+            }
+        }
+
+        public void EnqueueLoadSessionRequest(string fileName)
+        {
+            _fileNameToLoad = fileName;
+            _executionQueue.EnqueueLoadSessionRequest();
         }
     }
 }

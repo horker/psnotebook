@@ -7,7 +7,29 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <UserControl.Resources>
+        <RoutedCommand x:Key="SaveCommand" />
+        <RoutedCommand x:Key="SaveAsCommand" />
+        <RoutedCommand x:Key="LoadCommand" />
+    </UserControl.Resources>
+
+    <UserControl.CommandBindings>
+        <CommandBinding Command="{StaticResource SaveCommand}" Executed="SaveCommand_Execute"/>
+        <CommandBinding Command="{StaticResource SaveAsCommand}" Executed="SaveAsCommand_Execute"/>
+        <CommandBinding Command="{StaticResource LoadCommand}" Executed="LoadCommand_Execute"/>
+    </UserControl.CommandBindings>
+
     <DockPanel>
+        <Grid DockPanel.Dock="Top" x:Name="Menu">
+            <Menu>
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Save Session..." Command="{StaticResource SaveCommand}"/>
+                    <MenuItem Header="Save Session _As..." Command="{StaticResource SaveAsCommand}"/>
+                    <MenuItem Header="_Load Session..." Command="{StaticResource LoadCommand}"/>
+                </MenuItem>
+            </Menu>
+        </Grid>
+
         <Grid DockPanel.Dock="Top" x:Name="ProgressBar" Visibility="Collapsed" Background="LightYellow" Margin="2,2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -19,7 +41,7 @@
             <TextBlock Grid.Column="1" x:Name="ProgressPercent" Text="{Binding ProgressPercentString}" Margin="0,0,2,0"/>
             <ProgressBar Grid.Column="2" x:Name="ProgressMeter" Minimum="0" Maximum="100" Value="{Binding Progress}"/>
         </Grid>
-
+    
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>

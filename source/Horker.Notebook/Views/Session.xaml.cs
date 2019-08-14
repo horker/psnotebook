@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Horker.Notebook.ViewModels;
+using Microsoft.Win32;
 
 namespace Horker.Notebook.Views
 {
@@ -72,6 +74,37 @@ namespace Horker.Notebook.Views
         public void HideProgress()
         {
             ProgressBar.Visibility = Visibility.Collapsed;
+        }
+
+        // Commands
+
+        private void SaveCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+
+        private void SaveAsCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Filter = "PowerShell Notebook (*.nb.ps1)|*.nb.ps1",
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                CheckFileExists = false
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+                ViewModel.Model.SaveSession(openFileDialog.FileName);
+        }
+
+        private void LoadCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Filter = "PowerShell Notebook (*.nb.ps1)|*.nb.ps1",
+                InitialDirectory = Directory.GetCurrentDirectory()
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+                ViewModel.EnqueueLoadSessionRequest(openFileDialog.FileName);
         }
     }
 }

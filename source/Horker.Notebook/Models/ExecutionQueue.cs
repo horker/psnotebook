@@ -14,16 +14,25 @@ namespace Horker.Notebook.Models
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
 
+        private Roundtrip _loadSessionRequest;
+
         public ExecutionQueue()
         {
             _queue = new BlockingCollection<Roundtrip>();
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
+
+            _loadSessionRequest = new Roundtrip(null);
         }
 
         public void Enqueue(Roundtrip r)
         {
             _queue.Add(r, _cancellationToken);
+        }
+
+        public void EnqueueLoadSessionRequest()
+        {
+            _queue.Add(_loadSessionRequest, _cancellationToken);
         }
 
         public Roundtrip Dequeue()
@@ -34,6 +43,11 @@ namespace Horker.Notebook.Models
         public void Cancel()
         {
             _cancellationTokenSource.Cancel();
+        }
+
+        public bool IsLoadSessionRequest(Roundtrip r)
+        {
+            return ReferenceEquals(r, _loadSessionRequest);
         }
     }
 }

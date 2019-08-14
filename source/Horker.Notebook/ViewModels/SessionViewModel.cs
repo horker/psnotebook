@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Horker.Notebook.ViewModels
 {
@@ -104,13 +105,6 @@ namespace Horker.Notebook.ViewModels
             _items = new ObservableCollection<RoundtripViewModel>();
         }
 
-        public void NotifyCancel()
-        {
-            _model.NotifyCancel();
-        }
-
-        // Helper methods
-
         public RoundtripViewModel GetLastItem()
         {
             RoundtripViewModel r = null;
@@ -174,6 +168,13 @@ namespace Horker.Notebook.ViewModels
             });
         }
 
+        public void Clear()
+        {
+            _sessionControl.Dispatcher.Invoke(() => {
+                Items.Clear();
+            });
+        }
+
         public void ShowProgress()
         {
             _sessionControl.Dispatcher.Invoke(() => {
@@ -193,6 +194,37 @@ namespace Horker.Notebook.ViewModels
             ShowProgress();
             ProgressMessage = message;
             Progress = progress;
+        }
+
+        public void NotifyCancel()
+        {
+            _model.NotifyCancel();
+        }
+
+        public void SaveSession(string fileName)
+        {
+            try
+            {
+                _model.SaveSession(fileName);
+            }
+            catch (Exception ex)
+            {
+                _sessionControl.Dispatcher.Invoke(() => {
+                    MessageBox.Show(ex.Message, "Error Occurred on Saving");
+                });
+            }
+        }
+
+        public void EnqueueLoadSessionRequest(string fileName)
+        {
+            _model.EnqueueLoadSessionRequest(fileName);
+        }
+
+        public void ShowMessageBox(string message, string caption)
+        {
+            _sessionControl.Dispatcher.Invoke(() => {
+                MessageBox.Show(message, caption);
+            });
         }
     }
 }

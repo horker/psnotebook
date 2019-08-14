@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -93,7 +95,11 @@ namespace Horker.Notebook.Views
             var control = sender as Roundtrip;
 
             _commandLineControl = control.FindName("CommandLine") as RichTextBox;
+            Debug.Assert(_commandLineControl != null);
+
             _outputControl = control.FindName("Output") as FlowDocumentScrollViewer;
+            Debug.Assert(_outputControl != null);
+
             ViewModel.Control = control;
 
             // Address RichTextBox's known limitation that its document's width is not stretched automatically.
@@ -103,6 +109,8 @@ namespace Horker.Notebook.Views
             _outputControl.Document.PageWidth = Models.Configuration.ConsoleWidth;
 
             _commandLineControl.Focus();
+
+            ViewModel.CreatedEvent.Set();
         }
     }
 }
