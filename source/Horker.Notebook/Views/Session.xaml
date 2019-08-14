@@ -9,10 +9,26 @@
 
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom">
-            <StatusBarItem>
-                <TextBlock x:Name="CommandPrompt" Text="StatusBar" />
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem Grid.Column="0">
+                <TextBlock x:Name="CommandPrompt" Text="{Binding CommandPrompt}" />
+            </StatusBarItem>
+            <Separator Grid.Column="1"/>
+            <StatusBarItem Grid.Column="2">
+                <TextBlock x:Name="TimeTaken" Text="{Binding TimeTaken}" />
             </StatusBarItem>
         </StatusBar>
+
         <ScrollViewer x:Name="ScrollViewer">
             <ListBox x:Name="ListBox" ItemsSource="{Binding Items}" HorizontalContentAlignment="Stretch">
                 <ListBox.Template>

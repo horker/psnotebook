@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
@@ -98,6 +99,22 @@ namespace Horker.Notebook.Models
             }
         }
 
+        private string GetPrompt()
+        {
+            _powerShell.Commands.Clear();
+            _powerShell.Commands.AddCommand("Prompt");
+            _powerShell.Commands.AddCommand("Out-String").AddParameter("Stream");
+            try
+            {
+                var result = _powerShell.Invoke();
+                return ((string)result[0].BaseObject).Replace('\r', ' ').Replace('\n', ' ');
+            }
+            catch (RuntimeException ex)
+            {
+                return ex.ToString();
+            }
+        }
+
         public int StartExecutionLoop()
         {
             Roundtrip roundtrip = null;
@@ -106,10 +123,14 @@ namespace Horker.Notebook.Models
 
             InitializeCurrentSession();
 
+            var stopWatch = new Stopwatch();
+
             try
             {
                 while (true)
                 {
+                    _sessionViewModel.CommandPrompt = GetPrompt();
+
                     var input = new PSDataCollection<PSObject>();
                     input.Complete();
 
@@ -129,17 +150,23 @@ namespace Horker.Notebook.Models
 
                     try
                     {
+                        stopWatch.Restart();
+
                         var asyncResult = _powerShell.BeginInvoke(input, output);
 
                         if (_sessionViewModel.IsLastItem(roundtrip.ViewModel))
                             _sessionViewModel.ScrollToBottom();
 
                         _powerShell.EndInvoke(asyncResult);
+
                     }
                     catch (RuntimeException ex)
                     {
                         DisplayError(ex);
                     }
+
+                    stopWatch.Stop();
+                    _sessionViewModel.TimeTaken = stopWatch.Elapsed;
 
                     if (_sessionViewModel.IsLastItem(roundtrip.ViewModel))
                         CreateNewRoundtrip();

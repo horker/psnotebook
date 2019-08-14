@@ -39,6 +39,30 @@ namespace Horker.Notebook.ViewModels
             }
         }
 
+        private string _commandPrompt;
+
+        public string CommandPrompt
+        {
+            get => _commandPrompt;
+            set
+            {
+                _commandPrompt = value;
+                OnPropertyChanged(nameof(CommandPrompt));
+            }
+        }
+
+        private TimeSpan _timeTaken;
+
+        public TimeSpan TimeTaken
+        {
+            get => _timeTaken;
+            set
+            {
+                _timeTaken = value;
+                OnPropertyChanged(nameof(TimeTaken));
+            }
+        }
+
         public SessionViewModel(Views.Session sessionControl)
         {
             _sessionControl = sessionControl;
