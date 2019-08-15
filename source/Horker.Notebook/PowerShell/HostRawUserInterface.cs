@@ -10,7 +10,7 @@ namespace Horker.Notebook
 {
     public class HostRawUserInterface : PSHostRawUserInterface
     {
-        private ConsoleColor _foregroundColor = ConsoleColor.White;
+        private ConsoleColor _foregroundColor = ConsoleColor.Black;
 
         public override ConsoleColor ForegroundColor
         {
@@ -22,11 +22,11 @@ namespace Horker.Notebook
             }
         }
 
-        private Brush _foregroundBrush = Brushes.White;
+        private Brush _foregroundBrush = Brushes.Black;
 
         public Brush ForegroundBrush => _foregroundBrush;
 
-        private ConsoleColor _backgroundColor = ConsoleColor.DarkBlue;
+        private ConsoleColor _backgroundColor = ConsoleColor.White;
 
         public override ConsoleColor BackgroundColor
         {
@@ -36,7 +36,15 @@ namespace Horker.Notebook
 
         private Brush _backgroundBrush = Brushes.DarkBlue;
 
-        public Brush BackgroundBrush => _backgroundBrush;
+        public Brush BackgroundBrush
+        {
+            get
+            {
+                if (Models.Configuration.IgnoreBackgroundColor)
+                    return null;
+                return _backgroundBrush;
+            }
+        }
 
         private Coordinates _cursorPosition = new Coordinates(0, 0);
 
