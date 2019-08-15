@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cmdlets\GetNotebookWindowDispatcher.cs" />
+    <Compile Include="Cmdlets\InvokeWpfAction.cs" />
     <Compile Include="Cmdlets\NewWpfGrid.cs" />
     <Compile Include="Cmdlets\NewWpfImage.cs" />
     <Compile Include="Cmdlets\OutNotebookString.cs" />
