@@ -57,7 +57,9 @@ namespace Horker.Notebook.Models
 
             Environment.ExitCode = exitCode;
 
-            window.Close();
+            window.Dispatcher.Invoke(() => {
+                window.Close();
+            });
         }
     }
 }

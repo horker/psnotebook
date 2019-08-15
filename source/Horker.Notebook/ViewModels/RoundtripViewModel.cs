@@ -119,7 +119,15 @@ namespace Horker.Notebook.ViewModels
                 ResolveNewline();
 
                 var run = GetRun(text, foreground, background);
-                ((Paragraph)_control.OutputControl.Document.Blocks.LastBlock).Inlines.Add(run);
+
+                var par = _control.OutputControl.Document.Blocks.LastBlock as Paragraph;
+                if (par == null)
+                {
+                    par = new Paragraph();
+                    _control.OutputControl.Document.Blocks.Add(par);
+                }
+
+                par.Inlines.Add(run);
 
                 _control.ScrollToBottom();
             });

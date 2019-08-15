@@ -136,7 +136,8 @@ namespace Horker.Notebook.Models
         {
             Roundtrip roundtrip = null;
 
-            CreateNewRoundtrip(false);
+            var r = CreateNewRoundtrip(true);
+            SessionViewModel.ActiveOutput = r.ViewModel;
 
             InitializeCurrentSession();
 
@@ -206,7 +207,7 @@ namespace Horker.Notebook.Models
                     if (queueItem.MoveToNext)
                     {
                         if (_sessionViewModel.IsLastItem(roundtrip.ViewModel))
-                            CreateNewRoundtrip(false);
+                            CreateNewRoundtrip(true);
                         else
                         {
                             var rr = _sessionViewModel.GetNextRoundtripViewModel(roundtrip.ViewModel);
