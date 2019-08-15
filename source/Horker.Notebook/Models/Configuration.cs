@@ -50,6 +50,8 @@ namespace Horker.Notebook.Models
 
         public static double MaxOutputHeight => FontSize * MaxOutputHeightInLines;
 
+        public static bool IgnoreBackgroundColor => true;
+
         // Helper methods
 
         private static double GetWidthBasedOnNumberOfCharacters(int charCount)

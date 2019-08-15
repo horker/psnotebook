@@ -64,9 +64,10 @@ namespace Horker.Notebook
 
         public override void Write(ConsoleColor foregroundColor, ConsoleColor backgroundColor, string value)
         {
-            SessionViewModel.ActiveOutput.Write(value,
-                ConsoleColorToBrushConverter.GetBrush(foregroundColor),
-                ConsoleColorToBrushConverter.GetBrush(backgroundColor));
+            var f = ConsoleColorToBrushConverter.GetBrush(foregroundColor);
+            var b = Models.Configuration.IgnoreBackgroundColor ? null : ConsoleColorToBrushConverter.GetBrush(backgroundColor);
+
+            SessionViewModel.ActiveOutput.Write(value, f, b);
         }
 
         public override void WriteDebugLine(string message)
