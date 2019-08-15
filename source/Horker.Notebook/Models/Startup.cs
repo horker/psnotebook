@@ -13,7 +13,7 @@ namespace Horker.Notebook.Models
 {
     public class Startup
     {
-        public static void Start()
+        public static int Start()
         {
             Window window = null;
             Views.Session sessionControl = null;
@@ -55,11 +55,11 @@ namespace Horker.Notebook.Models
 
             var exitCode = session.StartExecutionLoop();
 
-            Environment.ExitCode = exitCode;
-
             window.Dispatcher.Invoke(() => {
                 window.Close();
             });
+
+            return exitCode;
         }
     }
 }
