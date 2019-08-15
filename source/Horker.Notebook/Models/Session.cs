@@ -106,6 +106,7 @@ namespace Horker.Notebook.Models
                 foreach (PSCommand command in profileCommands)
                 {
                     _powerShell.Commands = command;
+                    _powerShell.AddCommand("Out-NotebookInternal");
                     _powerShell.Commands.Commands[0].MergeMyResults(PipelineResultTypes.Error, PipelineResultTypes.Output);
                     _powerShell.Invoke();
                 }

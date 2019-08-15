@@ -111,7 +111,7 @@ namespace Horker.Notebook.ViewModels
             _newlinePending = false;
         }
 
-        public void Write(string text, Brush foreground = null, Brush background = null)
+        private void WriteInternal(string text, Brush foreground, Brush background, bool newLine)
         {
             _control.Dispatcher.Invoke(() => {
                 _control.OutputControl.Visibility = Visibility.Visible;
@@ -129,26 +129,20 @@ namespace Horker.Notebook.ViewModels
 
                 par.Inlines.Add(run);
 
+                _newlinePending = newLine;
+
                 _control.ScrollToBottom();
             });
         }
 
+        public void Write(string text, Brush foreground = null, Brush background = null)
+        {
+            WriteInternal(text, foreground, background, false);
+        }
+
         public void WriteLine(string text, Brush foreground = null, Brush background = null)
         {
-            _control.Dispatcher.Invoke(() => {
-                _control.OutputControl.Visibility = Visibility.Visible;
-
-                ResolveNewline();
-
-                var run = GetRun(text, foreground, background);
-
-                if (!string.IsNullOrEmpty(text))
-                    ((Paragraph)_control.OutputControl.Document.Blocks.LastBlock).Inlines.Add(run);
-
-                _newlinePending = true;
-
-                _control.ScrollToBottom();
-            });
+            WriteInternal(text, foreground, background, true);
         }
 
         public void WriteWholeLine(string text, Brush foreground = null, Brush background = null)
