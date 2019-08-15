@@ -30,13 +30,13 @@
         <KeyBinding Gesture="Ctrl+Down" Command="{StaticResource NextRoundtripCommand}"/>
     </UserControl.InputBindings>
 
-    <Grid Margin="0,0,0,2">
+    <Grid Margin="0,1">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBox Grid.Column="0" x:Name="Index" Text="{Binding IndexString, Mode=OneWay}" Background="#FFD4D4D4" IsReadOnly="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" Foreground="#FF9E9E9E" Margin="0,0,2,0">
+        <TextBox Grid.Column="0" x:Name="Index" Text="{Binding IndexString, Mode=OneWay}" Background="Gainsboro" IsReadOnly="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" Foreground="DarkGray" Margin="0,0,2,0">
             <TextBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Delete this" x:Name="DeleteRoundtrip" Click="DeleteRoundtrip_Click" />
@@ -50,7 +50,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <RichTextBox Grid.Row="0" x:Name="CommandLine" VerticalAlignment="Top" Background="#FFFDFAEF" MinHeight="20" AcceptsReturn="true" AcceptsTab="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" MinWidth="{x:Static models:Configuration.CommandLineWidth}">
+            <RichTextBox Grid.Row="0" x:Name="CommandLine" VerticalAlignment="Top" Background="WhiteSmoke" MinHeight="20" AcceptsReturn="true" AcceptsTab="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" MinWidth="{x:Static models:Configuration.CommandLineWidth}" GotKeyboardFocus="CommandLine_GotKeyboardFocus" LostKeyboardFocus="CommandLine_LostKeyboardFocus">
                 <FlowDocument PagePadding="0">
                     <FlowDocument.Resources>
                         <Style TargetType="{x:Type Paragraph}">

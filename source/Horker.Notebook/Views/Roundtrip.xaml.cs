@@ -112,5 +112,15 @@ namespace Horker.Notebook.Views
 
             ViewModel.CreatedEvent.Set();
         }
+
+        private void CommandLine_GotKeyboardFocus(object sender, RoutedEventArgs e)
+        {
+            CommandLine.Background = Brushes.FloralWhite;
+        }
+
+        private void CommandLine_LostKeyboardFocus(object sender, RoutedEventArgs e)
+        {
+            CommandLine.Background = Brushes.WhiteSmoke;
+        }
     }
 }
