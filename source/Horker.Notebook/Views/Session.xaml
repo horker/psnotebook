@@ -30,7 +30,7 @@
 
     <DockPanel>
         <Grid DockPanel.Dock="Top" x:Name="Menu">
-            <Menu>
+            <Menu FontSize="10pt">
                 <MenuItem Header="_File">
                     <MenuItem Header="_Save Session..." Command="{StaticResource SaveCommand}"/>
                     <MenuItem Header="Save Session _As..." Command="{StaticResource SaveAsCommand}"/>
@@ -50,12 +50,12 @@
                 <ColumnDefinition Width="150" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" x:Name="ProgressMessage" Text="{Binding ProgressMessage}"/>
+            <TextBlock Grid.Column="0" x:Name="ProgressMessage" Text="{Binding ProgressMessage}" FontSize="10pt"/>
             <TextBlock Grid.Column="1" x:Name="ProgressPercent" Text="{Binding ProgressPercentString}" Margin="0,0,2,0"/>
-            <ProgressBar Grid.Column="2" x:Name="ProgressMeter" Minimum="0" Maximum="100" Value="{Binding Progress}"/>
+            <ProgressBar Grid.Column="2" x:Name="ProgressMeter" Minimum="0" Maximum="100" FontSize="10pt" Value="{Binding Progress}"/>
         </Grid>
     
-        <StatusBar DockPanel.Dock="Bottom">
+        <StatusBar DockPanel.Dock="Bottom" FontSize="10pt">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
