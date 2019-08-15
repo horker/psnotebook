@@ -13,9 +13,9 @@ using Horker.Notebook.Models;
 
 namespace Horker.Notebook.Cmdlets
 {
-    [Cmdlet("Get", "WpfImage")]
+    [Cmdlet("New", "WpfImage")]
     [OutputType(typeof(Image))]
-    public class GetWpfImage : PSCmdlet
+    public class NewWpfImage : PSCmdlet
     {
         [Parameter(Position = 0, Mandatory = true)]
         public string Source { get; set; }
