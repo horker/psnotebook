@@ -30,7 +30,7 @@
         <KeyBinding Gesture="Ctrl+Down" Command="{StaticResource NextRoundtripCommand}"/>
     </UserControl.InputBindings>
 
-    <Grid>
+    <Grid Margin="0,0,0,2">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
@@ -61,7 +61,7 @@
                 </FlowDocument>
             </RichTextBox>
 
-            <FlowDocumentScrollViewer Grid.Row="1" x:Name="Output" VerticalAlignment="Top" MaxHeight="{x:Static models:Configuration.MaxOutputHeight}" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" VerticalScrollBarVisibility="Auto" Margin="5,0" Visibility="Collapsed" MinWidth="{x:Static models:Configuration.CommandLineWidth}">
+            <FlowDocumentScrollViewer Grid.Row="1" x:Name="Output" VerticalAlignment="Top" MaxHeight="{x:Static models:Configuration.MaxOutputHeight}" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" VerticalScrollBarVisibility="Auto" Margin="5,2,5,0" Visibility="Collapsed" MinWidth="{x:Static models:Configuration.CommandLineWidth}">
                 <FlowDocument PagePadding="0">
                     <FlowDocument.Resources>
                         <Style TargetType="{x:Type Paragraph}">
