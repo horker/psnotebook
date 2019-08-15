@@ -4,6 +4,7 @@ using System.Linq;
 using System.Management.Automation.Host;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Horker.Notebook
 {
@@ -14,8 +15,16 @@ namespace Horker.Notebook
         public override ConsoleColor ForegroundColor
         {
             get => _foregroundColor;
-            set => _foregroundColor = value;
+            set
+            {
+                _foregroundColor = value;
+                _foregroundBrush = ViewModels.ConsoleColorToBrushConverter.GetBrush(value);
+            }
         }
+
+        private Brush _foregroundBrush = Brushes.White;
+
+        public Brush ForegroundBrush => _foregroundBrush;
 
         private ConsoleColor _backgroundColor = ConsoleColor.DarkBlue;
 
@@ -24,6 +33,10 @@ namespace Horker.Notebook
             get => _backgroundColor;
             set => _backgroundColor = value;
         }
+
+        private Brush _backgroundBrush = Brushes.DarkBlue;
+
+        public Brush BackgroundBrush => _backgroundBrush;
 
         private Coordinates _cursorPosition = new Coordinates(0, 0);
 

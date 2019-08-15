@@ -59,7 +59,7 @@ namespace Horker.Notebook
 
         public override void Write(string value)
         {
-            SessionViewModel.ActiveOutput.Write(value);
+            SessionViewModel.ActiveOutput.Write(value, _rawUI.ForegroundBrush, _rawUI.BackgroundBrush);
         }
 
         public override void Write(ConsoleColor foregroundColor, ConsoleColor backgroundColor, string value)
@@ -85,7 +85,7 @@ namespace Horker.Notebook
 
         public override void WriteLine(string value)
         {
-            SessionViewModel.ActiveOutput.WriteLine(value);
+            SessionViewModel.ActiveOutput.WriteLine(value, _rawUI.ForegroundBrush, _rawUI.BackgroundBrush);
         }
 
         public override void WriteProgress(long sourceId, ProgressRecord record)
