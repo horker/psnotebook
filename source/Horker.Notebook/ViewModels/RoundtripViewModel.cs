@@ -210,5 +210,17 @@ namespace Horker.Notebook.ViewModels
                 _control.CommandLineControl?.Focus();
             });
         }
+
+        public bool IsOutputEmpty()
+        {
+            var result = true;
+
+            _control?.Dispatcher.Invoke(() => {
+                var doc = _control.OutputControl.Document;
+                result = doc.Blocks.Count == 0 || ((Paragraph)doc.Blocks.LastBlock).Inlines.Count == 0;
+            });
+
+            return result;
+        }
     }
 }

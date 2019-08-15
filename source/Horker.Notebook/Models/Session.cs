@@ -89,7 +89,8 @@ namespace Horker.Notebook.Models
 
         private void InitializeCurrentSession()
         {
-            SessionViewModel.ActiveOutput = _sessionViewModel.GetLastItem();
+            var r = CreateNewRoundtrip(true);
+            SessionViewModel.ActiveOutput = r.ViewModel;
 
             try
             {
@@ -115,6 +116,11 @@ namespace Horker.Notebook.Models
             {
                 DisplayError(ex);
             }
+
+            if (!r.ViewModel.IsOutputEmpty())
+                CreateNewRoundtrip(true);
+
+            _sessionViewModel.HideProgress();
         }
 
         private string GetPrompt()
@@ -135,13 +141,9 @@ namespace Horker.Notebook.Models
 
         public int StartExecutionLoop()
         {
-            Roundtrip roundtrip = null;
-
-            var r = CreateNewRoundtrip(true);
-            SessionViewModel.ActiveOutput = r.ViewModel;
-
             InitializeCurrentSession();
 
+            Roundtrip roundtrip = null;
             var stopWatch = new Stopwatch();
 
             try
