@@ -118,9 +118,13 @@ namespace Horker.Notebook.Cmdlets
 
                 if (MyInvocation.BoundParameters.ContainsKey("Width"))
                     grid.Width = Width;
+                else
+                    grid.Width = Models.Configuration.ConsoleWidth;
 
                 if (MyInvocation.BoundParameters.ContainsKey("Height"))
                     grid.Height = Height;
+                else
+                    grid.Height = Models.Configuration.MaxOutputHeight;
 
                 for (var i = 0; i < heights.Count; ++i)
                 {
