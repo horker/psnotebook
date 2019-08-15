@@ -176,9 +176,15 @@ namespace Horker.Notebook.ViewModels
                 ResolveNewline();
 
                 var container = new InlineUIContainer(uiElement);
-                ((Paragraph)_control.OutputControl.Document.Blocks.LastBlock).Inlines.Add(container);
 
-                _newlinePending = true;
+                var par = (Paragraph)_control.OutputControl.Document.Blocks.LastBlock;
+                if (par == null)
+                {
+                    par = new Paragraph();
+                    _control.OutputControl.Document.Blocks.Add(par);
+                }
+
+                par.Inlines.Add(container);
 
                 _control.ScrollToBottom();
             });

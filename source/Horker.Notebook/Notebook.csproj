@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Cmdlets\GetNotebookWindowDispatcher.cs" />
     <Compile Include="Cmdlets\GetWpfImage.cs" />
+    <Compile Include="Cmdlets\NewWpfGridControl.cs" />
     <Compile Include="Cmdlets\OutNotebookString.cs" />
     <Compile Include="Cmdlets\StartNotebook.cs" />
     <Compile Include="Models\Configuration.cs" />
