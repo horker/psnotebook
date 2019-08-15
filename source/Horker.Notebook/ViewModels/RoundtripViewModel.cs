@@ -186,7 +186,6 @@ namespace Horker.Notebook.ViewModels
         {
             _control.Dispatcher.Invoke(() => {
                 _control.OutputControl.Document.Blocks.Clear();
-                _control.OutputControl.Document.Blocks.Add(new Paragraph());
             });
         }
 
@@ -197,10 +196,10 @@ namespace Horker.Notebook.ViewModels
             });
         }
 
-        public void NotifyExecute()
+        public void NotifyExecute(bool moveToNext)
         {
             SessionViewModel.ActiveOutput = this;
-            Model.NotifyExecute();
+            Model.NotifyExecute(moveToNext);
         }
 
         public void Focus()

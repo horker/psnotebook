@@ -11,13 +11,22 @@
         <RoutedCommand x:Key="SaveCommand" />
         <RoutedCommand x:Key="SaveAsCommand" />
         <RoutedCommand x:Key="LoadCommand" />
+        <RoutedCommand x:Key="RunCommand" />
+        <RoutedCommand x:Key="RunAllCommand" />
     </UserControl.Resources>
 
     <UserControl.CommandBindings>
         <CommandBinding Command="{StaticResource SaveCommand}" Executed="SaveCommand_Execute"/>
         <CommandBinding Command="{StaticResource SaveAsCommand}" Executed="SaveAsCommand_Execute"/>
         <CommandBinding Command="{StaticResource LoadCommand}" Executed="LoadCommand_Execute"/>
+        <CommandBinding Command="{StaticResource RunCommand}" Executed="RunCommand_Execute"/>
+        <CommandBinding Command="{StaticResource RunAllCommand}" Executed="RunAllCommand_Execute"/>
     </UserControl.CommandBindings>
+
+    <UserControl.InputBindings>
+        <KeyBinding Gesture="F5" Command="{StaticResource RunCommand}"/>
+        <KeyBinding Gesture="Ctrl+F5" Command="{StaticResource RunAllCommand}"/>
+    </UserControl.InputBindings>
 
     <DockPanel>
         <Grid DockPanel.Dock="Top" x:Name="Menu">
@@ -26,6 +35,10 @@
                     <MenuItem Header="_Save Session..." Command="{StaticResource SaveCommand}"/>
                     <MenuItem Header="Save Session _As..." Command="{StaticResource SaveAsCommand}"/>
                     <MenuItem Header="_Load Session..." Command="{StaticResource LoadCommand}"/>
+                </MenuItem>
+                <MenuItem Header="_Run">
+                    <MenuItem Header="_Run" InputGestureText="F5" Command="{StaticResource RunCommand}"/>
+                    <MenuItem Header="Run _All" InputGestureText="Ctrl+F5" Command="{StaticResource RunAllCommand}"/>
                 </MenuItem>
             </Menu>
         </Grid>

@@ -1,6 +1,5 @@
-save/load
 resize output pane
-Ctrl+C
+packaging in module
 
 no highlight on cursor
 native executable
@@ -10,6 +9,9 @@ Display an error correctly when $ErrorActionPreference = "Stop"
 New-WpfWindow, New-WpfGrid, Out-Pane, etc.
 Hide progress bar when PercentComplete is not specified in Write-Progress
 
+DONE F5 Ctrl+F5
+DONE save/load
+DONE Ctrl+C
 DONE show progress
 DONE prompt
 DONE status line (current directory)

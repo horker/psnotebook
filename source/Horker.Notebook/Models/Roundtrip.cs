@@ -20,9 +20,9 @@ namespace Horker.Notebook.Models
             _executionQueue = q;
         }
 
-        public void NotifyExecute()
+        public void NotifyExecute(bool moveToNext)
         {
-            _executionQueue.Enqueue(this);
+            _executionQueue.Enqueue(this, moveToNext);
         }
     }
 }

@@ -8,34 +8,54 @@ using System.Threading.Tasks;
 
 namespace Horker.Notebook.Models
 {
+    public class ExecutionQueueItem
+    {
+        private static ExecutionQueueItem _loadSessionRequest = new ExecutionQueueItem(null, false);
+
+        public Roundtrip Roundtrip { get; set; }
+        public bool MoveToNext { get; set; }
+
+        public ExecutionQueueItem(Roundtrip r, bool moveToNext)
+        {
+            Roundtrip = r;
+            MoveToNext = moveToNext;
+        }
+
+        public static ExecutionQueueItem GetLoadSessionRequest()
+        {
+            return _loadSessionRequest;
+        }
+
+        public bool IsLoadSessionRequest()
+        {
+            return ReferenceEquals(this, _loadSessionRequest);
+        }
+    }
+
     public class ExecutionQueue
     {
-        private BlockingCollection<Roundtrip> _queue;
+        private BlockingCollection<ExecutionQueueItem> _queue;
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
 
-        private Roundtrip _loadSessionRequest;
-
         public ExecutionQueue()
         {
-            _queue = new BlockingCollection<Roundtrip>();
+            _queue = new BlockingCollection<ExecutionQueueItem>();
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
-
-            _loadSessionRequest = new Roundtrip(null);
         }
 
-        public void Enqueue(Roundtrip r)
+        public void Enqueue(Roundtrip r, bool moveToNext)
         {
-            _queue.Add(r, _cancellationToken);
+            _queue.Add(new ExecutionQueueItem(r, moveToNext), _cancellationToken);
         }
 
         public void EnqueueLoadSessionRequest()
         {
-            _queue.Add(_loadSessionRequest, _cancellationToken);
+            _queue.Add(ExecutionQueueItem.GetLoadSessionRequest(), _cancellationToken);
         }
 
-        public Roundtrip Dequeue()
+        public ExecutionQueueItem Dequeue()
         {
             return _queue.Take(_cancellationToken);
         }
@@ -43,11 +63,6 @@ namespace Horker.Notebook.Models
         public void Cancel()
         {
             _cancellationTokenSource.Cancel();
-        }
-
-        public bool IsLoadSessionRequest(Roundtrip r)
-        {
-            return ReferenceEquals(r, _loadSessionRequest);
         }
     }
 }

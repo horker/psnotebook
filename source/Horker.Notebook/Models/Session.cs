@@ -28,10 +28,6 @@ namespace Horker.Notebook.Models
         private ManualResetEvent _cancelEvent;
         private bool _cancelled;
 
-        private Roundtrip _activeRoundtrip;
-
-        public Roundtrip ActiveRoundtrip => _activeRoundtrip;
-
         private string _fileNameToLoad;
 
         public string FileNameToLoad
@@ -157,14 +153,16 @@ namespace Horker.Notebook.Models
 
                     var output = new PSDataCollection<PSObject>();
 
-                    roundtrip = _executionQueue.Dequeue();
-                    _activeRoundtrip = roundtrip;
+                    var queueItem = _executionQueue.Dequeue();
 
-                    if (_executionQueue.IsLoadSessionRequest(roundtrip))
+                    if (queueItem.IsLoadSessionRequest())
                     {
                         LoadSession();
                         continue;
                     }
+
+                    roundtrip = queueItem.Roundtrip;
+                    SessionViewModel.ActiveOutput = roundtrip.ViewModel;
 
                     var commandLine = roundtrip.ViewModel.CommandLine;
                     _powerShell.Commands.Clear();
@@ -205,12 +203,15 @@ namespace Horker.Notebook.Models
 
                     _sessionViewModel.HideProgress();
 
-                    if (_sessionViewModel.IsLastItem(roundtrip.ViewModel))
-                        CreateNewRoundtrip(false);
-                    else
+                    if (queueItem.MoveToNext)
                     {
-                        var rr = _sessionViewModel.GetNextRoundtripViewModel(roundtrip.ViewModel);
-                        rr.Focus();
+                        if (_sessionViewModel.IsLastItem(roundtrip.ViewModel))
+                            CreateNewRoundtrip(false);
+                        else
+                        {
+                            var rr = _sessionViewModel.GetNextRoundtripViewModel(roundtrip.ViewModel);
+                            rr.Focus();
+                        }
                     }
                 }
             }

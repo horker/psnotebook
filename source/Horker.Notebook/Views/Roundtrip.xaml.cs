@@ -65,7 +65,7 @@ namespace Horker.Notebook.Views
 
         private void InvokeCommandLineCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            ViewModel.NotifyExecute();
+            ViewModel.NotifyExecute(true);
         }
 
         private void CancelCommand_Execute(object sender, ExecutedRoutedEventArgs e)

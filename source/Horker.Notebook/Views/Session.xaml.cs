@@ -110,5 +110,16 @@ namespace Horker.Notebook.Views
             if (openFileDialog.ShowDialog() == true)
                 ViewModel.EnqueueLoadSessionRequest(openFileDialog.FileName);
         }
+
+        private void RunCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            var r = GetActiveRoundtrip();
+            r.ViewModel.NotifyExecute(false);
+        }
+
+        private void RunAllCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            ViewModel.NotifyExecuteAll();
+        }
     }
 }

@@ -196,6 +196,12 @@ namespace Horker.Notebook.ViewModels
             Progress = progress;
         }
 
+        public void NotifyExecuteAll()
+        {
+            foreach (var item in Items)
+                item.NotifyExecute(false);
+        }
+
         public void NotifyCancel()
         {
             _model.NotifyCancel();
