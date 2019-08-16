@@ -12,7 +12,7 @@ Install-Module psnotebook -Scope CurrentUser
 
 ## How to start
 
-Invoke the `Start-Notebook` cmdlet in the PowerShell console.
+Run the `Start-Notebook` cmdlet in the PowerShell console.
 As another way, execute `NotebookApp.exe` in the module directory (`$HOME\Documents\WindowsPowerShell\Modules\psnotebook` in the usual environment).
 
 ## Key Bindings
@@ -21,7 +21,8 @@ As another way, execute `NotebookApp.exe` in the module directory (`$HOME\Docume
 | -------- | ---- |
 |Ctrl+Up   |Move to the previous command line.|
 |Ctrl+Down |Move to the next command line.|
-|Ctrl+Enter|Execute the command line and move to the next command line.|
+|Enter     |Execute the command line and move to the next command line.|
+|Ctrl+Enter|Enter line break.|
 |F5        |Execute the command line and keep the cursor in the current command line.|
 |Ctrl+F5   |Execute all command lines.|
 

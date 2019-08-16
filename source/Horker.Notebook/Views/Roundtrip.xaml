@@ -24,7 +24,8 @@
     </UserControl.CommandBindings>
 
     <UserControl.InputBindings>
-        <KeyBinding Gesture="Ctrl+Enter" Command="{StaticResource InvokeCommandLineCommand}"/>
+        <KeyBinding Gesture="Enter" Command="{StaticResource InvokeCommandLineCommand}"/>
+        <KeyBinding Gesture="Ctrl+Enter" Command="EditingCommands.EnterParagraphBreak"/>
         <KeyBinding Gesture="ESC" Command="{StaticResource CancelCommand}"/>
         <KeyBinding Gesture="Ctrl+Up" Command="{StaticResource PreviousRoundtripCommand}"/>
         <KeyBinding Gesture="Ctrl+Down" Command="{StaticResource NextRoundtripCommand}"/>
