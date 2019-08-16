@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,6 +25,8 @@ namespace Horker.Notebook.ViewModels
             });
         }
 
+        // References to related objects
+
         private Views.Session _sessionControl;
 
         private Models.Session _model;
@@ -35,6 +38,8 @@ namespace Horker.Notebook.ViewModels
         }
 
         public static RoundtripViewModel ActiveOutput { get; set; }
+
+        // View properties
 
         private ObservableCollection<RoundtripViewModel> _items;
 
@@ -99,11 +104,38 @@ namespace Horker.Notebook.ViewModels
 
         public string ProgressPercentString => $"{_progress}%";
 
+        private string _fileName;
+
+        public string FileName
+        {
+            get => _fileName;
+            set
+            {
+                _fileName = value;
+                OnPropertyChanged(nameof(FileName));
+                OnPropertyChanged(nameof(TitleString));
+            }
+        }
+
+        public string TitleString
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_fileName))
+                    return "PowerShell Notebook";
+                return Regex.Replace(_fileName, "(.+[/\\\\])?(.+)$", "$2") + " - PowerShlell Notebook";
+            }
+        }
+
+        // Constructor
+
         public SessionViewModel(Views.Session sessionControl)
         {
             _sessionControl = sessionControl;
             _items = new ObservableCollection<RoundtripViewModel>();
         }
+
+        // Methods
 
         public RoundtripViewModel GetLastItem()
         {
@@ -209,7 +241,7 @@ namespace Horker.Notebook.ViewModels
 
         public bool HasFileName()
         {
-            return !string.IsNullOrEmpty(_model.FileNameToLoad);
+            return !string.IsNullOrEmpty(FileName);
         }
 
         public void SaveSession(string fileName = null)
@@ -217,7 +249,7 @@ namespace Horker.Notebook.ViewModels
             try
             {
                 if (!string.IsNullOrEmpty(fileName))
-                    _model.FileNameToLoad = fileName;
+                    FileName = fileName;
                 _model.SaveSession();
             }
             catch (Exception ex)

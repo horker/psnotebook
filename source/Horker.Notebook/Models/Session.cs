@@ -28,14 +28,6 @@ namespace Horker.Notebook.Models
         private ManualResetEvent _cancelEvent;
         private bool _cancelled;
 
-        private string _fileNameToLoad;
-
-        public string FileNameToLoad
-        {
-            get => _fileNameToLoad;
-            set => _fileNameToLoad = value;
-        }
-
         public Session(SessionViewModel sessionViewModel)
         {
             _sessionViewModel = sessionViewModel;
@@ -268,9 +260,9 @@ namespace Horker.Notebook.Models
 
         public void SaveSession()
         {
-            Debug.Assert(!string.IsNullOrEmpty(_fileNameToLoad));
+            Debug.Assert(!string.IsNullOrEmpty(_sessionViewModel.FileName));
 
-            using (var writer = new StreamWriter(_fileNameToLoad, false, Encoding.UTF8))
+            using (var writer = new StreamWriter(_sessionViewModel.FileName, false, Encoding.UTF8))
             {
                 SaveSession(writer);
             }
@@ -337,7 +329,7 @@ namespace Horker.Notebook.Models
         {
             try
             {
-                using (var reader = new StreamReader(_fileNameToLoad, Encoding.UTF8))
+                using (var reader = new StreamReader(_sessionViewModel.FileName, Encoding.UTF8))
                 {
                     LoadSession(reader);
                 }
@@ -350,7 +342,7 @@ namespace Horker.Notebook.Models
 
         public void EnqueueLoadSessionRequest(string fileName)
         {
-            _fileNameToLoad = fileName;
+            _sessionViewModel.FileName = fileName;
             _executionQueue.EnqueueLoadSessionRequest();
         }
     }
