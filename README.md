@@ -2,6 +2,8 @@
 
 PowerShell Notebook is a console application for PowerShell to bring Jupyter Notebook-like user experience to PowerShell scripting.
 
+<img src="https://github.com/horker/psnotebook/blob/master/docs/images/screenshot.png" width=40%>
+
 This project is work-in-progress.
 
 ## Installation
@@ -13,7 +15,7 @@ Install-Module psnotebook -Scope CurrentUser
 ## How to start
 
 Run the `Start-Notebook` cmdlet in the PowerShell console.
-As another way, execute `NotebookApp.exe` in the module directory (`$HOME\Documents\WindowsPowerShell\Modules\psnotebook` in the usual environment).
+As another way, execute `NotebookApp.exe` in the module directory (`$HOME\Documents\WindowsPowerShell\Modules\psnotebook` in usual environments).
 
 ## Key Bindings
 
@@ -22,7 +24,7 @@ As another way, execute `NotebookApp.exe` in the module directory (`$HOME\Docume
 |Ctrl+Up   |Move to the previous command line.|
 |Ctrl+Down |Move to the next command line.|
 |Enter     |Execute the command line and move to the next command line.|
-|Ctrl+Enter|Enter line break.|
+|Ctrl+Enter|Insert line break.|
 |F5        |Execute the command line and keep the cursor in the current command line.|
 |Ctrl+F5   |Execute all command lines.|
 
@@ -47,10 +49,10 @@ Import-Module oxyplotcli
 Set-OxyPlotViewDispatcher (Get-NotebookWindowDispatcher)
 ```
 
-You should add the `-AsPlotView` parameter to each OxyPlot CLI cmdlet and pass it to the `New-WpfGrid` cmdlet.
+You should add the `-AsPlotView` parameter to each OxyPlot CLI cmdlet to show a chart inline.
 
 ```PowerShell
-oxy.line -x 1,2,3 -y 1,2,3 -AsPlotView | New-WpfGrid
+oxy.line -x 1,2,3 -y 1,2,3 -AsPlotView
 ```
 
 ## License
