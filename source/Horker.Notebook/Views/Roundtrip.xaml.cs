@@ -93,7 +93,7 @@ namespace Horker.Notebook.Views
             Container.ViewModel.RemoveRoundtrip(ViewModel);
         }
 
-        private void DeleteOutput_Click(object sender, RoutedEventArgs e)
+        private void ClearOutput_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.Clear();
             ViewModel.Hidden();

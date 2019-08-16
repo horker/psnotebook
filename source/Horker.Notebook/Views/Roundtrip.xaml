@@ -42,7 +42,7 @@
                 <ContextMenu>
                     <MenuItem Header="Insert new" x:Name="InsertNewRoundtrip" Click="InsertNewRoundtrip_Click" />
                     <MenuItem Header="Delete" x:Name="DeleteRoundtrip" Click="DeleteRoundtrip_Click" />
-                    <MenuItem Header="Delete output" x:Name="DeleteOutput" Click="DeleteOutput_Click" />
+                    <MenuItem Header="Clear output" x:Name="DeleteOutput" Click="ClearOutput_Click" />
                 </ContextMenu>
             </TextBox.ContextMenu>
         </TextBox>
