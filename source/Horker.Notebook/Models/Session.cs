@@ -50,10 +50,10 @@ namespace Horker.Notebook.Models
             _cancelEvent = new ManualResetEvent(false);
         }
 
-        public Roundtrip CreateNewRoundtrip(bool wait)
+        public Roundtrip CreateNewRoundtrip(bool wait, int position = -1)
         {
             var r = new Roundtrip(_executionQueue);
-            _sessionViewModel.AddRoundtripViewModel(r.ViewModel);
+            _sessionViewModel.AddRoundtripViewModel(r.ViewModel, position);
 
             if (wait)
                 r.ViewModel.CreatedEvent.WaitOne();

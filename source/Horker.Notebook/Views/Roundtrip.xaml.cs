@@ -83,9 +83,21 @@ namespace Horker.Notebook.Views
             Container.MoveToNextRoundtrip();
         }
 
+        private void InsertNewRoundtrip_Click(object sender, RoutedEventArgs e)
+        {
+            Container.ViewModel.InsertRoundtrip(ViewModel);
+        }
+
         private void DeleteRoundtrip_Click(object sender, RoutedEventArgs e)
         {
             Container.ViewModel.RemoveRoundtrip(ViewModel);
+        }
+
+        private void DeleteOutput_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Clear();
+            ViewModel.Hidden();
+            CommandLine.Focus();
         }
 
         // Event handlers

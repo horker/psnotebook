@@ -137,6 +137,14 @@ namespace Horker.Notebook.ViewModels
 
         // Methods
 
+        private void Reindex(int start)
+        {
+            _sessionControl.Dispatcher.Invoke(() => {
+                for (var i = start; i < Items.Count; ++i)
+                    Items[i].Index = i;
+            });
+        }
+
         public RoundtripViewModel GetLastItem()
         {
             RoundtripViewModel r = null;
@@ -155,11 +163,16 @@ namespace Horker.Notebook.ViewModels
             return result;
         }
 
-        public void AddRoundtripViewModel(RoundtripViewModel r)
+        public void AddRoundtripViewModel(RoundtripViewModel r, int position = -1)
         {
             _sessionControl.Dispatcher.Invoke(() => {
                 r.Index = Items.Count;
-                Items.Add(r);
+                if (position == -1)
+                    Items.Add(r);
+                else
+                {
+                    Items.Insert(position, r);
+                }
             });
         }
 
@@ -180,6 +193,16 @@ namespace Horker.Notebook.ViewModels
             });
         }
 
+        public void InsertRoundtrip(RoundtripViewModel r)
+        {
+            var index = r.Index + 1;
+            _model.CreateNewRoundtrip(false, index);
+            _sessionControl.Dispatcher.Invoke(() => {
+                Reindex(index);
+                Items[index].Focus();
+            });
+        }
+
         public void RemoveRoundtrip(RoundtripViewModel r)
         {
             if (Items.Count <= 1)
@@ -190,8 +213,7 @@ namespace Horker.Notebook.ViewModels
                 Debug.Assert(index == Items.IndexOf(r));
                 Items.RemoveAt(index);
 
-                for (var i = index; i < Items.Count; ++i)
-                    Items[i].Index = i;
+                Reindex(index);
 
                 if (index == Items.Count)
                     Items.Last().Focus();
