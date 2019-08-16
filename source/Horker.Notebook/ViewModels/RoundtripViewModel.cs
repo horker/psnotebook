@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -173,18 +174,11 @@ namespace Horker.Notebook.ViewModels
             _control.Dispatcher.Invoke(() => {
                 _control.OutputControl.Visibility = Visibility.Visible;
 
-                ResolveNewline();
-
                 var container = new InlineUIContainer(uiElement);
+                var par = new Paragraph(container);
+                _control.OutputControl.Document.Blocks.Add(par);
 
-                var par = (Paragraph)_control.OutputControl.Document.Blocks.LastBlock;
-                if (par == null)
-                {
-                    par = new Paragraph();
-                    _control.OutputControl.Document.Blocks.Add(par);
-                }
-
-                par.Inlines.Add(container);
+                _newlinePending = true;
 
                 _control.ScrollToBottom();
             });
