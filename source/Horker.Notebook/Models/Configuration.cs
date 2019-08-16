@@ -50,6 +50,10 @@ namespace Horker.Notebook.Models
 
         public static double MaxOutputHeight => FontSize * MaxOutputHeightInLines;
 
+        public static double DefaultWpfElementWidth { get; set; } = ConsoleWidth * .7;
+
+        public static double DefaultWpfElementHeight { get; set; } = MaxOutputHeight * .9;
+
         public static bool IgnoreBackgroundColor => true;
 
         // Helper methods

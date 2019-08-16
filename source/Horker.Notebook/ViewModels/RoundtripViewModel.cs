@@ -174,6 +174,21 @@ namespace Horker.Notebook.ViewModels
             _control.Dispatcher.Invoke(() => {
                 _control.OutputControl.Visibility = Visibility.Visible;
 
+                // WPF objects that have no default size appears in (zero, zero) size.
+                // Give sizes explicitly to such objects.
+
+                uiElement.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                if (uiElement.DesiredSize.Width == 0 || uiElement.DesiredSize.Height == 0)
+                {
+                    var grid = new Grid()
+                    {
+                        Width = Models.Configuration.DefaultWpfElementWidth,
+                        Height = Models.Configuration.DefaultWpfElementHeight
+                    };
+                    grid.Children.Add(uiElement);
+                    uiElement = grid;
+                }
+
                 var container = new InlineUIContainer(uiElement);
                 var par = new Paragraph(container);
                 _control.OutputControl.Document.Blocks.Add(par);

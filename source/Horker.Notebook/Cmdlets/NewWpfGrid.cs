@@ -29,10 +29,10 @@ namespace Horker.Notebook.Cmdlets
         public int RowCount;
 
         [Parameter(Position = 5, Mandatory = false)]
-        public double Width;
+        public double Width = double.NaN;
 
         [Parameter(Position = 6, Mandatory = false)]
-        public double Height;
+        public double Height = double.NaN;
 
         private List<UIElement> _children;
 
@@ -118,13 +118,9 @@ namespace Horker.Notebook.Cmdlets
 
                 if (MyInvocation.BoundParameters.ContainsKey("Width"))
                     grid.Width = Width;
-                else
-                    grid.Width = Models.Configuration.ConsoleWidth;
 
                 if (MyInvocation.BoundParameters.ContainsKey("Height"))
                     grid.Height = Height;
-                else
-                    grid.Height = Models.Configuration.MaxOutputHeight;
 
                 for (var i = 0; i < heights.Count; ++i)
                 {
