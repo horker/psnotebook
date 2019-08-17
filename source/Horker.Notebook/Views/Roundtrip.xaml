@@ -6,30 +6,19 @@
              xmlns:local="clr-namespace:Horker.Notebook.Views"
              xmlns:models="clr-namespace:Horker.Notebook.Models"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             local:InputBindingsBehavior.TakesInputBindingPrecedence="true" Loaded="RoundtripControl_Loaded">
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="RoundtripControl_Loaded">
 
     <UserControl.Resources>
         <RoutedCommand x:Key="InvokeCommandLineCommand" />
-        <RoutedCommand x:Key="CancelCommand" />
         <RoutedCommand x:Key="PreviousRoundtripCommand" />
         <RoutedCommand x:Key="NextRoundtripCommand" />
     </UserControl.Resources>
 
     <UserControl.CommandBindings>
         <CommandBinding Command="{StaticResource InvokeCommandLineCommand}" Executed="InvokeCommandLineCommand_Execute"/>
-        <CommandBinding Command="{StaticResource CancelCommand}" Executed="CancelCommand_Execute"/>
         <CommandBinding Command="{StaticResource PreviousRoundtripCommand}" Executed="PreviousRoundtripCommand_Execute"/>
         <CommandBinding Command="{StaticResource NextRoundtripCommand}" Executed="NextRoundtripCommand_Execute"/>
     </UserControl.CommandBindings>
-
-    <UserControl.InputBindings>
-        <KeyBinding Gesture="Enter" Command="{StaticResource InvokeCommandLineCommand}"/>
-        <KeyBinding Gesture="Ctrl+Enter" Command="EditingCommands.EnterParagraphBreak"/>
-        <KeyBinding Gesture="ESC" Command="{StaticResource CancelCommand}"/>
-        <KeyBinding Gesture="Ctrl+Up" Command="{StaticResource PreviousRoundtripCommand}"/>
-        <KeyBinding Gesture="Ctrl+Down" Command="{StaticResource NextRoundtripCommand}"/>
-    </UserControl.InputBindings>
 
     <Grid Margin="0,1">
         <Grid.ColumnDefinitions>
@@ -54,6 +43,13 @@
             </Grid.RowDefinitions>
 
             <RichTextBox Grid.Row="0" x:Name="CommandLine" VerticalAlignment="Top" Background="WhiteSmoke" MinHeight="20" AcceptsReturn="true" AcceptsTab="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" MinWidth="{x:Static models:Configuration.CommandLineWidth}" GotKeyboardFocus="CommandLine_GotKeyboardFocus" LostKeyboardFocus="CommandLine_LostKeyboardFocus">
+                <RichTextBox.InputBindings>
+                    <KeyBinding Gesture="Enter" Command="{StaticResource InvokeCommandLineCommand}"/>
+                    <KeyBinding Gesture="Ctrl+Enter" Command="EditingCommands.EnterParagraphBreak"/>
+                    <KeyBinding Gesture="Ctrl+Up" Command="{StaticResource PreviousRoundtripCommand}"/>
+                    <KeyBinding Gesture="Ctrl+Down" Command="{StaticResource NextRoundtripCommand}"/>
+                </RichTextBox.InputBindings>
+
                 <FlowDocument PagePadding="0">
                     <FlowDocument.Resources>
                         <Style TargetType="{x:Type Paragraph}">

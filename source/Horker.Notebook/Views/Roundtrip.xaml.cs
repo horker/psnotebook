@@ -68,11 +68,6 @@ namespace Horker.Notebook.Views
             ViewModel.NotifyExecute(true);
         }
 
-        private void CancelCommand_Execute(object sender, ExecutedRoutedEventArgs e)
-        {
-            Container.ViewModel.NotifyCancel();
-        }
-
         private void PreviousRoundtripCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
             Container.MoveToPreviousRoundtrip();

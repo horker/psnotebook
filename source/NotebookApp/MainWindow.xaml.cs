@@ -48,7 +48,7 @@ namespace Horker.Notebook
             });
 
             thread.SetApartmentState(ApartmentState.STA);
-            thread.Name = "Notebook GUI thread";
+            thread.Name = "Notebook Execution loop thread";
             thread.Start();
         }
 

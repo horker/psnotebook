@@ -121,5 +121,11 @@ namespace Horker.Notebook.Views
         {
             ViewModel.NotifyExecuteAll();
         }
+
+        private void CancelCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            ViewModel.NotifyCancel();
+        }
+
     }
 }

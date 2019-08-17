@@ -13,6 +13,7 @@
         <RoutedCommand x:Key="LoadCommand" />
         <RoutedCommand x:Key="RunCommand" />
         <RoutedCommand x:Key="RunAllCommand" />
+        <RoutedCommand x:Key="CancelCommand" />
     </UserControl.Resources>
 
     <UserControl.CommandBindings>
@@ -21,11 +22,13 @@
         <CommandBinding Command="{StaticResource LoadCommand}" Executed="LoadCommand_Execute"/>
         <CommandBinding Command="{StaticResource RunCommand}" Executed="RunCommand_Execute"/>
         <CommandBinding Command="{StaticResource RunAllCommand}" Executed="RunAllCommand_Execute"/>
+        <CommandBinding Command="{StaticResource CancelCommand}" Executed="CancelCommand_Execute"/>
     </UserControl.CommandBindings>
 
     <UserControl.InputBindings>
         <KeyBinding Gesture="F5" Command="{StaticResource RunCommand}"/>
         <KeyBinding Gesture="Ctrl+F5" Command="{StaticResource RunAllCommand}"/>
+        <KeyBinding Gesture="ESC" Command="{StaticResource CancelCommand}"/>
     </UserControl.InputBindings>
 
     <DockPanel>
@@ -39,6 +42,7 @@
                 <MenuItem Header="_Run">
                     <MenuItem Header="_Run" InputGestureText="F5" Command="{StaticResource RunCommand}"/>
                     <MenuItem Header="Run _All" InputGestureText="Ctrl+F5" Command="{StaticResource RunAllCommand}"/>
+                    <MenuItem Header="Cancel" InputGestureText="ESC" Command="{StaticResource CancelCommand}"/>
                 </MenuItem>
             </Menu>
         </Grid>

@@ -81,7 +81,6 @@
     <Compile Include="ViewModels\ConsoleColorToBrushConverter.cs" />
     <Compile Include="ViewModels\RoundtripViewModel.cs" />
     <Compile Include="ViewModels\SessionViewModel.cs" />
-    <Compile Include="Views\InputBindingsBehavior.cs" />
     <Compile Include="Views\Roundtrip.xaml.cs">
       <DependentUpon>Roundtrip.xaml</DependentUpon>
     </Compile>
