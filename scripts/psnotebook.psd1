@@ -10,7 +10,7 @@
 RootModule = 'psnotebook.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.1.0'
+ModuleVersion = '0.1.1'
 
 # Supported PSEditions
 #CompatiblePSEditions = ''
@@ -29,9 +29,9 @@ Copyright = '(c) 2019 horker. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = @"
-PowerShell console host that provides user experience similar to the Jupytor Notebook.
+PowerShell Notebook is a console host application for PowerShell to bring Jupyter Notebook-like user experience to PowerShell scripting.
 
-For more details, see https://github.com/horker/notebook
+For more details, see https://github.com/horker/psnotebook
 "@
 
 # Minimum version of the Windows PowerShell engine required by this module
@@ -114,13 +114,16 @@ PrivateData = @{
         LicenseUri = 'https://opensource.org/licenses/MIT'
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/horker/notebook'
+        ProjectUri = 'https://github.com/horker/psnotebook'
 
         # A URL to an icon representing this module.
         # IconUri = ''
 
         # ReleaseNotes of this module
         ReleaseNotes = @"
+v0.1.1
+Documentation update
+
 v0.1.0
 First release
 "@

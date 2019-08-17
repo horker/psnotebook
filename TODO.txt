@@ -7,6 +7,10 @@ Display an error correctly when $ErrorActionPreference = "Stop"
 New-WpfWindow, New-WpfGrid, Out-Pane, etc.
 Hide progress bar when PercentComplete is not specified in Write-Progress
 keep the session when loading fails
+show processing command line
+disable useless key bindings in command line
+"Scroll to top" and "Scroll to bottom" icons in the output area
+tab window
 
 DONE no highlight on cursor
 DONE stop execution thread on closing window on Start-Notebook
