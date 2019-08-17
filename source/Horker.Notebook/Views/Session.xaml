@@ -29,6 +29,7 @@
         <KeyBinding Gesture="F5" Command="{StaticResource RunCommand}"/>
         <KeyBinding Gesture="Ctrl+F5" Command="{StaticResource RunAllCommand}"/>
         <KeyBinding Gesture="ESC" Command="{StaticResource CancelCommand}"/>
+        <KeyBinding Gesture="Ctrl+S" Command="{StaticResource SaveCommand}"/>
     </UserControl.InputBindings>
 
     <DockPanel>
