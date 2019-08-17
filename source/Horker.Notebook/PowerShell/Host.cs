@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Text;
 using System.Threading;
@@ -12,14 +13,14 @@ namespace Horker.Notebook
 {
     class Host : PSHost
     {
-        private SessionViewModel _session;
+        private SessionViewModel _sessionViewModel;
         private HostUserInterface _hostUserInterface;
         private Action<int> _exitCallback;
 
-        public Host(SessionViewModel session, Action<int> exitCallback)
+        public Host(SessionViewModel sessionViewModel, Action<int> exitCallback)
         {
-            _session = session;
-            _hostUserInterface = new HostUserInterface(session);
+            _sessionViewModel = sessionViewModel;
+            _hostUserInterface = new HostUserInterface(sessionViewModel);
             _exitCallback = exitCallback;
         }
 
@@ -33,13 +34,15 @@ namespace Horker.Notebook
 
         public override Guid InstanceId => _instanceId;
 
-        public override string Name => "ProtoHost";
+        public override string Name => "PowerShell Notebook";
 
         public override PSHostUserInterface UI => _hostUserInterface;
 
         private Version _version = new Version(0, 1, 0);
 
         public override Version Version => _version;
+
+        public override PSObject PrivateData => new PSObject(_sessionViewModel);
 
         public override void EnterNestedPrompt()
         {
