@@ -12,12 +12,14 @@
         <RoutedCommand x:Key="InvokeCommandLineCommand" />
         <RoutedCommand x:Key="PreviousRoundtripCommand" />
         <RoutedCommand x:Key="NextRoundtripCommand" />
+        <RoutedCommand x:Key="InsertTabCommand" />
     </UserControl.Resources>
 
     <UserControl.CommandBindings>
         <CommandBinding Command="{StaticResource InvokeCommandLineCommand}" Executed="InvokeCommandLineCommand_Execute"/>
         <CommandBinding Command="{StaticResource PreviousRoundtripCommand}" Executed="PreviousRoundtripCommand_Execute"/>
         <CommandBinding Command="{StaticResource NextRoundtripCommand}" Executed="NextRoundtripCommand_Execute"/>
+        <CommandBinding Command="{StaticResource InsertTabCommand}" Executed="InsertTabCommand_Execute"/>
     </UserControl.CommandBindings>
 
     <Grid Margin="0,1">
@@ -48,6 +50,7 @@
                     <KeyBinding Gesture="Ctrl+Enter" Command="EditingCommands.EnterParagraphBreak"/>
                     <KeyBinding Gesture="Ctrl+Up" Command="{StaticResource PreviousRoundtripCommand}"/>
                     <KeyBinding Gesture="Ctrl+Down" Command="{StaticResource NextRoundtripCommand}"/>
+                    <KeyBinding Gesture="Tab" Command="{StaticResource InsertTabCommand}"/>
                 </RichTextBox.InputBindings>
 
                 <FlowDocument PagePadding="0">

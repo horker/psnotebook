@@ -78,6 +78,12 @@ namespace Horker.Notebook.Views
             Container.MoveToNextRoundtrip();
         }
 
+        private void InsertTabCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            CommandLine.Selection.Text = "    ";
+            CommandLine.Selection.Select(CommandLine.Selection.End, CommandLine.Selection.End);
+        }
+
         private void InsertNewRoundtrip_Click(object sender, RoutedEventArgs e)
         {
             Container.ViewModel.InsertRoundtrip(ViewModel);
