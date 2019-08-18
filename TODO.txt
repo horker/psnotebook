@@ -1,6 +1,9 @@
 resize output pane
+stop justification of output
 
-input
+mouse wheel on output view
+show unsaved content (*)
+user input
 native executable
 invalidate "Delete this" in the context menu when there is one roundtrip
 Display an error correctly when $ErrorActionPreference = "Stop"
@@ -10,8 +13,16 @@ keep the session when loading fails
 show processing command line
 disable useless key bindings in command line
 "Scroll to top" and "Scroll to bottom" icons in the output area
-tab window
 
+BIG ISSUES
+tab window
+debugger
+text highlighting
+completion
+R studio-like side view
+save/restore output area
+
+DONE Allow cursor to move to prev/next roundtrip by cursor up/down
 DONE no highlight on cursor
 DONE stop execution thread on closing window on Start-Notebook
 DONE packaging in module

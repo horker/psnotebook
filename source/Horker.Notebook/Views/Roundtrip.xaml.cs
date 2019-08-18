@@ -84,6 +84,36 @@ namespace Horker.Notebook.Views
             CommandLine.Selection.Select(CommandLine.Selection.End, CommandLine.Selection.End);
         }
 
+        private void UpCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (EditingCommands.MoveUpByLine.CanExecute(null, CommandLine))
+            {
+                var position = CommandLine.CaretPosition;
+                EditingCommands.MoveUpByLine.Execute(null, CommandLine);
+                if (position.CompareTo(CommandLine.CaretPosition) == 0)
+                    Container.MoveToPreviousRoundtrip();
+            }
+            else
+            {
+                Container.MoveToPreviousRoundtrip();
+            }
+        }
+
+        private void DownCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (EditingCommands.MoveDownByLine.CanExecute(null, CommandLine))
+            {
+                var position = CommandLine.CaretPosition;
+                EditingCommands.MoveDownByLine.Execute(null, CommandLine);
+                if (position.CompareTo(CommandLine.CaretPosition) == 0)
+                    Container.MoveToNextRoundtrip();
+            }
+            else
+            {
+                Container.MoveToNextRoundtrip();
+            }
+        }
+
         private void InsertNewRoundtrip_Click(object sender, RoutedEventArgs e)
         {
             Container.ViewModel.InsertRoundtrip(ViewModel);

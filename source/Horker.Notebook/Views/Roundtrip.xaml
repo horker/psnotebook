@@ -13,6 +13,8 @@
         <RoutedCommand x:Key="PreviousRoundtripCommand" />
         <RoutedCommand x:Key="NextRoundtripCommand" />
         <RoutedCommand x:Key="InsertTabCommand" />
+        <RoutedCommand x:Key="UpCommand" />
+        <RoutedCommand x:Key="DownCommand" />
     </UserControl.Resources>
 
     <UserControl.CommandBindings>
@@ -20,6 +22,8 @@
         <CommandBinding Command="{StaticResource PreviousRoundtripCommand}" Executed="PreviousRoundtripCommand_Execute"/>
         <CommandBinding Command="{StaticResource NextRoundtripCommand}" Executed="NextRoundtripCommand_Execute"/>
         <CommandBinding Command="{StaticResource InsertTabCommand}" Executed="InsertTabCommand_Execute"/>
+        <CommandBinding Command="{StaticResource UpCommand}" Executed="UpCommand_Execute"/>
+        <CommandBinding Command="{StaticResource DownCommand}" Executed="DownCommand_Execute"/>
     </UserControl.CommandBindings>
 
     <Grid Margin="0,1">
@@ -51,6 +55,8 @@
                     <KeyBinding Gesture="Ctrl+Up" Command="{StaticResource PreviousRoundtripCommand}"/>
                     <KeyBinding Gesture="Ctrl+Down" Command="{StaticResource NextRoundtripCommand}"/>
                     <KeyBinding Gesture="Tab" Command="{StaticResource InsertTabCommand}"/>
+                    <KeyBinding Gesture="Up" Command="{StaticResource UpCommand}"/>
+                    <KeyBinding Gesture="Down" Command="{StaticResource DownCommand}"/>
                 </RichTextBox.InputBindings>
 
                 <FlowDocument PagePadding="0">
