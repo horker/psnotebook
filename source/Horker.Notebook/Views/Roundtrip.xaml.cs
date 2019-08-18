@@ -37,6 +37,19 @@ namespace Horker.Notebook.Views
 
         private ScrollViewer _outputScrollViewer;
 
+        private ScrollViewer OutputScrollViewer
+        {
+            get
+            {
+                // This getter can return null.
+
+                if (_outputScrollViewer == null)
+                    _outputScrollViewer = Output.Template.FindName("PART_ContentHost", Output) as ScrollViewer;
+
+                return _outputScrollViewer;
+            }
+        }
+
         public RoundtripViewModel ViewModel
         {
             get => DataContext as RoundtripViewModel;
@@ -50,15 +63,7 @@ namespace Horker.Notebook.Views
 
         public void ScrollToBottom()
         {
-            if (_outputScrollViewer != null)
-            {
-                _outputScrollViewer.ScrollToBottom();
-                return;
-            }
-
-            _outputScrollViewer = _outputControl.Template.FindName("PART_ContentHost", _outputControl) as ScrollViewer;
-            if (_outputScrollViewer != null)
-                _outputScrollViewer.ScrollToBottom();
+            OutputScrollViewer?.ScrollToBottom();
         }
 
         // Commands
@@ -164,6 +169,17 @@ namespace Horker.Notebook.Views
         private void CommandLine_LostKeyboardFocus(object sender, RoutedEventArgs e)
         {
             CommandLine.Background = Brushes.WhiteSmoke;
+        }
+
+        private void Roundtrip_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (OutputScrollViewer?.ComputedVerticalScrollBarVisibility != Visibility.Visible)
+            {
+                e.Handled = true;
+                var args = new MouseWheelEventArgs((MouseDevice)e.Device, e.Timestamp, e.Delta);
+                args.RoutedEvent = MouseWheelEvent;
+                RaiseEvent(args);
+            }
         }
     }
 }
