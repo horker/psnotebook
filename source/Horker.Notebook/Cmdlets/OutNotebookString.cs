@@ -15,7 +15,7 @@ namespace Horker.Notebook.Cmdlets
     {
         protected override void ProcessRecord()
         {
-            if (InputObject.BaseObject is UIElement uiElement)
+            if (InputObject?.BaseObject is UIElement uiElement)
                 SessionViewModel.ActiveOutput.WriteUIElement(uiElement);
             else
                 base.ProcessRecord();
