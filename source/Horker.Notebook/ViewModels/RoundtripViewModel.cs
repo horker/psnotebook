@@ -82,6 +82,18 @@ namespace Horker.Notebook.ViewModels
             }
         }
 
+        private bool _isEditorMode = false;
+
+        public bool IsEditorMode
+        {
+            get => _isEditorMode;
+            set
+            {
+                _isEditorMode = value;
+                OnPropertyChanged(nameof(IsEditorMode));
+            }
+        }
+
         private Run GetRun(string text, Brush foreground = null, Brush background = null)
         {
             var run = new Run(text);

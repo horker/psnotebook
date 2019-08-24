@@ -34,7 +34,8 @@ namespace Horker.Notebook.Views
         public Roundtrip GetActiveRoundtrip()
         {
             var rtb = Keyboard.FocusedElement as RichTextBox;
-            var grid1 = rtb?.Parent as Grid;
+            var border = rtb?.Parent as Border;
+            var grid1 = border?.Parent as Grid;
             var grid2 = grid1?.Parent as Grid;
             var r = grid2?.Parent as Roundtrip;
             return r;

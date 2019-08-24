@@ -3,7 +3,6 @@ show processing command line
 removing character decoration on pasting text
 show unsaved content (*)
 move roundtrip up and down
-execution lock icons (return doesn't occur execution) "Editor mode"
 stop word wrap
 resize output pane
 "Scroll to top" and "Scroll to bottom" icons in the output area
@@ -28,6 +27,7 @@ undo
 Emacs mode
 native executable example: git clone, doxygen incubator-mxnet
 
+DONE execution lock icons (return doesn't occur execution) "Editor mode"
 DONE stop justification of output
 DONE mouse wheel on output view
 DONE Allow cursor to move to prev/next roundtrip by cursor up/down

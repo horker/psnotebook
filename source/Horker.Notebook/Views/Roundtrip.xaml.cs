@@ -70,7 +70,10 @@ namespace Horker.Notebook.Views
 
         private void InvokeCommandLineCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            ViewModel.NotifyExecute(true);
+            if (ViewModel.IsEditorMode)
+                EditingCommands.EnterParagraphBreak.Execute(null, CommandLine);
+            else
+                ViewModel.NotifyExecute(true);
         }
 
         private void PreviousRoundtripCommand_Execute(object sender, ExecutedRoutedEventArgs e)
@@ -129,6 +132,8 @@ namespace Horker.Notebook.Views
             var position = CommandLine.CaretPosition = CommandLine.Document.ContentEnd;
         }
 
+        // Menu items
+
         private void InsertNewRoundtrip_Click(object sender, RoutedEventArgs e)
         {
             Container.ViewModel.InsertRoundtrip(ViewModel);
@@ -143,6 +148,16 @@ namespace Horker.Notebook.Views
         {
             ViewModel.Clear();
             ViewModel.Hidden();
+            CommandLine.Focus();
+        }
+
+        private void EditorMode_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.IsEditorMode)
+                CommandLineBorderRectangle.StrokeDashArray = new DoubleCollection(new double[] { 6, 4 });
+            else
+                CommandLineBorderRectangle.StrokeDashArray = null;
+
             CommandLine.Focus();
         }
 
