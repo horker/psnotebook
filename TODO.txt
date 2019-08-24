@@ -1,27 +1,35 @@
-resize output pane
-stop justification of output
-
-mouse wheel on output view
+correct line number and column on errors
+show processing command line
+removing character decoration on pasting text
 show unsaved content (*)
-user input
-native executable
+move roundtrip up and down
+execution lock icons (return doesn't occur execution) "Editor mode"
+stop word wrap
+resize output pane
+"Scroll to top" and "Scroll to bottom" icons in the output area
+
 invalidate "Delete this" in the context menu when there is one roundtrip
 Display an error correctly when $ErrorActionPreference = "Stop"
 New-WpfWindow, New-WpfGrid, Out-Pane, etc.
 Hide progress bar when PercentComplete is not specified in Write-Progress
 keep the session when loading fails
-show processing command line
 disable useless key bindings in command line
-"Scroll to top" and "Scroll to bottom" icons in the output area
+move focus to output area when past command line is called by F5
 
 BIG ISSUES
-tab window
+user input
 debugger
+tab window
 text highlighting
 completion
 R studio-like side view
 save/restore output area
+undo
+Emacs mode
+native executable example: git clone, doxygen incubator-mxnet
 
+DONE stop justification of output
+DONE mouse wheel on output view
 DONE Allow cursor to move to prev/next roundtrip by cursor up/down
 DONE no highlight on cursor
 DONE stop execution thread on closing window on Start-Notebook
