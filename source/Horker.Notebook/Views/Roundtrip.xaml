@@ -15,6 +15,8 @@
         <RoutedCommand x:Key="InsertTabCommand" />
         <RoutedCommand x:Key="UpCommand" />
         <RoutedCommand x:Key="DownCommand" />
+        <RoutedCommand x:Key="CursorToTopCommand" />
+        <RoutedCommand x:Key="CursorToBottomCommand" />
     </UserControl.Resources>
 
     <UserControl.CommandBindings>
@@ -24,6 +26,8 @@
         <CommandBinding Command="{StaticResource InsertTabCommand}" Executed="InsertTabCommand_Execute"/>
         <CommandBinding Command="{StaticResource UpCommand}" Executed="UpCommand_Execute"/>
         <CommandBinding Command="{StaticResource DownCommand}" Executed="DownCommand_Execute"/>
+        <CommandBinding Command="{StaticResource CursorToTopCommand}" Executed="CursorToTopCommand_Execute"/>
+        <CommandBinding Command="{StaticResource CursorToBottomCommand}" Executed="CursorToBottomCommand_Execute"/>
     </UserControl.CommandBindings>
 
     <Grid Margin="0,1">
@@ -57,6 +61,8 @@
                     <KeyBinding Gesture="Tab" Command="{StaticResource InsertTabCommand}"/>
                     <KeyBinding Gesture="Up" Command="{StaticResource UpCommand}"/>
                     <KeyBinding Gesture="Down" Command="{StaticResource DownCommand}"/>
+                    <KeyBinding Gesture="Ctrl+Left" Command="{StaticResource CursorToTopCommand}"/>
+                    <KeyBinding Gesture="Ctrl+Right" Command="{StaticResource CursorToBottomCommand}"/>
                 </RichTextBox.InputBindings>
 
                 <FlowDocument PagePadding="0">

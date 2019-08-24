@@ -119,6 +119,16 @@ namespace Horker.Notebook.Views
             }
         }
 
+        private void CursorToTopCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            var position = CommandLine.CaretPosition = CommandLine.Document.ContentStart;
+        }
+
+        private void CursorToBottomCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            var position = CommandLine.CaretPosition = CommandLine.Document.ContentEnd;
+        }
+
         private void InsertNewRoundtrip_Click(object sender, RoutedEventArgs e)
         {
             Container.ViewModel.InsertRoundtrip(ViewModel);
