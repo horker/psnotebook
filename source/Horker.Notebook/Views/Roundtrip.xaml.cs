@@ -68,12 +68,22 @@ namespace Horker.Notebook.Views
 
         // Commands
 
-        private void InvokeCommandLineCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        private void EnterCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
             if (ViewModel.IsEditorMode)
                 EditingCommands.EnterParagraphBreak.Execute(null, CommandLine);
             else
                 ViewModel.NotifyExecute(true);
+        }
+
+        private void ShiftEnterCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            ViewModel.NotifyExecute(true);
+        }
+
+        private void CtrlEnterCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            ViewModel.NotifyExecute(false);
         }
 
         private void PreviousRoundtripCommand_Execute(object sender, ExecutedRoutedEventArgs e)

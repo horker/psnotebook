@@ -9,7 +9,9 @@
              d:DesignHeight="450" d:DesignWidth="800" Loaded="RoundtripControl_Loaded" PreviewMouseWheel="Roundtrip_PreviewMouseWheel">
 
     <UserControl.Resources>
-        <RoutedCommand x:Key="InvokeCommandLineCommand" />
+        <RoutedCommand x:Key="EnterCommand" />
+        <RoutedCommand x:Key="ShiftEnterCommand" />
+        <RoutedCommand x:Key="CtrlEnterCommand" />
         <RoutedCommand x:Key="PreviousRoundtripCommand" />
         <RoutedCommand x:Key="NextRoundtripCommand" />
         <RoutedCommand x:Key="InsertTabCommand" />
@@ -20,7 +22,9 @@
     </UserControl.Resources>
 
     <UserControl.CommandBindings>
-        <CommandBinding Command="{StaticResource InvokeCommandLineCommand}" Executed="InvokeCommandLineCommand_Execute"/>
+        <CommandBinding Command="{StaticResource EnterCommand}" Executed="EnterCommand_Execute"/>
+        <CommandBinding Command="{StaticResource ShiftEnterCommand}" Executed="ShiftEnterCommand_Execute"/>
+        <CommandBinding Command="{StaticResource CtrlEnterCommand}" Executed="CtrlEnterCommand_Execute"/>
         <CommandBinding Command="{StaticResource PreviousRoundtripCommand}" Executed="PreviousRoundtripCommand_Execute"/>
         <CommandBinding Command="{StaticResource NextRoundtripCommand}" Executed="NextRoundtripCommand_Execute"/>
         <CommandBinding Command="{StaticResource InsertTabCommand}" Executed="InsertTabCommand_Execute"/>
@@ -67,8 +71,9 @@
                 </Border.BorderBrush>
                 <RichTextBox Grid.Row="0" x:Name="CommandLine" VerticalAlignment="Top" Background="WhiteSmoke" MinHeight="20" AcceptsReturn="true" AcceptsTab="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" MinWidth="{x:Static models:Configuration.CommandLineWidth}" GotKeyboardFocus="CommandLine_GotKeyboardFocus" LostKeyboardFocus="CommandLine_LostKeyboardFocus" BorderThickness="0">
                     <RichTextBox.InputBindings>
-                        <KeyBinding Gesture="Enter" Command="{StaticResource InvokeCommandLineCommand}"/>
-                        <KeyBinding Gesture="Ctrl+Enter" Command="EditingCommands.EnterParagraphBreak"/>
+                        <KeyBinding Gesture="Enter" Command="{StaticResource EnterCommand}"/>
+                        <KeyBinding Gesture="Shift+Enter" Command="{StaticResource ShiftEnterCommand}"/>
+                        <KeyBinding Gesture="Ctrl+Enter" Command="{StaticResource CtrlEnterCommand}"/>
                         <KeyBinding Gesture="Ctrl+Up" Command="{StaticResource PreviousRoundtripCommand}"/>
                         <KeyBinding Gesture="Ctrl+Down" Command="{StaticResource NextRoundtripCommand}"/>
                         <KeyBinding Gesture="Tab" Command="{StaticResource InsertTabCommand}"/>
