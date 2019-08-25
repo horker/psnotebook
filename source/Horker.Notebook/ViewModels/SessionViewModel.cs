@@ -193,9 +193,9 @@ namespace Horker.Notebook.ViewModels
             });
         }
 
-        public void InsertRoundtrip(RoundtripViewModel r)
+        public void InsertRoundtrip(RoundtripViewModel after)
         {
-            var index = r.Index + 1;
+            var index = after.Index + 1;
             _model.CreateNewRoundtrip(false, index);
             _sessionControl.Dispatcher.Invoke(() => {
                 Reindex(index);

@@ -61,8 +61,15 @@ namespace Horker.Notebook.Views
                 return;
 
             var index = ViewModel.Items.IndexOf(r.ViewModel);
-            if (index == -1 || index == ViewModel.Items.Count - 1)
+
+            if (index == -1)
                 return;
+
+            if (index == ViewModel.Items.Count - 1)
+            {
+                ViewModel.InsertRoundtrip(r.ViewModel);
+                return;
+            }
 
             ViewModel.Items[index + 1].Focus();
         }
