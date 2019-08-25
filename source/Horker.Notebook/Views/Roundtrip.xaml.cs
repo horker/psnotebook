@@ -263,5 +263,11 @@ namespace Horker.Notebook.Views
             r1.CommandLine.Document = commandLineDoc2;
             r2.CommandLine.Document = commandLineDoc1;
         }
+
+        private void CommandLine_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Container != null && Container.ViewModel != null)
+                Container.ViewModel.IsTextChanged = true;
+        }
     }
 }

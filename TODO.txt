@@ -1,8 +1,6 @@
 correct line number and column on errors
 show processing command line
 removing character decoration on pasting text
-show unsaved content (*)
-move roundtrip up and down
 stop word wrap
 resize output pane
 "Scroll to top" and "Scroll to bottom" icons in the output area
@@ -27,6 +25,8 @@ undo
 Emacs mode
 native executable example: git clone, doxygen incubator-mxnet
 
+DONE move roundtrip up and down
+DONE show unsaved content (*)
 DONE execution lock icons (return doesn't occur execution) "Editor mode"
 DONE stop justification of output
 DONE mouse wheel on output view

@@ -74,7 +74,7 @@
                         </VisualBrush.Visual>
                     </VisualBrush>
                 </Border.BorderBrush>
-                <RichTextBox Grid.Row="0" x:Name="CommandLine" VerticalAlignment="Top" Background="WhiteSmoke" MinHeight="20" AcceptsReturn="true" AcceptsTab="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" MinWidth="{x:Static models:Configuration.CommandLineWidth}" GotKeyboardFocus="CommandLine_GotKeyboardFocus" LostKeyboardFocus="CommandLine_LostKeyboardFocus" BorderThickness="0">
+                <RichTextBox Grid.Row="0" x:Name="CommandLine" VerticalAlignment="Top" Background="WhiteSmoke" MinHeight="20" AcceptsReturn="true" AcceptsTab="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" MinWidth="{x:Static models:Configuration.CommandLineWidth}" GotKeyboardFocus="CommandLine_GotKeyboardFocus" LostKeyboardFocus="CommandLine_LostKeyboardFocus" BorderThickness="0" TextChanged="CommandLine_TextChanged">
                     <RichTextBox.InputBindings>
                         <KeyBinding Gesture="Enter" Command="{StaticResource EnterCommand}"/>
                         <KeyBinding Gesture="Shift+Enter" Command="{StaticResource ShiftEnterCommand}"/>

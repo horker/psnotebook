@@ -113,13 +113,30 @@ namespace Horker.Notebook.ViewModels
             }
         }
 
+        private bool _isTextChanged;
+
+        public bool IsTextChanged
+        {
+            get => _isTextChanged;
+            set
+            {
+                _isTextChanged = value;
+                OnPropertyChanged(nameof(IsTextChanged));
+                OnPropertyChanged(nameof(TitleString));
+            }
+        }
         public string TitleString
         {
             get
             {
+                string f = null;
                 if (string.IsNullOrEmpty(_fileName))
-                    return "PowerShell Notebook";
-                return Regex.Replace(_fileName, "(.+[/\\\\])?(.+)$", "$2") + " - PowerShlell Notebook";
+                    f = "Untitled";
+                else
+                    f = Regex.Replace(_fileName, "(.+[/\\\\])?(.+)$", "$2");
+
+                string changed = _isTextChanged ? "*" : "";
+                return f + changed + " - PowerShlell Notebook";
             }
         }
 
@@ -286,6 +303,7 @@ namespace Horker.Notebook.ViewModels
                 if (!string.IsNullOrEmpty(fileName))
                     FileName = fileName;
                 Model.SaveSession();
+                IsTextChanged = false;
             }
             catch (Exception ex)
             {
