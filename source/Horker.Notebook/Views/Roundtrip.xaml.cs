@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -161,6 +162,24 @@ namespace Horker.Notebook.Views
             CommandLine.Focus();
         }
 
+        private void MoveUpRoundtrip_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.Index == 0)
+                return;
+
+            var target = Container.ViewModel.Items[ViewModel.Index - 1].Control;
+            SwapControlContent(this, target);
+        }
+
+        private void MoveDownRoundtrip_Click(object sender, RoutedEventArgs e)
+        {
+            if (Container.ViewModel.IsLastItem(ViewModel))
+                return;
+
+            var target = Container.ViewModel.Items[ViewModel.Index + 1].Control;
+            SwapControlContent(this, target);
+        }
+
         private void EditorMode_Click(object sender, RoutedEventArgs e)
         {
             if (ViewModel.IsEditorMode)
@@ -215,6 +234,47 @@ namespace Horker.Notebook.Views
                 args.RoutedEvent = MouseWheelEvent;
                 RaiseEvent(args);
             }
+        }
+        
+        // Helper methods
+        // https://stackoverflow.com/questions/12787513/how-to-transfer-data-from-richtextbox-to-another-richtextbox-wpf-c-sharp
+
+        private static string GetRtfStringFromFlowDocument(FlowDocument doc)
+        {
+            TextRange textRange = new TextRange(doc.ContentStart, doc.ContentEnd);
+            MemoryStream ms = new MemoryStream();
+            textRange.Save(ms, DataFormats.Rtf);
+
+            return Encoding.Default.GetString(ms.ToArray());
+        }
+
+        private static FlowDocument CreateFlowDocument(string richTextString)
+        {
+            FlowDocument fd = new FlowDocument();
+            MemoryStream ms = new MemoryStream(Encoding.ASCII.GetBytes(richTextString));
+            TextRange textRange = new TextRange(fd.ContentStart, fd.ContentEnd);
+            textRange.Load(ms, DataFormats.Rtf);
+
+            return fd;
+        }
+
+        public static FlowDocument CopyFlowDocument(FlowDocument doc)
+        {
+            var s = GetRtfStringFromFlowDocument(doc);
+            return CreateFlowDocument(s);
+        }
+
+        public static void SwapControlContent(Roundtrip r1, Roundtrip r2)
+        {
+            var outputDoc1 = CopyFlowDocument(r1.Output.Document);
+            var outputDoc2 = CopyFlowDocument(r2.Output.Document);
+            r1.Output.Document = outputDoc2;
+            r2.Output.Document = outputDoc1;
+
+            var commandLineDoc1 = CopyFlowDocument(r1.CommandLine.Document);
+            var commandLineDoc2 = CopyFlowDocument(r2.CommandLine.Document);
+            r1.CommandLine.Document = commandLineDoc2;
+            r2.CommandLine.Document = commandLineDoc1;
         }
     }
 }

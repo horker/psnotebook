@@ -47,6 +47,9 @@
                     <MenuItem Header="Delete" x:Name="DeleteRoundtrip" Click="DeleteRoundtrip_Click" />
                     <MenuItem Header="Clear output" x:Name="DeleteOutput" Click="ClearOutput_Click" />
                     <Separator/>
+                    <MenuItem Header="Up" x:Name="MoveUpRoundtrip" Click="MoveUpRoundtrip_Click" />
+                    <MenuItem Header="Down" x:Name="MoveDownRoundtrip" Click="MoveDownRoundtrip_Click" />
+                    <Separator/>
                     <MenuItem Header="Editor mode" x:Name="EditMode" IsCheckable="true" IsChecked="{Binding IsEditorMode}" Click="EditorMode_Click"/>
                 </ContextMenu>
             </TextBox.ContextMenu>
