@@ -21,33 +21,25 @@ namespace Horker.Notebook.ViewModels
 
         protected void OnPropertyChanged(string info)
         {
-            _control?.Dispatcher.Invoke(() => {
+            Control?.Dispatcher.Invoke(() => {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
             });
         }
 
-        private Models.Roundtrip _model;
-        private int _index;
-        private Views.Roundtrip _control;
-
-        private ManualResetEvent _createdEvent;
-
-        public ManualResetEvent CreatedEvent => _createdEvent;
-
         public RoundtripViewModel(Models.Roundtrip r)
         {
             _index = 0; // Index is set by Session
-            _model = r;
-            _createdEvent = new ManualResetEvent(false);
-        }
-        
-        public Views.Roundtrip Control
-        {
-            get => _control;
-            set => _control = value;
+            Model = r;
+            CreatedEvent = new ManualResetEvent(false);
         }
 
-        public Models.Roundtrip Model => _model;
+        public ManualResetEvent CreatedEvent { get; }
+
+        public Views.Roundtrip Control { get; set; }
+
+        public Models.Roundtrip Model { get; }
+
+        private int _index;
 
         public int Index
         {
@@ -67,8 +59,8 @@ namespace Horker.Notebook.ViewModels
             get
             {
                 return new TextRange(
-                    _control.CommandLineControl.Document.ContentStart,
-                    _control.CommandLineControl.Document.ContentEnd).Text;
+                    Control.CommandLine.Document.ContentStart,
+                    Control.CommandLine.Document.ContentEnd).Text;
             }
         }
 
@@ -77,8 +69,8 @@ namespace Horker.Notebook.ViewModels
             get
             {
                 return new TextRange(
-                    _control.OutputControl.Document.ContentStart,
-                    _control.OutputControl.Document.ContentEnd).Text;
+                    Control.Output.Document.ContentStart,
+                    Control.Output.Document.ContentEnd).Text;
             }
         }
 
@@ -111,40 +103,40 @@ namespace Horker.Notebook.ViewModels
 
         public void WriteCommandLine(string line)
         {
-            _control.Dispatcher.Invoke(() => {
-                _control.CommandLineControl.Document.Blocks.Add(new Paragraph(new Run(line)));
+            Control.Dispatcher.Invoke(() => {
+                Control.CommandLine.Document.Blocks.Add(new Paragraph(new Run(line)));
             });
         }
 
         private void ResolveNewline()
         {
             if (_newlinePending)
-                _control.OutputControl.Document.Blocks.Add(new Paragraph());
+                Control.Output.Document.Blocks.Add(new Paragraph());
 
             _newlinePending = false;
         }
 
         private void WriteInternal(string text, Brush foreground, Brush background, bool newLine)
         {
-            _control.Dispatcher.Invoke(() => {
-                _control.OutputControl.Visibility = Visibility.Visible;
+            Control.Dispatcher.Invoke(() => {
+                Control.Output.Visibility = Visibility.Visible;
 
                 ResolveNewline();
 
                 var run = GetRun(text, foreground, background);
 
-                var par = _control.OutputControl.Document.Blocks.LastBlock as Paragraph;
+                var par = Control.Output.Document.Blocks.LastBlock as Paragraph;
                 if (par == null)
                 {
                     par = new Paragraph();
-                    _control.OutputControl.Document.Blocks.Add(par);
+                    Control.Output.Document.Blocks.Add(par);
                 }
 
                 par.Inlines.Add(run);
 
                 _newlinePending = newLine;
 
-                _control.ScrollToBottom();
+                Control.ScrollToBottom();
             });
         }
 
@@ -160,31 +152,31 @@ namespace Horker.Notebook.ViewModels
 
         public void WriteWholeLine(string text, Brush foreground = null, Brush background = null)
         {
-            _control.Dispatcher.Invoke(() => {
-                _control.OutputControl.Visibility = Visibility.Visible;
+            Control.Dispatcher.Invoke(() => {
+                Control.Output.Visibility = Visibility.Visible;
 
                 ResolveNewline();
 
                 var run = GetRun(text, foreground, background);
 
-                var par = (Paragraph)_control.OutputControl.Document.Blocks.LastBlock;
+                var par = (Paragraph)Control.Output.Document.Blocks.LastBlock;
                 if (par == null || par.Inlines.Count > 0)
                 {
                     par = new Paragraph();
-                    _control.OutputControl.Document.Blocks.Add(par);
+                    Control.Output.Document.Blocks.Add(par);
                 }
 
                 par.Inlines.Add(run);
                 _newlinePending = true;
 
-                _control.ScrollToBottom();
+                Control.ScrollToBottom();
             });
         }
 
         public void WriteUIElement(UIElement uiElement)
         {
-            _control.Dispatcher.Invoke(() => {
-                _control.OutputControl.Visibility = Visibility.Visible;
+            Control.Dispatcher.Invoke(() => {
+                Control.Output.Visibility = Visibility.Visible;
 
                 // WPF objects that have no default size appears in (zero, zero) size.
                 // Give sizes explicitly to such objects.
@@ -203,25 +195,25 @@ namespace Horker.Notebook.ViewModels
 
                 var container = new InlineUIContainer(uiElement);
                 var par = new Paragraph(container);
-                _control.OutputControl.Document.Blocks.Add(par);
+                Control.Output.Document.Blocks.Add(par);
 
                 _newlinePending = true;
 
-                _control.ScrollToBottom();
+                Control.ScrollToBottom();
             });
         }
 
         public void Clear()
         {
-            _control.Dispatcher.Invoke(() => {
-                _control.OutputControl.Document.Blocks.Clear();
+            Control.Dispatcher.Invoke(() => {
+                Control.Output.Document.Blocks.Clear();
             });
         }
 
         public void Hidden()
         {
-            _control.Dispatcher.Invoke(() => {
-                _control.OutputControl.Visibility = Visibility.Collapsed;
+            Control.Dispatcher.Invoke(() => {
+                Control.Output.Visibility = Visibility.Collapsed;
             });
         }
 
@@ -233,8 +225,8 @@ namespace Horker.Notebook.ViewModels
 
         public void Focus()
         {
-            _control?.Dispatcher.Invoke(() => {
-                _control.CommandLineControl?.Focus();
+            Control?.Dispatcher.Invoke(() => {
+                Control.CommandLine?.Focus();
             });
         }
 
@@ -242,8 +234,8 @@ namespace Horker.Notebook.ViewModels
         {
             var result = true;
 
-            _control?.Dispatcher.Invoke(() => {
-                var doc = _control.OutputControl.Document;
+            Control?.Dispatcher.Invoke(() => {
+                var doc = Control.Output.Document;
                 result = doc.Blocks.Count == 0 || ((Paragraph)doc.Blocks.LastBlock).Inlines.Count == 0;
             });
 

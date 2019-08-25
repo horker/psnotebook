@@ -21,12 +21,6 @@ namespace Horker.Notebook.Views
 {
     public partial class Roundtrip : UserControl
     {
-        private RichTextBox _commandLineControl;
-        private FlowDocumentScrollViewer _outputControl;
-
-        public RichTextBox CommandLineControl => _commandLineControl;
-        public FlowDocumentScrollViewer OutputControl => _outputControl;
-
         private ScrollViewer _outputScrollViewer;
 
         private ScrollViewer OutputScrollViewer
@@ -43,6 +37,7 @@ namespace Horker.Notebook.Views
         }
 
         public Session Container { get; set; }
+
         public RoundtripViewModel ViewModel
         {
             get => (RoundtripViewModel)DataContext;
@@ -193,21 +188,15 @@ namespace Horker.Notebook.Views
         {
             var control = sender as Roundtrip;
 
-            _commandLineControl = control.FindName("CommandLine") as RichTextBox;
-            Debug.Assert(_commandLineControl != null);
-
-            _outputControl = control.FindName("Output") as FlowDocumentScrollViewer;
-            Debug.Assert(_outputControl != null);
-
             ViewModel.Control = control;
 
             // Address RichTextBox's known limitation that its document's width is not stretched automatically.
             // (source: https://stackoverflow.com/questions/350863/wpf-richtextbox-with-no-width-set)
 
-            _commandLineControl.Document.PageWidth = Models.Configuration.ConsoleWidth;
-            _outputControl.Document.PageWidth = Models.Configuration.ConsoleWidth;
+            CommandLine.Document.PageWidth = Models.Configuration.ConsoleWidth;
+            Output.Document.PageWidth = Models.Configuration.ConsoleWidth;
 
-            _commandLineControl.Focus();
+            CommandLine.Focus();
 
             ViewModel.CreatedEvent.Set();
         }
@@ -232,9 +221,10 @@ namespace Horker.Notebook.Views
                 RaiseEvent(args);
             }
         }
-        
+
         // Helper methods
         // https://stackoverflow.com/questions/12787513/how-to-transfer-data-from-richtextbox-to-another-richtextbox-wpf-c-sharp
+        // These methods are not used in the current version. Kept for future use.
 
         private static string GetRtfStringFromFlowDocument(FlowDocument doc)
         {

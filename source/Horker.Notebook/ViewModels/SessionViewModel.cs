@@ -21,39 +21,33 @@ namespace Horker.Notebook.ViewModels
 
         protected void OnPropertyChanged(string info)
         {
-            _sessionControl?.Dispatcher.Invoke(() => {
+            _control?.Dispatcher.Invoke(() => {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
             });
         }
 
         // References to related objects
 
-        private Views.Session _sessionControl;
+        private Views.Session _control;
 
-        private Models.Session _model;
-
-        public Models.Session Model
-        {
-            get => _model;
-            set => _model = value;
-        }
+        public Models.Session Model { get; set; }
 
         public static RoundtripViewModel ActiveOutput { get; set; }
 
         // View properties
 
-        public UIElementCollection ViewItems => _sessionControl.StackPanel.Children;
+        public UIElementCollection ViewItems => _control.StackPanel.Children;
 
         public IEnumerable<RoundtripViewModel> Items
         {
             get
             {
-                foreach (var r in _sessionControl.StackPanel.Children)
+                foreach (var r in _control.StackPanel.Children)
                     yield return (r as Views.Roundtrip).ViewModel;
             }
         }
 
-        public int ItemCount => _sessionControl.StackPanel.Children.Count;
+        public int ItemCount => _control.StackPanel.Children.Count;
 
         private string _commandPrompt;
 
@@ -133,14 +127,14 @@ namespace Horker.Notebook.ViewModels
 
         public SessionViewModel(Views.Session sessionControl)
         {
-            _sessionControl = sessionControl;
+            _control = sessionControl;
         }
 
         // Methods
 
         public void Reindex()
         {
-            _sessionControl.Dispatcher.Invoke(() => {
+            _control.Dispatcher.Invoke(() => {
                 var i = 0;
                 foreach (var r in Items)
                     r.Index = i++;
@@ -150,7 +144,7 @@ namespace Horker.Notebook.ViewModels
         public RoundtripViewModel GetLastItem()
         {
             RoundtripViewModel r = null;
-            _sessionControl.Dispatcher.Invoke(() => {
+            _control.Dispatcher.Invoke(() => {
                 r = Items.Last();
             });
             return r;
@@ -159,7 +153,7 @@ namespace Horker.Notebook.ViewModels
         public bool IsLastItem(RoundtripViewModel r)
         {
             bool result = false;
-            _sessionControl.Dispatcher.Invoke(() => {
+            _control.Dispatcher.Invoke(() => {
                 result = r == Items.Last();
             });
             return result;
@@ -167,9 +161,9 @@ namespace Horker.Notebook.ViewModels
 
         public void AddRoundtripViewModel(RoundtripViewModel r, int position = -1)
         {
-            _sessionControl.Dispatcher.Invoke(() => {
+            _control.Dispatcher.Invoke(() => {
                 r.Index = ItemCount;
-                _sessionControl.AddRoundtrip(r, position);
+                _control.AddRoundtrip(r, position);
             });
         }
 
@@ -178,7 +172,7 @@ namespace Horker.Notebook.ViewModels
             var i = r.Index;
 
             RoundtripViewModel result = null;
-            _sessionControl.Dispatcher.Invoke(() => {
+            _control.Dispatcher.Invoke(() => {
                 if (i >= ItemCount - 1)
                     result = (ViewItems[ViewItems.Count - 1] as Views.Roundtrip).ViewModel;
 
@@ -190,16 +184,16 @@ namespace Horker.Notebook.ViewModels
 
         public void ScrollToBottom()
         {
-            _sessionControl.Dispatcher.Invoke(() => {
-                _sessionControl.ScrollViewer.ScrollToBottom();
+            _control.Dispatcher.Invoke(() => {
+                _control.ScrollViewer.ScrollToBottom();
             });
         }
 
         public void InsertRoundtrip(RoundtripViewModel after)
         {
             var index = after.Index + 1;
-            _model.CreateNewRoundtrip(false, index);
-            _sessionControl.Dispatcher.Invoke(() => {
+            Model.CreateNewRoundtrip(false, index);
+            _control.Dispatcher.Invoke(() => {
                 Reindex();
                 ViewItems[index].Focus();
             });
@@ -207,7 +201,7 @@ namespace Horker.Notebook.ViewModels
 
         public void RemoveRoundtrip(RoundtripViewModel r)
         {
-            _sessionControl.Dispatcher.Invoke(() => {
+            _control.Dispatcher.Invoke(() => {
                 if (ViewItems.Count <= 1)
                     return;
 
@@ -226,7 +220,7 @@ namespace Horker.Notebook.ViewModels
 
         public void MoveRoundtrip(RoundtripViewModel r, int newIndex)
         {
-            _sessionControl.Dispatcher.Invoke(() => {
+            _control.Dispatcher.Invoke(() => {
                 var index = r.Index;
                 if (newIndex < 0 || index == newIndex || newIndex >= ViewItems.Count)
                     return;
@@ -243,22 +237,22 @@ namespace Horker.Notebook.ViewModels
 
         public void Clear()
         {
-            _sessionControl.Dispatcher.Invoke(() => {
+            _control.Dispatcher.Invoke(() => {
                 ViewItems.Clear();
             });
         }
 
         public void ShowProgress()
         {
-            _sessionControl.Dispatcher.Invoke(() => {
-                _sessionControl.ShowProgress();
+            _control.Dispatcher.Invoke(() => {
+                _control.ShowProgress();
             });
         }
 
         public void HideProgress()
         {
-            _sessionControl.Dispatcher.Invoke(() => {
-                _sessionControl.HideProgress();
+            _control.Dispatcher.Invoke(() => {
+                _control.HideProgress();
             });
         }
 
@@ -277,7 +271,7 @@ namespace Horker.Notebook.ViewModels
 
         public void NotifyCancel()
         {
-            _model.NotifyCancel();
+            Model.NotifyCancel();
         }
 
         public bool HasFileName()
@@ -291,11 +285,11 @@ namespace Horker.Notebook.ViewModels
             {
                 if (!string.IsNullOrEmpty(fileName))
                     FileName = fileName;
-                _model.SaveSession();
+                Model.SaveSession();
             }
             catch (Exception ex)
             {
-                _sessionControl.Dispatcher.Invoke(() => {
+                _control.Dispatcher.Invoke(() => {
                     MessageBox.Show(ex.Message, "Error Occurred on Saving");
                 });
             }
@@ -303,12 +297,12 @@ namespace Horker.Notebook.ViewModels
 
         public void EnqueueLoadSessionRequest(string fileName)
         {
-            _model.EnqueueLoadSessionRequest(fileName);
+            Model.EnqueueLoadSessionRequest(fileName);
         }
 
         public void ShowMessageBox(string message, string caption)
         {
-            _sessionControl.Dispatcher.Invoke(() => {
+            _control.Dispatcher.Invoke(() => {
                 MessageBox.Show(message, caption);
             });
         }
