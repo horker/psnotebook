@@ -41,17 +41,27 @@ namespace Horker.Notebook.Views
             return r;
         }
 
+        // Add/Remove roundtrips
+
+        public void AddRoundtrip(RoundtripViewModel r, int position)
+        {
+            if (position == -1)
+                StackPanel.Children.Add(new Roundtrip(this, r));
+            else
+                StackPanel.Children.Insert(position, new Roundtrip(this, r));
+        }
+
         public void MoveToPreviousRoundtrip()
         {
             var r = GetActiveRoundtrip();
             if (r == null)
                 return;
 
-            var index = ViewModel.Items.IndexOf(r.ViewModel);
+            var index = StackPanel.Children.IndexOf(r);
             if (index <= 0)
                 return;
 
-            ViewModel.Items[index - 1].Focus();
+            (StackPanel.Children[index - 1] as Roundtrip).CommandLine.Focus();
         }
 
         public void MoveToNextRoundtrip()
@@ -60,18 +70,23 @@ namespace Horker.Notebook.Views
             if (r == null)
                 return;
 
-            var index = ViewModel.Items.IndexOf(r.ViewModel);
+            var index = StackPanel.Children.IndexOf(r);
 
             if (index == -1)
                 return;
 
-            if (index == ViewModel.Items.Count - 1)
+            if (index == StackPanel.Children.Count - 1)
             {
                 ViewModel.InsertRoundtrip(r.ViewModel);
                 return;
             }
 
-            ViewModel.Items[index + 1].Focus();
+            (StackPanel.Children[index + 1] as Roundtrip).CommandLine.Focus();
+        }
+
+        public void MoveRoundtrip(Roundtrip r, int newIndex)
+        {
+            ViewModel.MoveRoundtrip(r.ViewModel, newIndex);
         }
 
         public void ShowProgress()

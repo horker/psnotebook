@@ -24,15 +24,6 @@ namespace Horker.Notebook.Views
         private RichTextBox _commandLineControl;
         private FlowDocumentScrollViewer _outputControl;
 
-        public static readonly DependencyProperty ContainerProperty =
-            DependencyProperty.Register("Container", typeof(Session), typeof(Roundtrip));
-
-        public Session Container
-        {
-            get => (Session)GetValue(ContainerProperty);
-            set => SetValue(ContainerProperty, value);
-        }
-
         public RichTextBox CommandLineControl => _commandLineControl;
         public FlowDocumentScrollViewer OutputControl => _outputControl;
 
@@ -51,15 +42,19 @@ namespace Horker.Notebook.Views
             }
         }
 
+        public Session Container { get; set; }
         public RoundtripViewModel ViewModel
         {
-            get => DataContext as RoundtripViewModel;
+            get => (RoundtripViewModel)DataContext;
             set => DataContext = value;
         }
 
-        public Roundtrip()
+        public Roundtrip(Session container, RoundtripViewModel viewModel)
         {
             InitializeComponent();
+
+            Container = container;
+            DataContext = viewModel;
         }
 
         public void ScrollToBottom()
@@ -164,20 +159,22 @@ namespace Horker.Notebook.Views
 
         private void MoveUpRoundtrip_Click(object sender, RoutedEventArgs e)
         {
-            if (ViewModel.Index == 0)
-                return;
-
-            var target = Container.ViewModel.Items[ViewModel.Index - 1].Control;
-            SwapControlContent(this, target);
+            Container.MoveRoundtrip(this, ViewModel.Index - 1);
         }
 
         private void MoveDownRoundtrip_Click(object sender, RoutedEventArgs e)
         {
-            if (Container.ViewModel.IsLastItem(ViewModel))
-                return;
+            Container.MoveRoundtrip(this, ViewModel.Index + 1);
+        }
 
-            var target = Container.ViewModel.Items[ViewModel.Index + 1].Control;
-            SwapControlContent(this, target);
+        private void MoveToTopRoundtrip_Click(object sender, RoutedEventArgs e)
+        {
+            Container.MoveRoundtrip(this, 0);
+        }
+
+        private void MoveToBottomRoundtrip_Click(object sender, RoutedEventArgs e)
+        {
+            Container.MoveRoundtrip(this, Container.StackPanel.Children.Count - 1);
         }
 
         private void EditorMode_Click(object sender, RoutedEventArgs e)

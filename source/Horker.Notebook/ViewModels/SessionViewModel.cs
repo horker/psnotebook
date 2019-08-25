@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Horker.Notebook.ViewModels
 {
@@ -41,17 +42,18 @@ namespace Horker.Notebook.ViewModels
 
         // View properties
 
-        private ObservableCollection<RoundtripViewModel> _items;
+        public UIElementCollection ViewItems => _sessionControl.StackPanel.Children;
 
-        public ObservableCollection<RoundtripViewModel> Items
+        public IEnumerable<RoundtripViewModel> Items
         {
-            get => _items;
-            set
+            get
             {
-                _items = value;
-                OnPropertyChanged(nameof(Items));
+                foreach (var r in _sessionControl.StackPanel.Children)
+                    yield return (r as Views.Roundtrip).ViewModel;
             }
         }
+
+        public int ItemCount => _sessionControl.StackPanel.Children.Count;
 
         private string _commandPrompt;
 
@@ -132,16 +134,16 @@ namespace Horker.Notebook.ViewModels
         public SessionViewModel(Views.Session sessionControl)
         {
             _sessionControl = sessionControl;
-            _items = new ObservableCollection<RoundtripViewModel>();
         }
 
         // Methods
 
-        private void Reindex(int start)
+        public void Reindex()
         {
             _sessionControl.Dispatcher.Invoke(() => {
-                for (var i = start; i < Items.Count; ++i)
-                    Items[i].Index = i;
+                var i = 0;
+                foreach (var r in Items)
+                    r.Index = i++;
             });
         }
 
@@ -166,13 +168,8 @@ namespace Horker.Notebook.ViewModels
         public void AddRoundtripViewModel(RoundtripViewModel r, int position = -1)
         {
             _sessionControl.Dispatcher.Invoke(() => {
-                r.Index = Items.Count;
-                if (position == -1)
-                    Items.Add(r);
-                else
-                {
-                    Items.Insert(position, r);
-                }
+                r.Index = ItemCount;
+                _sessionControl.AddRoundtrip(r, position);
             });
         }
 
@@ -180,10 +177,15 @@ namespace Horker.Notebook.ViewModels
         {
             var i = r.Index;
 
-            if (i >= Items.Count - 1)
-                return Items.Last();
+            RoundtripViewModel result = null;
+            _sessionControl.Dispatcher.Invoke(() => {
+                if (i >= ItemCount - 1)
+                    result = (ViewItems[ViewItems.Count - 1] as Views.Roundtrip).ViewModel;
 
-            return Items[i + 1];
+                result = (ViewItems[i + 1] as Views.Roundtrip).ViewModel;
+            });
+
+            return result;
         }
 
         public void ScrollToBottom()
@@ -198,34 +200,51 @@ namespace Horker.Notebook.ViewModels
             var index = after.Index + 1;
             _model.CreateNewRoundtrip(false, index);
             _sessionControl.Dispatcher.Invoke(() => {
-                Reindex(index);
-                Items[index].Focus();
+                Reindex();
+                ViewItems[index].Focus();
             });
         }
 
         public void RemoveRoundtrip(RoundtripViewModel r)
         {
-            if (Items.Count <= 1)
-                return;
+            _sessionControl.Dispatcher.Invoke(() => {
+                if (ViewItems.Count <= 1)
+                    return;
 
+                var index = r.Index;
+                Debug.Assert(index == ViewItems.IndexOf(r.Control));
+                ViewItems.RemoveAt(index);
+
+                Reindex();
+
+                if (index == ViewItems.Count)
+                    ViewItems[ViewItems.Count - 1].Focus();
+                else
+                    ViewItems[index].Focus();
+            });
+        }
+
+        public void MoveRoundtrip(RoundtripViewModel r, int newIndex)
+        {
             _sessionControl.Dispatcher.Invoke(() => {
                 var index = r.Index;
-                Debug.Assert(index == Items.IndexOf(r));
-                Items.RemoveAt(index);
+                if (newIndex < 0 || index == newIndex || newIndex >= ViewItems.Count)
+                    return;
 
-                Reindex(index);
+                var rr = ViewItems[newIndex] as Views.Roundtrip;
 
-                if (index == Items.Count)
-                    Items.Last().Focus();
-                else
-                    Items[index].Focus();
+                ViewItems.RemoveAt(index);
+                ViewItems.Insert(newIndex, r.Control);
+                Reindex();
+
+                r.Control.CommandLine.Focus();
             });
         }
 
         public void Clear()
         {
             _sessionControl.Dispatcher.Invoke(() => {
-                Items.Clear();
+                ViewItems.Clear();
             });
         }
 
