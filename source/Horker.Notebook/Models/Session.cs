@@ -168,6 +168,7 @@ namespace Horker.Notebook.Models
 
                     roundtrip.ViewModel.Hidden();
                     roundtrip.ViewModel.Clear();
+                    roundtrip.ViewModel.ShowExecuting();
 
                     try
                     {
@@ -195,9 +196,10 @@ namespace Horker.Notebook.Models
                     }
 
                     stopWatch.Stop();
-                    _sessionViewModel.TimeTaken = stopWatch.Elapsed;
 
+                    _sessionViewModel.TimeTaken = stopWatch.Elapsed;
                     _sessionViewModel.HideProgress();
+                    roundtrip.ViewModel.ShowEditing();
 
                     if (queueItem.MoveToNext)
                     {

@@ -241,5 +241,26 @@ namespace Horker.Notebook.ViewModels
 
             return result;
         }
+
+        public void ShowExecutionWaiting()
+        {
+            Control?.Dispatcher.Invoke(() => {
+                Control.Index.Background = Brushes.PowderBlue;
+            });
+        }
+
+        public void ShowExecuting()
+        {
+            Control?.Dispatcher.Invoke(() => {
+                Control.Index.Background = Brushes.Plum;
+            });
+        }
+
+        public void ShowEditing()
+        {
+            Control?.Dispatcher.Invoke(() => {
+                Control.Index.Background = Brushes.Gainsboro;
+            });
+        }
     }
 }

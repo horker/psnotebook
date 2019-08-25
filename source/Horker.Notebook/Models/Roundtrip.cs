@@ -23,6 +23,7 @@ namespace Horker.Notebook.Models
         public void NotifyExecute(bool moveToNext)
         {
             _executionQueue.Enqueue(this, moveToNext);
+            _viewModel.ShowExecutionWaiting();
         }
     }
 }
