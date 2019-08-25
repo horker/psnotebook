@@ -252,7 +252,7 @@ namespace Horker.Notebook.ViewModels
         public void ShowExecuting()
         {
             Control?.Dispatcher.Invoke(() => {
-                Control.Index.Background = Brushes.Plum;
+                Control.Index.Background = Brushes.Bisque;
             });
         }
 

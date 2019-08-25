@@ -23,6 +23,9 @@ namespace Horker.Notebook
     /// </summary>
     public partial class MainWindow : Window
     {
+        private int _exitCode;
+        private bool _sessionEnded;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -40,7 +43,8 @@ namespace Horker.Notebook
 
             var thread = new Thread(() => {
                 var session = new Models.Session(sessionViewModel);
-                var exitCode = session.StartExecutionLoop();
+                _exitCode = session.StartExecutionLoop();
+                _sessionEnded = true;
 
                 Dispatcher.Invoke(() => {
                     Close();
@@ -54,7 +58,17 @@ namespace Horker.Notebook
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            Environment.Exit(0);
+            Environment.Exit(_exitCode);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!_sessionEnded && Session.ViewModel.IsTextChanged)
+            {
+                var result = MessageBox.Show("Session is not saved yet. Are you sure to exit?", "PowrShell Notebook", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.Cancel)
+                    e.Cancel = true;
+            }
         }
     }
 }

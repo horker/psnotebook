@@ -6,10 +6,10 @@
         xmlns:models="clr-namespace:Horker.Notebook.Models;assembly=Horker.Notebook"
         xmlns:Views="clr-namespace:Horker.Notebook.Views;assembly=Horker.Notebook" x:Class="Horker.Notebook.MainWindow"
         mc:Ignorable="d"
-        Title="{Binding ElementName=SessionControl, Path=ViewModel.TitleString}" Width="{x:Static models:Configuration.WindowWidth}" Height="900" Closed="Window_Closed">
+        Title="{Binding ElementName=Session, Path=ViewModel.TitleString}" Width="{x:Static models:Configuration.WindowWidth}" Height="900" Closed="Window_Closed" Closing="Window_Closing">
     <Grid>
 
-        <Views:Session x:Name="SessionControl" Loaded="Session_Loaded"/>
+        <Views:Session x:Name="Session" Loaded="Session_Loaded"/>
 
     </Grid>
 </Window>
