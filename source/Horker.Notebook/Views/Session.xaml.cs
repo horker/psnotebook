@@ -150,5 +150,9 @@ namespace Horker.Notebook.Views
             ViewModel.NotifyCancel();
         }
 
+        private void EditorModeByDefaultCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+//            ViewModel.IsEditorModeByDefault = !ViewModel.IsEditorModeByDefault;
+        }
     }
 }

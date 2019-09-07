@@ -50,6 +50,8 @@ namespace Horker.Notebook.Views
 
             Container = container;
             DataContext = viewModel;
+
+            UpdateEditorMode();
         }
 
         public void ScrollToBottom()
@@ -178,13 +180,17 @@ namespace Horker.Notebook.Views
             Container.MoveRoundtrip(this, Container.StackPanel.Children.Count - 1);
         }
 
-        private void EditorMode_Click(object sender, RoutedEventArgs e)
+        private void UpdateEditorMode()
         {
             if (ViewModel.IsEditorMode)
                 CommandLineBorderRectangle.StrokeDashArray = new DoubleCollection(new double[] { 6, 4 });
             else
                 CommandLineBorderRectangle.StrokeDashArray = null;
+        }
 
+        private void EditorMode_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateEditorMode();
             CommandLine.Focus();
         }
 
@@ -228,6 +234,12 @@ namespace Horker.Notebook.Views
             }
         }
 
+        private void CommandLine_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Container != null && Container.ViewModel != null)
+                Container.ViewModel.IsTextChanged = true;
+        }
+
         // Helper methods
         // https://stackoverflow.com/questions/12787513/how-to-transfer-data-from-richtextbox-to-another-richtextbox-wpf-c-sharp
         // These methods are not used in the current version. Kept for future use.
@@ -268,12 +280,6 @@ namespace Horker.Notebook.Views
             var commandLineDoc2 = CopyFlowDocument(r2.CommandLine.Document);
             r1.CommandLine.Document = commandLineDoc2;
             r2.CommandLine.Document = commandLineDoc1;
-        }
-
-        private void CommandLine_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (Container != null && Container.ViewModel != null)
-                Container.ViewModel.IsTextChanged = true;
         }
     }
 }

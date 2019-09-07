@@ -125,6 +125,19 @@ namespace Horker.Notebook.ViewModels
                 OnPropertyChanged(nameof(TitleString));
             }
         }
+
+        private bool _isEditorModeByDefault = true;
+
+        public bool IsEditorModeByDefault
+        {
+            get => _isEditorModeByDefault;
+            set
+            {
+                _isEditorModeByDefault = value;
+                OnPropertyChanged(nameof(IsEditorModeByDefault));
+            }
+        }
+
         public string TitleString
         {
             get
@@ -180,6 +193,7 @@ namespace Horker.Notebook.ViewModels
         {
             _control.Dispatcher.Invoke(() => {
                 r.Index = ItemCount;
+                r.IsEditorMode = _isEditorModeByDefault;
                 _control.AddRoundtrip(r, position);
             });
         }

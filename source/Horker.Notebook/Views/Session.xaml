@@ -14,6 +14,7 @@
         <RoutedCommand x:Key="RunCommand" />
         <RoutedCommand x:Key="RunAllCommand" />
         <RoutedCommand x:Key="CancelCommand" />
+        <RoutedCommand x:Key="EditorModeByDefaultCommand" />
     </UserControl.Resources>
 
     <UserControl.CommandBindings>
@@ -23,6 +24,7 @@
         <CommandBinding Command="{StaticResource RunCommand}" Executed="RunCommand_Execute"/>
         <CommandBinding Command="{StaticResource RunAllCommand}" Executed="RunAllCommand_Execute"/>
         <CommandBinding Command="{StaticResource CancelCommand}" Executed="CancelCommand_Execute"/>
+        <CommandBinding Command="{StaticResource EditorModeByDefaultCommand}" Executed="EditorModeByDefaultCommand_Execute"/>
     </UserControl.CommandBindings>
 
     <UserControl.InputBindings>
@@ -39,6 +41,9 @@
                     <MenuItem Header="_Save Session..." Command="{StaticResource SaveCommand}"/>
                     <MenuItem Header="Save Session _As..." Command="{StaticResource SaveAsCommand}"/>
                     <MenuItem Header="_Load Session..." Command="{StaticResource LoadCommand}"/>
+                </MenuItem>
+                <MenuItem Header="_Edit">
+                    <MenuItem Header="_Editor mode by default" x:Name="EditModeByDefault" IsCheckable="true" IsChecked="{Binding IsEditorModeByDefault}" Command="{StaticResource EditorModeByDefaultCommand}"/>
                 </MenuItem>
                 <MenuItem Header="_Run">
                     <MenuItem Header="_Run" InputGestureText="F5" Command="{StaticResource RunCommand}"/>
