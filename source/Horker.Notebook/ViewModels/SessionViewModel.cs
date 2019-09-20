@@ -158,6 +158,8 @@ namespace Horker.Notebook.ViewModels
         public SessionViewModel(Views.Session sessionControl)
         {
             _control = sessionControl;
+
+            _isEditorModeByDefault = true;
         }
 
         // Methods

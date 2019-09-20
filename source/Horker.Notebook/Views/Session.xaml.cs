@@ -17,6 +17,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Horker.Notebook.ViewModels;
+using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Editing;
 using Microsoft.Win32;
 
 namespace Horker.Notebook.Views
@@ -33,11 +35,14 @@ namespace Horker.Notebook.Views
 
         public Roundtrip GetActiveRoundtrip()
         {
-            var rtb = Keyboard.FocusedElement as RichTextBox;
-            var border = rtb?.Parent as Border;
+            var textArea = Keyboard.FocusedElement as TextArea;
+            var scrollView = textArea?.Parent as ScrollViewer;
+            var textEditor = scrollView?.TemplatedParent as TextEditor;
+            var border = textEditor?.Parent as Border;
             var grid1 = border?.Parent as Grid;
             var grid2 = grid1?.Parent as Grid;
             var r = grid2?.Parent as Roundtrip;
+
             return r;
         }
 
@@ -124,7 +129,7 @@ namespace Horker.Notebook.Views
 
         private void LoadCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog()
+            var openFileDialog = new OpenFileDialog()
             {
                 Filter = "PowerShell Notebook (*.nb.ps1)|*.nb.ps1",
                 InitialDirectory = Directory.GetCurrentDirectory()
@@ -152,7 +157,7 @@ namespace Horker.Notebook.Views
 
         private void EditorModeByDefaultCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-//            ViewModel.IsEditorModeByDefault = !ViewModel.IsEditorModeByDefault;
+            // Nothing to do
         }
     }
 }

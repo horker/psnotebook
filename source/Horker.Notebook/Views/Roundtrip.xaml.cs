@@ -16,6 +16,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Horker.Notebook.ViewModels;
+using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.AvalonEdit.Editing;
 
 namespace Horker.Notebook.Views
 {
@@ -27,7 +30,7 @@ namespace Horker.Notebook.Views
         {
             get
             {
-                // This getter can return null.
+                // It is possible that this getter will return null.
 
                 if (_outputScrollViewer == null)
                     _outputScrollViewer = Output.Template.FindName("PART_ContentHost", Output) as ScrollViewer;
@@ -48,6 +51,8 @@ namespace Horker.Notebook.Views
         {
             InitializeComponent();
 
+            InitializeCommandBindings();
+
             Container = container;
             DataContext = viewModel;
 
@@ -61,10 +66,61 @@ namespace Horker.Notebook.Views
 
         // Commands
 
+        public static readonly RoutedCommand EnterCommand = new RoutedCommand("EnterCommand", typeof(Roundtrip));
+        public static readonly RoutedCommand ShiftEnterCommand = new RoutedCommand("ShiftEnterCommand", typeof(Roundtrip));
+        public static readonly RoutedCommand CtrlEnterCommand = new RoutedCommand("CtrlEnterCommand", typeof(Roundtrip));
+        public static readonly RoutedCommand PreviousRoundtripCommand = new RoutedCommand("PreviousRoundtripCommnad", typeof(Roundtrip));
+        public static readonly RoutedCommand NextRoundtripCommand = new RoutedCommand("NextRoundtripCommand", typeof(Roundtrip));
+        public static readonly RoutedCommand InsertTabCommand = new RoutedCommand("InsertTabCommand", typeof(Roundtrip));
+        public static readonly RoutedCommand UpCommand = new RoutedCommand("UpCommand", typeof(Roundtrip));
+        public static readonly RoutedCommand DownCommand = new RoutedCommand("DownCommand", typeof(Roundtrip));
+        public static readonly RoutedCommand CursorToTopCommand = new RoutedCommand("CursorToTopCommand", typeof(Roundtrip));
+        public static readonly RoutedCommand CursorToBottomCommand = new RoutedCommand("CursorToBottomCommand", typeof(Roundtrip));
+
+        private void InitializeCommandBindings()
+        {
+            CommandBindings.Add(new CommandBinding(EnterCommand, EnterCommand_Execute));
+            CommandBindings.Add(new CommandBinding(ShiftEnterCommand, ShiftEnterCommand_Execute));
+            CommandBindings.Add(new CommandBinding(CtrlEnterCommand, CtrlEnterCommand_Execute));
+            CommandBindings.Add(new CommandBinding(PreviousRoundtripCommand, PreviousRoundtripCommand_Execute));
+            CommandBindings.Add(new CommandBinding(NextRoundtripCommand, NextRoundtripCommand_Execute));
+            CommandBindings.Add(new CommandBinding(InsertTabCommand, InsertTabCommand_Execute));
+            CommandBindings.Add(new CommandBinding(UpCommand, UpCommand_Execute));
+            CommandBindings.Add(new CommandBinding(DownCommand, DownCommand_Execute));
+            CommandBindings.Add(new CommandBinding(CursorToTopCommand, CursorToTopCommand_Execute));
+            CommandBindings.Add(new CommandBinding(CursorToBottomCommand, CursorToBottomCommand_Execute));
+        }
+
+        private void InitializeKeyBindings()
+        {
+            DefineKeyBinding(new KeyBinding(EnterCommand, new KeyGesture(Key.Enter)));
+            DefineKeyBinding(new KeyBinding(ShiftEnterCommand, new KeyGesture(Key.Enter, ModifierKeys.Shift)));
+            DefineKeyBinding(new KeyBinding(CtrlEnterCommand, new KeyGesture(Key.Enter, ModifierKeys.Control)));
+            DefineKeyBinding(new KeyBinding(PreviousRoundtripCommand, new KeyGesture(Key.Up, ModifierKeys.Control)));
+            DefineKeyBinding(new KeyBinding(NextRoundtripCommand, new KeyGesture(Key.Down, ModifierKeys.Control)));
+            DefineKeyBinding(new KeyBinding(InsertTabCommand, new KeyGesture(Key.Tab)));
+            DefineKeyBinding(new KeyBinding(UpCommand, new KeyGesture(Key.Up)));
+            DefineKeyBinding(new KeyBinding(DownCommand, new KeyGesture(Key.Down)));
+            DefineKeyBinding(new KeyBinding(CursorToTopCommand, new KeyGesture(Key.Left, ModifierKeys.Control)));
+            DefineKeyBinding(new KeyBinding(CursorToBottomCommand, new KeyGesture(Key.Right, ModifierKeys.Control)));
+        }
+
+        private void DefineKeyBinding(KeyBinding kb)
+        {
+            var editingKeyBindings = CommandLine.TextArea.DefaultInputHandler.Editing.InputBindings.OfType<KeyBinding>();
+
+            var existing = editingKeyBindings.FirstOrDefault(b => b.Key == kb.Key && b.Modifiers == kb.Modifiers);
+
+            if (existing != null)
+                CommandLine.TextArea.DefaultInputHandler.Editing.InputBindings.Remove(existing);
+
+            CommandLine.TextArea.DefaultInputHandler.Editing.InputBindings.Add(kb);
+        }
+
         private void EnterCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
             if (ViewModel.IsEditorMode)
-                EditingCommands.EnterParagraphBreak.Execute(null, CommandLine);
+                CommandLine.Document.Insert(CommandLine.CaretOffset, "\n");
             else
                 ViewModel.NotifyExecute(true);
         }
@@ -74,7 +130,7 @@ namespace Horker.Notebook.Views
             if (ViewModel.IsEditorMode)
                 ViewModel.NotifyExecute(true);
             else
-                EditingCommands.EnterParagraphBreak.Execute(null, CommandLine);
+                CommandLine.Document.Insert(CommandLine.CaretOffset, "\n");
         }
 
         private void CtrlEnterCommand_Execute(object sender, ExecutedRoutedEventArgs e)
@@ -82,7 +138,7 @@ namespace Horker.Notebook.Views
             if (ViewModel.IsEditorMode)
                 ViewModel.NotifyExecute(false);
             else
-                EditingCommands.EnterParagraphBreak.Execute(null, CommandLine);
+                CommandLine.Document.Insert(CommandLine.CaretOffset, "\n");
         }
 
         private void PreviousRoundtripCommand_Execute(object sender, ExecutedRoutedEventArgs e)
@@ -97,48 +153,33 @@ namespace Horker.Notebook.Views
 
         private void InsertTabCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            CommandLine.Selection.Text = "    ";
-            CommandLine.Selection.Select(CommandLine.Selection.End, CommandLine.Selection.End);
+            CommandLine.Document.Insert(CommandLine.CaretOffset, "    ");
         }
 
         private void UpCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            if (EditingCommands.MoveUpByLine.CanExecute(null, CommandLine))
-            {
-                var position = CommandLine.CaretPosition;
-                EditingCommands.MoveUpByLine.Execute(null, CommandLine);
-                if (position.CompareTo(CommandLine.CaretPosition) == 0)
-                    Container.MoveToPreviousRoundtrip();
-            }
-            else
-            {
+            var position = CommandLine.TextArea.Caret.Position;
+            --CommandLine.TextArea.Caret.Line;
+            if (position.CompareTo(CommandLine.TextArea.Caret.Position) == 0)
                 Container.MoveToPreviousRoundtrip();
-            }
         }
 
         private void DownCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            if (EditingCommands.MoveDownByLine.CanExecute(null, CommandLine))
-            {
-                var position = CommandLine.CaretPosition;
-                EditingCommands.MoveDownByLine.Execute(null, CommandLine);
-                if (position.CompareTo(CommandLine.CaretPosition) == 0)
-                    Container.MoveToNextRoundtrip();
-            }
-            else
-            {
+            var position = CommandLine.TextArea.Caret.Position;
+            ++CommandLine.TextArea.Caret.Line;
+            if (position.CompareTo(CommandLine.TextArea.Caret.Position) == 0)
                 Container.MoveToNextRoundtrip();
-            }
         }
 
         private void CursorToTopCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            var position = CommandLine.CaretPosition = CommandLine.Document.ContentStart;
+            CommandLine.TextArea.Caret.Offset = 0;
         }
 
         private void CursorToBottomCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            var position = CommandLine.CaretPosition = CommandLine.Document.ContentEnd;
+            CommandLine.TextArea.Caret.Offset = CommandLine.TextArea.Document.TextLength;
         }
 
         // Menu items
@@ -182,10 +223,6 @@ namespace Horker.Notebook.Views
 
         private void UpdateEditorMode()
         {
-            if (ViewModel.IsEditorMode)
-                CommandLineBorderRectangle.StrokeDashArray = new DoubleCollection(new double[] { 6, 4 });
-            else
-                CommandLineBorderRectangle.StrokeDashArray = null;
         }
 
         private void EditorMode_Click(object sender, RoutedEventArgs e)
@@ -198,14 +235,14 @@ namespace Horker.Notebook.Views
 
         private void RoundtripControl_Loaded(object sender, RoutedEventArgs e)
         {
-            var control = sender as Roundtrip;
+            ViewModel.Control = this;
 
-            ViewModel.Control = control;
+            InitializeKeyBindings();
+
+            CommandLine.Document.TextChanged += CommandLine_TextChanged;
 
             // Address RichTextBox's known limitation that its document's width is not stretched automatically.
             // (source: https://stackoverflow.com/questions/350863/wpf-richtextbox-with-no-width-set)
-
-            CommandLine.Document.PageWidth = Models.Configuration.ConsoleWidth;
             Output.Document.PageWidth = Models.Configuration.ConsoleWidth;
 
             CommandLine.Focus();
@@ -215,7 +252,10 @@ namespace Horker.Notebook.Views
 
         private void CommandLine_GotKeyboardFocus(object sender, RoutedEventArgs e)
         {
-            CommandLine.Background = Brushes.FloralWhite;
+            if (ViewModel.IsEditorMode)
+                CommandLine.Background = Brushes.FloralWhite;
+            else
+                CommandLine.Background = Brushes.Beige;
         }
 
         private void CommandLine_LostKeyboardFocus(object sender, RoutedEventArgs e)
@@ -234,7 +274,7 @@ namespace Horker.Notebook.Views
             }
         }
 
-        private void CommandLine_TextChanged(object sender, TextChangedEventArgs e)
+        private void CommandLine_TextChanged(object sender, EventArgs e)
         {
             if (Container != null && Container.ViewModel != null)
                 Container.ViewModel.IsTextChanged = true;
@@ -243,43 +283,44 @@ namespace Horker.Notebook.Views
         // Helper methods
         // https://stackoverflow.com/questions/12787513/how-to-transfer-data-from-richtextbox-to-another-richtextbox-wpf-c-sharp
         // These methods are not used in the current version. Kept for future use.
+        /*
+                private static string GetRtfStringFromFlowDocument(FlowDocument doc)
+                {
+                    TextRange textRange = new TextRange(doc.ContentStart, doc.ContentEnd);
+                    MemoryStream ms = new MemoryStream();
+                    textRange.Save(ms, DataFormats.Rtf);
 
-        private static string GetRtfStringFromFlowDocument(FlowDocument doc)
-        {
-            TextRange textRange = new TextRange(doc.ContentStart, doc.ContentEnd);
-            MemoryStream ms = new MemoryStream();
-            textRange.Save(ms, DataFormats.Rtf);
+                    return Encoding.Default.GetString(ms.ToArray());
+                }
 
-            return Encoding.Default.GetString(ms.ToArray());
-        }
+                private static FlowDocument CreateFlowDocument(string richTextString)
+                {
+                    FlowDocument fd = new FlowDocument();
+                    MemoryStream ms = new MemoryStream(Encoding.ASCII.GetBytes(richTextString));
+                    TextRange textRange = new TextRange(fd.ContentStart, fd.ContentEnd);
+                    textRange.Load(ms, DataFormats.Rtf);
 
-        private static FlowDocument CreateFlowDocument(string richTextString)
-        {
-            FlowDocument fd = new FlowDocument();
-            MemoryStream ms = new MemoryStream(Encoding.ASCII.GetBytes(richTextString));
-            TextRange textRange = new TextRange(fd.ContentStart, fd.ContentEnd);
-            textRange.Load(ms, DataFormats.Rtf);
+                    return fd;
+                }
 
-            return fd;
-        }
+                public static FlowDocument CopyFlowDocument(FlowDocument doc)
+                {
+                    var s = GetRtfStringFromFlowDocument(doc);
+                    return CreateFlowDocument(s);
+                }
 
-        public static FlowDocument CopyFlowDocument(FlowDocument doc)
-        {
-            var s = GetRtfStringFromFlowDocument(doc);
-            return CreateFlowDocument(s);
-        }
+                public static void SwapControlContent(Roundtrip r1, Roundtrip r2)
+                {
+                    var outputDoc1 = CopyFlowDocument(r1.Output.Document);
+                    var outputDoc2 = CopyFlowDocument(r2.Output.Document);
+                    r1.Output.Document = outputDoc2;
+                    r2.Output.Document = outputDoc1;
 
-        public static void SwapControlContent(Roundtrip r1, Roundtrip r2)
-        {
-            var outputDoc1 = CopyFlowDocument(r1.Output.Document);
-            var outputDoc2 = CopyFlowDocument(r2.Output.Document);
-            r1.Output.Document = outputDoc2;
-            r2.Output.Document = outputDoc1;
-
-            var commandLineDoc1 = CopyFlowDocument(r1.CommandLine.Document);
-            var commandLineDoc2 = CopyFlowDocument(r2.CommandLine.Document);
-            r1.CommandLine.Document = commandLineDoc2;
-            r2.CommandLine.Document = commandLineDoc1;
-        }
+                    var commandLineDoc1 = CopyFlowDocument(r1.CommandLine.Document);
+                    var commandLineDoc2 = CopyFlowDocument(r2.CommandLine.Document);
+                    r1.CommandLine.Document = commandLineDoc2;
+                    r2.CommandLine.Document = commandLineDoc1;
+                }
+                */
     }
 }

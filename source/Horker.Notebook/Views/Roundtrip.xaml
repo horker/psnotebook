@@ -8,32 +8,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="RoundtripControl_Loaded" PreviewMouseWheel="Roundtrip_PreviewMouseWheel">
 
-    <UserControl.Resources>
-        <RoutedCommand x:Key="EnterCommand" />
-        <RoutedCommand x:Key="ShiftEnterCommand" />
-        <RoutedCommand x:Key="CtrlEnterCommand" />
-        <RoutedCommand x:Key="PreviousRoundtripCommand" />
-        <RoutedCommand x:Key="NextRoundtripCommand" />
-        <RoutedCommand x:Key="InsertTabCommand" />
-        <RoutedCommand x:Key="UpCommand" />
-        <RoutedCommand x:Key="DownCommand" />
-        <RoutedCommand x:Key="CursorToTopCommand" />
-        <RoutedCommand x:Key="CursorToBottomCommand" />
-    </UserControl.Resources>
-
-    <UserControl.CommandBindings>
-        <CommandBinding Command="{StaticResource EnterCommand}" Executed="EnterCommand_Execute"/>
-        <CommandBinding Command="{StaticResource ShiftEnterCommand}" Executed="ShiftEnterCommand_Execute"/>
-        <CommandBinding Command="{StaticResource CtrlEnterCommand}" Executed="CtrlEnterCommand_Execute"/>
-        <CommandBinding Command="{StaticResource PreviousRoundtripCommand}" Executed="PreviousRoundtripCommand_Execute"/>
-        <CommandBinding Command="{StaticResource NextRoundtripCommand}" Executed="NextRoundtripCommand_Execute"/>
-        <CommandBinding Command="{StaticResource InsertTabCommand}" Executed="InsertTabCommand_Execute"/>
-        <CommandBinding Command="{StaticResource UpCommand}" Executed="UpCommand_Execute"/>
-        <CommandBinding Command="{StaticResource DownCommand}" Executed="DownCommand_Execute"/>
-        <CommandBinding Command="{StaticResource CursorToTopCommand}" Executed="CursorToTopCommand_Execute"/>
-        <CommandBinding Command="{StaticResource CursorToBottomCommand}" Executed="CursorToBottomCommand_Execute"/>
-    </UserControl.CommandBindings>
-
     <Grid Margin="0,1">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -62,9 +36,23 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+            <Border BorderThickness="1" BorderBrush="#FFABADB3">
+                <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+                                   x:Name="CommandLine"
+                                   FontFamily="{x:Static models:Configuration.FontFamily}"
+                                   FontSize="{x:Static models:Configuration.FontSize}"
+                                   SyntaxHighlighting="PowerShell"
+                                   ShowLineNumbers="true"
+                                   HorizontalScrollBarVisibility="Hidden"
+                                   VerticalScrollBarVisibility="Hidden"
+                                   Background="WhiteSmoke"
+                                   GotKeyboardFocus="CommandLine_GotKeyboardFocus"
+                                   LostKeyboardFocus="CommandLine_LostKeyboardFocus" />
+            </Border>
 
+                <!--
             <Border BorderThickness="2">
-                <!--https://stackoverflow.com/questions/6195395/how-can-i-achieve-a-dashed-or-dotted-border-in-wpf -->
+                <!- https://stackoverflow.com/questions/6195395/how-can-i-achieve-a-dashed-or-dotted-border-in-wpf ->
                 <Border.BorderBrush>
                     <VisualBrush>
                         <VisualBrush.Visual>
@@ -99,7 +87,7 @@
                     </FlowDocument>
                 </RichTextBox>
             </Border>
-
+-->
             <FlowDocumentScrollViewer Grid.Row="1" x:Name="Output" VerticalAlignment="Top" MaxHeight="{x:Static models:Configuration.MaxOutputHeight}" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" VerticalScrollBarVisibility="Auto" Margin="5,2,5,0" Visibility="Collapsed" MinWidth="{x:Static models:Configuration.CommandLineWidth}" BorderBrush="Gray">
                 <FlowDocument PagePadding="0">
                     <FlowDocument.Resources>

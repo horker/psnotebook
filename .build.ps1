@@ -17,6 +17,7 @@ $MODULE_PATH_DEBUG = "$PSScriptRoot\module\debug\psnotebook"
 $SOLUTION_FILE = "$PSScriptRoot\source\notebook.sln"
 
 $OBJECT_FILES = @(
+    "ICSharpCode.AvalonEdit.dll"
     "Horker.Notebook.dll"
     "Horker.Notebook.pdb"
     "NotebookApp.exe"

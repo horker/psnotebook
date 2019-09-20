@@ -1,9 +1,11 @@
-correct line number and column on errors
-show processing command line
-removing character decoration on pasting text
 stop word wrap
 resize output pane
 "Scroll to top" and "Scroll to bottom" icons in the output area
+set focus when the notebook window is activated
+save/load Editor mode status
+change editor mode display (show small icon for example)
+start new session
+reload current session
 
 invalidate "Delete this" in the context menu when there is one roundtrip
 Display an error correctly when $ErrorActionPreference = "Stop"
@@ -25,6 +27,10 @@ undo
 Emacs mode
 native executable example: git clone, doxygen incubator-mxnet
 
+DONE removing character decoration on pasting text
+DONE show processing command line
+DONE Use Avalon edit: line number
+DONE correct line number and column on errors
 DONE move roundtrip up and down
 DONE show unsaved content (*)
 DONE execution lock icons (return doesn't occur execution) "Editor mode"
