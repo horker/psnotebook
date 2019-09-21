@@ -56,6 +56,8 @@ namespace Horker.Notebook.Models
 
         public static bool IgnoreBackgroundColor => true;
 
+        public static bool InlineCompletion = true;
+
         // Helper methods
 
         private static double GetWidthBasedOnNumberOfCharacters(int charCount)

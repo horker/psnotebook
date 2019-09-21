@@ -312,10 +312,14 @@ namespace Horker.Notebook.Views
         // Code completion
 
         private CompletionWindow _completionWindow;
+        private bool _inlineCompletion;
+        private int _completionStartOffset;
+        private int _completionEndOffset;
 
         void InitializeCodeCompletion()
         {
             CommandLine.TextArea.TextEntering += CommandLine_TextEntering;
+            _inlineCompletion = Models.Configuration.InlineCompletion;
         }
 
         void OpenCompletionWindow(CommandCompletion completion, bool byUserAction)
@@ -345,9 +349,25 @@ namespace Horker.Notebook.Views
 
                     e.Handled = true;
                 }
-                else if (e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Left || e.Key == Key.Right)
+                else if (_inlineCompletion && (e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Left || e.Key == Key.Right))
                     _completionWindow.Close();
             };
+
+            if (_inlineCompletion)
+            {
+                _completionWindow.CompletionList.ListBox.SelectionChanged += (object sender, SelectionChangedEventArgs e) => {
+                    if (e.AddedItems.Count > 0)
+                    {
+                        var item = e.AddedItems[0] as CompletionData;
+                        if (item.NoCompletionFound)
+                            return;
+
+                        CommandLine.TextArea.Document.Replace(_completionStartOffset, CommandLine.CaretOffset - _completionStartOffset, item.Text);
+                    }
+                };
+
+                _completionWindow.CompletionList.IsFiltering = false;
+            }
 
             IList<ICompletionData> data = _completionWindow.CompletionList.CompletionData;
 
@@ -357,17 +377,26 @@ namespace Horker.Notebook.Views
             }
             else
             {
-                foreach (var result in completion.CompletionMatches)
-                    data.Add(new CompletionData(result));
+                _completionStartOffset = completion.ReplacementIndex;
+                _completionEndOffset = CommandLine.CaretOffset;
 
-                _completionWindow.StartOffset = completion.ReplacementIndex;
+                foreach (var result in completion.CompletionMatches)
+                    data.Add(new CompletionData(result, _completionStartOffset, _completionEndOffset));
+
+                if (_inlineCompletion)
+                {
+                    var offset = completion.ReplacementIndex;
+                    var length = CommandLine.CaretOffset - offset;
+                    data.Add(new CompletionData(CommandLine.Document.GetText(offset, length), "<pre-completion text>", _completionStartOffset, _completionEndOffset));
+
+                    _completionWindow.StartOffset = _completionStartOffset;
+                }
 
                 if (byUserAction)
                     _completionWindow.CompletionList.SelectedItem = data[0];
             }
 
-            _completionWindow.Closed += delegate
-            {
+            _completionWindow.Closed += (object sender, EventArgs e) => {
                 _completionWindow = null;
             };
 
@@ -378,11 +407,18 @@ namespace Horker.Notebook.Views
         {
             if (e.Text.Length > 0 && _completionWindow != null)
             {
-                if (!char.IsLetterOrDigit(e.Text[0]))
+                if (_inlineCompletion)
                 {
-                    // Whenever a non-letter is typed while the completion window is open,
-                    // insert the currently selected element.
-                    _completionWindow.CompletionList.RequestInsertion(e);
+                    _completionWindow.Close();
+                }
+                else
+                {
+                    if (!char.IsLetterOrDigit(e.Text[0]))
+                    {
+                        // Whenever a non-letter is typed while the completion window is open,
+                        // insert the currently selected element.
+                        _completionWindow.CompletionList.RequestInsertion(e);
+                    }
                 }
             }
             // Do not set e.Handled=true.

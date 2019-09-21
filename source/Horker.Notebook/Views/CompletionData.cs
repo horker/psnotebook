@@ -12,19 +12,32 @@ namespace Horker.Notebook.Views
 {
     public class CompletionData : ICompletionData
     {
-        private bool _noCompletionFound;
+        public int FirstOffset { get; private set; }
+        public int EndOffset { get; private set; }
+
+        public bool NoCompletionFound;
 
         public CompletionData()
         {
-            Text = "<No completion found>";
-            Description = "No completion found";
-            _noCompletionFound = true;
+            Text = "(No completion found)";
+            Description = null;
+            NoCompletionFound = true;
         }
 
-        public CompletionData(CompletionResult result)
+        public CompletionData(CompletionResult result, int firstOffset, int endOffset)
         {
             Text = result.CompletionText;
             Description = result.ToolTip;
+            FirstOffset = firstOffset;
+            EndOffset = endOffset;
+        }
+
+        public CompletionData(string text, string description, int firstOffset, int endOffset)
+        {
+            Text = text;
+            Description = description;
+            FirstOffset = firstOffset;
+            EndOffset = endOffset;
         }
 
         public System.Windows.Media.ImageSource Image => null;
@@ -40,10 +53,10 @@ namespace Horker.Notebook.Views
 
         public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)
         {
-            if (_noCompletionFound)
+            if (NoCompletionFound)
                 return;
 
-            textArea.Document.Replace(completionSegment, Text);
+            textArea.Document.Replace(FirstOffset, EndOffset - FirstOffset, Text);
         }
     }
 }
