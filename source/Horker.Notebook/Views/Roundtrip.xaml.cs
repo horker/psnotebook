@@ -22,6 +22,7 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
+using ICSharpCode.AvalonEdit.Indentation;
 
 namespace Horker.Notebook.Views
 {
@@ -54,6 +55,7 @@ namespace Horker.Notebook.Views
         {
             InitializeComponent();
 
+            InitializeCommandLine();
             InitializeCommandBindings();
             InitializeKeyBindings();
             InitializeCodeCompletion();
@@ -63,17 +65,30 @@ namespace Horker.Notebook.Views
             viewModel.Control = this;
 
             UpdateEditorMode();
-
-            CommandLine.Document.TextChanged += CommandLine_Document_TextChanged;
-
-            CommandLine.TextArea.Caret.PositionChanged += (object s, EventArgs ee) => {
-                CommandLine.TextArea.Caret.BringCaretToView();
-            };
         }
+
+        // Helper
 
         public void ScrollToBottom()
         {
             OutputScrollViewer?.ScrollToBottom();
+        }
+
+        // Initialization
+
+        private void InitializeCommandLine()
+        {
+            CommandLine.WordWrap = true;
+            CommandLine.TextArea.Options.ConvertTabsToSpaces = true;
+
+            CommandLine.TextArea.IndentationStrategy = new PowerShellIndentationStrategy(CommandLine.TextArea.Options);
+
+            CommandLine.Document.TextChanged += CommandLine_Document_TextChanged;
+            CommandLine.TextArea.TextEntering += CommandLine_TextArea_TextEntering;
+
+            CommandLine.TextArea.Caret.PositionChanged += (object s, EventArgs ee) => {
+                CommandLine.TextArea.Caret.BringCaretToView();
+            };
         }
 
         // Commands
@@ -132,7 +147,7 @@ namespace Horker.Notebook.Views
         private void EnterCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
             if (ViewModel.IsEditorMode)
-                CommandLine.Document.Insert(CommandLine.CaretOffset, "\n");
+                CommandLine.TextArea.PerformTextInput("\n");
             else
                 ViewModel.NotifyExecute(true);
         }
@@ -142,7 +157,7 @@ namespace Horker.Notebook.Views
             if (ViewModel.IsEditorMode)
                 ViewModel.NotifyExecute(true);
             else
-                CommandLine.Document.Insert(CommandLine.CaretOffset, "\n");
+                CommandLine.TextArea.PerformTextInput("\n");
         }
 
         private void CtrlEnterCommand_Execute(object sender, ExecutedRoutedEventArgs e)
@@ -150,7 +165,7 @@ namespace Horker.Notebook.Views
             if (ViewModel.IsEditorMode)
                 ViewModel.NotifyExecute(false);
             else
-                CommandLine.Document.Insert(CommandLine.CaretOffset, "\n");
+                CommandLine.TextArea.PerformTextInput("\n");
         }
 
         private void PreviousRoundtripCommand_Execute(object sender, ExecutedRoutedEventArgs e)
@@ -179,7 +194,7 @@ namespace Horker.Notebook.Views
             }
 
             if (allWhitespace)
-                CommandLine.Document.Insert(CommandLine.CaretOffset, "    ");
+                CommandLine.TextArea.PerformTextInput(CommandLine.TextArea.Options.IndentationString);
             else
             {
                 if (ViewModel.RequestCodeCompletion(CommandLine.Text, CommandLine.CaretOffset) == false)
@@ -306,6 +321,28 @@ namespace Horker.Notebook.Views
             }
         }
 
+        void CommandLine_TextArea_TextEntering(object sender, TextCompositionEventArgs e)
+        {
+            if (e.Text.Length > 0 && _completionWindow != null)
+            {
+                if (_inlineCompletion)
+                {
+                    _completionWindow.Close();
+                }
+                else
+                {
+                    if (!char.IsLetterOrDigit(e.Text[0]))
+                    {
+                        // Whenever a non-letter is typed while the completion window is open,
+                        // insert the currently selected element.
+                        _completionWindow.CompletionList.RequestInsertion(e);
+                    }
+                }
+            }
+            // Do not set e.Handled=true.
+            // We still want to insert the character that was typed.
+        }
+
         private void CommandLine_Document_TextChanged(object sender, EventArgs e)
         {
             if (Container != null && Container.ViewModel != null)
@@ -321,7 +358,6 @@ namespace Horker.Notebook.Views
 
         void InitializeCodeCompletion()
         {
-            CommandLine.TextArea.TextEntering += CommandLine_TextEntering;
             _inlineCompletion = Models.Configuration.InlineCompletion;
         }
 
@@ -404,28 +440,6 @@ namespace Horker.Notebook.Views
             };
 
             _completionWindow.Show();
-        }
-
-        void CommandLine_TextEntering(object sender, TextCompositionEventArgs e)
-        {
-            if (e.Text.Length > 0 && _completionWindow != null)
-            {
-                if (_inlineCompletion)
-                {
-                    _completionWindow.Close();
-                }
-                else
-                {
-                    if (!char.IsLetterOrDigit(e.Text[0]))
-                    {
-                        // Whenever a non-letter is typed while the completion window is open,
-                        // insert the currently selected element.
-                        _completionWindow.CompletionList.RequestInsertion(e);
-                    }
-                }
-            }
-            // Do not set e.Handled=true.
-            // We still want to insert the character that was typed.
         }
 
         // Helper methods
