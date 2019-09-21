@@ -8,7 +8,7 @@ Set-StrictMode -Version 4
 
 $PROJECT_NAME = "psnotebook"
 
-$SOURCE_PATH = "$PSScriptRoot\source\NotebookApp\bin"
+$SOURCE_PATH = "$PSScriptRoot\source\NotebookApp\bin\x64"
 $SCRIPT_PATH = "$PSScriptRoot\scripts"
 
 $MODULE_PATH = "$PSScriptRoot\module\psnotebook"
@@ -88,8 +88,8 @@ function Remove-Item2 {
 ############################################################
 
 task Compile {
-  msbuild $SOLUTION_FILE /p:Configuration=Debug /nologo /v:minimal
-  msbuild $SOLUTION_FILE /p:Configuration=Release /nologo /v:minimal
+  msbuild $SOLUTION_FILE /p:Configuration=Debug /p:Platform=x64 /nologo /v:minimal
+  msbuild $SOLUTION_FILE /p:Configuration=Release /p:Platform=x64 /nologo /v:minimal
 }
 
 task Build {
