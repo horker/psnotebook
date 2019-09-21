@@ -50,44 +50,6 @@
                                    LostKeyboardFocus="CommandLine_LostKeyboardFocus" />
             </Border>
 
-                <!--
-            <Border BorderThickness="2">
-                <!- https://stackoverflow.com/questions/6195395/how-can-i-achieve-a-dashed-or-dotted-border-in-wpf ->
-                <Border.BorderBrush>
-                    <VisualBrush>
-                        <VisualBrush.Visual>
-                            <Rectangle x:Name="CommandLineBorderRectangle" StrokeDashArray="{x:Null}" Stroke="#FFABADB3" StrokeThickness="1"
-                  Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualWidth}"
-                  Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=ActualHeight}"/>
-                        </VisualBrush.Visual>
-                    </VisualBrush>
-                </Border.BorderBrush>
-                <RichTextBox Grid.Row="0" x:Name="CommandLine" VerticalAlignment="Top" Background="WhiteSmoke" MinHeight="20" AcceptsReturn="true" AcceptsTab="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" MinWidth="{x:Static models:Configuration.CommandLineWidth}" GotKeyboardFocus="CommandLine_GotKeyboardFocus" LostKeyboardFocus="CommandLine_LostKeyboardFocus" BorderThickness="0" TextChanged="CommandLine_TextChanged">
-                    <RichTextBox.InputBindings>
-                        <KeyBinding Gesture="Enter" Command="{StaticResource EnterCommand}"/>
-                        <KeyBinding Gesture="Shift+Enter" Command="{StaticResource ShiftEnterCommand}"/>
-                        <KeyBinding Gesture="Ctrl+Enter" Command="{StaticResource CtrlEnterCommand}"/>
-                        <KeyBinding Gesture="Ctrl+Up" Command="{StaticResource PreviousRoundtripCommand}"/>
-                        <KeyBinding Gesture="Ctrl+Down" Command="{StaticResource NextRoundtripCommand}"/>
-                        <KeyBinding Gesture="Tab" Command="{StaticResource InsertTabCommand}"/>
-                        <KeyBinding Gesture="Up" Command="{StaticResource UpCommand}"/>
-                        <KeyBinding Gesture="Down" Command="{StaticResource DownCommand}"/>
-                        <KeyBinding Gesture="Ctrl+Left" Command="{StaticResource CursorToTopCommand}"/>
-                        <KeyBinding Gesture="Ctrl+Right" Command="{StaticResource CursorToBottomCommand}"/>
-                    </RichTextBox.InputBindings>
-
-                    <FlowDocument PagePadding="0">
-                        <FlowDocument.Resources>
-                            <Style TargetType="{x:Type Paragraph}">
-                                <Setter Property="Margin" Value="0"/>
-                                <Setter Property="Padding" Value="0"/>
-                                <Setter Property="TextAlignment" Value="Left"/>
-                            </Style>
-                        </FlowDocument.Resources>
-                    </FlowDocument>
-                </RichTextBox>
-            </Border>
--->
             <FlowDocumentScrollViewer Grid.Row="1" x:Name="Output" VerticalAlignment="Top" MaxHeight="{x:Static models:Configuration.MaxOutputHeight}" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" VerticalScrollBarVisibility="Auto" Margin="5,2,5,0" Visibility="Collapsed" MinWidth="{x:Static models:Configuration.CommandLineWidth}" BorderBrush="Gray">
                 <FlowDocument PagePadding="0">
                     <FlowDocument.Resources>
