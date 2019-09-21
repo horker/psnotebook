@@ -10,26 +10,29 @@ namespace Horker.Notebook.Models
 {
     public class ExecutionQueueItem
     {
-        private static ExecutionQueueItem _loadSessionRequest = new ExecutionQueueItem(null, false);
+    }
+
+    public class ExecutionRequest : ExecutionQueueItem
+    {
+        private static ExecutionRequest _loadSessionRequest = new ExecutionRequest(null, false);
 
         public Roundtrip Roundtrip { get; set; }
         public bool MoveToNext { get; set; }
 
-        public ExecutionQueueItem(Roundtrip r, bool moveToNext)
+        public ExecutionRequest(Roundtrip r, bool moveToNext)
         {
             Roundtrip = r;
             MoveToNext = moveToNext;
         }
 
-        public static ExecutionQueueItem GetLoadSessionRequest()
+        public static ExecutionRequest GetLoadSessionRequest()
         {
             return _loadSessionRequest;
         }
+    }
 
-        public bool IsLoadSessionRequest()
-        {
-            return ReferenceEquals(this, _loadSessionRequest);
-        }
+    public class LoadSessionRequest : ExecutionQueueItem
+    {
     }
 
     public class ExecutionQueue
@@ -45,14 +48,14 @@ namespace Horker.Notebook.Models
             _cancellationToken = _cancellationTokenSource.Token;
         }
 
-        public void Enqueue(Roundtrip r, bool moveToNext)
+        public void Enqueue(ExecutionQueueItem item)
         {
-            _queue.Add(new ExecutionQueueItem(r, moveToNext), _cancellationToken);
+            _queue.Add(item, _cancellationToken);
         }
 
-        public void EnqueueLoadSessionRequest()
+        public bool IsEmpty()
         {
-            _queue.Add(ExecutionQueueItem.GetLoadSessionRequest(), _cancellationToken);
+            return _queue.Count == 0;
         }
 
         public ExecutionQueueItem Dequeue()

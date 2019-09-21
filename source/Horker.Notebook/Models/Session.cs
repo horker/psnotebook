@@ -151,13 +151,20 @@ namespace Horker.Notebook.Models
 
                     var queueItem = _executionQueue.Dequeue();
 
-                    if (queueItem.IsLoadSessionRequest())
+                    if (queueItem is LoadSessionRequest)
                     {
                         LoadSession();
                         continue;
                     }
 
-                    roundtrip = queueItem.Roundtrip;
+                    if (queueItem is CodeCompletionRequest codeCompletionRequest)
+                    {
+                        DoCodeCompletion(codeCompletionRequest);
+                        continue;
+                    }
+
+                    var request = queueItem as ExecutionRequest;
+                    roundtrip = request.Roundtrip;
                     SessionViewModel.ActiveOutput = roundtrip.ViewModel;
 
                     var commandLine = roundtrip.ViewModel.CommandLine;
@@ -201,7 +208,7 @@ namespace Horker.Notebook.Models
                     _sessionViewModel.HideProgress();
                     roundtrip.ViewModel.ShowEditing();
 
-                    if (queueItem.MoveToNext)
+                    if (request.MoveToNext)
                     {
                         if (_sessionViewModel.IsLastItem(roundtrip.ViewModel))
                             CreateNewRoundtrip(true);
@@ -345,7 +352,15 @@ namespace Horker.Notebook.Models
         public void EnqueueLoadSessionRequest(string fileName)
         {
             _sessionViewModel.FileName = fileName;
-            _executionQueue.EnqueueLoadSessionRequest();
+            _executionQueue.Enqueue( new LoadSessionRequest());
+        }
+
+        // Code completion
+
+        private void DoCodeCompletion(CodeCompletionRequest request)
+        {
+            var result = CommandCompletion.CompleteInput(request.Input, request.CaretOffset, null, _powerShell);
+            request.CompletionResult = result;
         }
     }
 }

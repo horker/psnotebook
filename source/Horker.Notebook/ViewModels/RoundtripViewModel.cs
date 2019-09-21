@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Management.Automation;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -223,6 +224,16 @@ namespace Horker.Notebook.ViewModels
         {
             SessionViewModel.ActiveOutput = this;
             Model.NotifyExecute(moveToNext);
+        }
+
+        public bool RequestCodeCompletion(string input, int caretOffset)
+        {
+            return Model.RequestCodeCompletion(input, caretOffset);
+        }
+
+        public CommandCompletion WaitForCodeCompletion()
+        {
+            return Model.WaitForCodeCompletion();
         }
 
         public void Focus()

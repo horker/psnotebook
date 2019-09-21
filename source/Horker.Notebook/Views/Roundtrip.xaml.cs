@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Management.Automation;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,12 +12,14 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Horker.Notebook.ViewModels;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
 
@@ -52,6 +55,7 @@ namespace Horker.Notebook.Views
             InitializeComponent();
 
             InitializeCommandBindings();
+            InitializeCodeCompletion();
 
             Container = container;
             DataContext = viewModel;
@@ -153,7 +157,32 @@ namespace Horker.Notebook.Views
 
         private void InsertTabCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            CommandLine.Document.Insert(CommandLine.CaretOffset, "    ");
+            var line = CommandLine.Document.GetLineByOffset(CommandLine.CaretOffset);
+            var bol = CommandLine.Document.GetText(line.Offset, CommandLine.CaretOffset - line.Offset);
+
+            var allWhitespace = true;
+            foreach (var ch in bol)
+            {
+                if (!char.IsWhiteSpace(ch))
+                {
+                    allWhitespace = false;
+                    break;
+                }
+            }
+
+            if (allWhitespace)
+                CommandLine.Document.Insert(CommandLine.CaretOffset, "    ");
+            else
+            {
+                if (ViewModel.RequestCodeCompletion(CommandLine.Text, CommandLine.CaretOffset) == false)
+                    OpenCompletionWindow(null, true);
+
+                else
+                {
+                    var completion = ViewModel.WaitForCodeCompletion();
+                    OpenCompletionWindow(completion, true);
+                }
+            }
         }
 
         private void UpCommand_Execute(object sender, ExecutedRoutedEventArgs e)
@@ -278,6 +307,86 @@ namespace Horker.Notebook.Views
         {
             if (Container != null && Container.ViewModel != null)
                 Container.ViewModel.IsTextChanged = true;
+        }
+
+        // Code completion
+
+        private CompletionWindow _completionWindow;
+
+        void InitializeCodeCompletion()
+        {
+            CommandLine.TextArea.TextEntering += CommandLine_TextEntering;
+        }
+
+        void OpenCompletionWindow(CommandCompletion completion, bool byUserAction)
+        {
+            if (!byUserAction && (completion == null || completion.CompletionMatches.Count == 0))
+                return;
+
+            _completionWindow = new CompletionWindow(CommandLine.TextArea)
+            {
+                FontFamily = Models.Configuration.FontFamily,
+                SizeToContent = SizeToContent.WidthAndHeight,
+                MinWidth = 75,
+                MaxWidth = 500
+            };
+
+            _completionWindow.PreviewKeyDown += (object sender, KeyEventArgs e) => {
+                if (e.Key == Key.Tab)
+                {
+                    var listBox = _completionWindow?.CompletionList?.ListBox;
+                    if (listBox == null)
+                        return;
+
+                    if (listBox.SelectedIndex == listBox.Items.Count - 1)
+                        listBox.SelectedIndex = 0;
+                    else
+                        listBox.SelectIndex(listBox.SelectedIndex + 1);
+
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Left || e.Key == Key.Right)
+                    _completionWindow.Close();
+            };
+
+            IList<ICompletionData> data = _completionWindow.CompletionList.CompletionData;
+
+            if (completion == null || completion.CompletionMatches.Count == 0)
+            {
+                data.Add(new CompletionData());
+            }
+            else
+            {
+                foreach (var result in completion.CompletionMatches)
+                    data.Add(new CompletionData(result));
+
+                _completionWindow.StartOffset = completion.ReplacementIndex;
+
+                if (byUserAction)
+                    _completionWindow.CompletionList.SelectedItem = data[0];
+            }
+
+            _completionWindow.Closed += delegate
+            {
+                _completionWindow = null;
+            };
+
+            _completionWindow.Show();
+        }
+
+        void CommandLine_TextEntering(object sender, TextCompositionEventArgs e)
+        {
+            if (e.Text.Length > 0 && _completionWindow != null)
+            {
+                if (!char.IsLetterOrDigit(e.Text[0]))
+                {
+                    // Whenever a non-letter is typed while the completion window is open,
+                    // insert the currently selected element.
+                    _completionWindow.CompletionList.RequestInsertion(e);
+                }
+            }
+            // Do not set e.Handled=true.
+            // We still want to insert the character that was typed.
         }
 
         // Helper methods

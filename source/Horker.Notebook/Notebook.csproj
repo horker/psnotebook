@@ -67,6 +67,7 @@
     <Compile Include="Cmdlets\NewWpfImage.cs" />
     <Compile Include="Cmdlets\OutNotebookString.cs" />
     <Compile Include="Cmdlets\StartNotebook.cs" />
+    <Compile Include="Models\CodeCompletionRequest.cs" />
     <Compile Include="Models\Configuration.cs" />
     <Compile Include="Models\ExecutionQueue.cs" />
     <Compile Include="Models\Roundtrip.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="ViewModels\ConsoleColorToBrushConverter.cs" />
     <Compile Include="ViewModels\RoundtripViewModel.cs" />
     <Compile Include="ViewModels\SessionViewModel.cs" />
+    <Compile Include="Views\CompletionData.cs" />
     <Compile Include="Views\Roundtrip.xaml.cs">
       <DependentUpon>Roundtrip.xaml</DependentUpon>
     </Compile>
