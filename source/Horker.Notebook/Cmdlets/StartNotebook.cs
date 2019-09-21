@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Text;
@@ -12,7 +14,11 @@ namespace Horker.Notebook.Cmdlets
     {
         protected override void BeginProcessing()
         {
-            Models.Startup.Start();
+            var path = typeof(StartNotebook).Assembly.Location;
+            path = path.Substring(0, path.LastIndexOf("\\"));
+            path = Path.Combine(path, "NotebookApp.exe");
+
+            Process.Start(path);
         }
     }
 }
