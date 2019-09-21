@@ -29,6 +29,7 @@ namespace Horker.Notebook.Views
     public partial class Roundtrip : UserControl
     {
         private ScrollViewer _outputScrollViewer;
+        private PowerShellIndentationStrategy _indentationStrategy;
 
         private ScrollViewer OutputScrollViewer
         {
@@ -81,7 +82,8 @@ namespace Horker.Notebook.Views
             CommandLine.WordWrap = true;
             CommandLine.TextArea.Options.ConvertTabsToSpaces = true;
 
-            CommandLine.TextArea.IndentationStrategy = new PowerShellIndentationStrategy(CommandLine.TextArea.Options);
+            _indentationStrategy = new PowerShellIndentationStrategy(CommandLine.TextArea.Options);
+            CommandLine.TextArea.IndentationStrategy = _indentationStrategy;
 
             CommandLine.Document.TextChanged += CommandLine_Document_TextChanged;
             CommandLine.TextArea.TextEntering += CommandLine_TextArea_TextEntering;
@@ -323,7 +325,12 @@ namespace Horker.Notebook.Views
 
         void CommandLine_TextArea_TextEntering(object sender, TextCompositionEventArgs e)
         {
-            if (e.Text.Length > 0 && _completionWindow != null)
+            if (e.Text.Length <= 0)
+                return;
+
+            // Completion window
+
+            if (_completionWindow != null)
             {
                 if (_inlineCompletion)
                 {
@@ -338,9 +345,16 @@ namespace Horker.Notebook.Views
                         _completionWindow.CompletionList.RequestInsertion(e);
                     }
                 }
+
+                // Do not set e.Handled=true.
+                // We still want to insert the character that was typed.
             }
-            // Do not set e.Handled=true.
-            // We still want to insert the character that was typed.
+
+            // Closing parens
+
+            var ch = e.Text[0];
+            if (ch == ')' || ch == '}' || ch == ']')
+                _indentationStrategy.DedentByClosingParen(CommandLine.Document, CommandLine.CaretOffset);
         }
 
         private void CommandLine_Document_TextChanged(object sender, EventArgs e)
