@@ -268,13 +268,18 @@ namespace Horker.Notebook.Views
 
             InitializeKeyBindings();
 
-            CommandLine.Document.TextChanged += CommandLine_TextChanged;
+            CommandLine.Document.TextChanged += CommandLine_Document_TextChanged;
+
+            CommandLine.TextArea.Caret.PositionChanged += (object s, EventArgs ee) => {
+                CommandLine.TextArea.Caret.BringCaretToView();
+            };
 
             // Address RichTextBox's known limitation that its document's width is not stretched automatically.
             // (source: https://stackoverflow.com/questions/350863/wpf-richtextbox-with-no-width-set)
             Output.Document.PageWidth = Models.Configuration.ConsoleWidth;
 
             CommandLine.Focus();
+            CommandLine.TextArea.Caret.BringCaretToView();
 
             ViewModel.CreatedEvent.Set();
         }
@@ -303,7 +308,7 @@ namespace Horker.Notebook.Views
             }
         }
 
-        private void CommandLine_TextChanged(object sender, EventArgs e)
+        private void CommandLine_Document_TextChanged(object sender, EventArgs e)
         {
             if (Container != null && Container.ViewModel != null)
                 Container.ViewModel.IsTextChanged = true;

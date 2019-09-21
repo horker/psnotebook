@@ -184,9 +184,6 @@ namespace Horker.Notebook.Models
 
                         var asyncResult = _powerShell.BeginInvoke(input, output);
 
-                        if (_sessionViewModel.IsLastItem(roundtrip.ViewModel))
-                            _sessionViewModel.ScrollToBottom();
-
                         WaitHandle.WaitAny(new WaitHandle[] { asyncResult.AsyncWaitHandle, _cancelEvent });
 
                         if (_cancelled)
