@@ -55,12 +55,20 @@ namespace Horker.Notebook.Views
             InitializeComponent();
 
             InitializeCommandBindings();
+            InitializeKeyBindings();
             InitializeCodeCompletion();
 
             Container = container;
             DataContext = viewModel;
+            viewModel.Control = this;
 
             UpdateEditorMode();
+
+            CommandLine.Document.TextChanged += CommandLine_Document_TextChanged;
+
+            CommandLine.TextArea.Caret.PositionChanged += (object s, EventArgs ee) => {
+                CommandLine.TextArea.Caret.BringCaretToView();
+            };
         }
 
         public void ScrollToBottom()
@@ -264,16 +272,6 @@ namespace Horker.Notebook.Views
 
         private void RoundtripControl_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.Control = this;
-
-            InitializeKeyBindings();
-
-            CommandLine.Document.TextChanged += CommandLine_Document_TextChanged;
-
-            CommandLine.TextArea.Caret.PositionChanged += (object s, EventArgs ee) => {
-                CommandLine.TextArea.Caret.BringCaretToView();
-            };
-
             // Address RichTextBox's known limitation that its document's width is not stretched automatically.
             // (source: https://stackoverflow.com/questions/350863/wpf-richtextbox-with-no-width-set)
             Output.Document.PageWidth = Models.Configuration.ConsoleWidth;
