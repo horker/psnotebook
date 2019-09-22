@@ -38,7 +38,7 @@ As another way, execute `NotebookApp.exe` in the module directory (`$HOME\Docume
 |Shift+Enter|Execute the command line and move to the next command line. (Editor mode)|
 |Ctrl+Enter |Execute the command line and keep the cursor in the current command line. (Editor mode)|
 |F5         |Execute the command line and keep the cursor in the current command line.|
-|Ctrl+F5    |Execute all command lines in sequence.|
+|Ctrl+F5    |Execute all command lines in order.|
 |Ctrl+Q     |Show the context menu to operate command line cells.|
 |Esc        |Cancel the ongoing execution.|
 
@@ -95,6 +95,6 @@ oxy.line -x 1,2,3 -y 1,2,3 -AsPlotView
 
 ## License
 
-This software is published under the MIT license.
+This software is licensed under the MIT license.
 
-The AvalonEdit library that this software using is subject to its own license. Refer to the [project site](http://avalonedit.net).
+The AvalonEdit library is subject to its own license. Refer to the [project site](http://avalonedit.net).
