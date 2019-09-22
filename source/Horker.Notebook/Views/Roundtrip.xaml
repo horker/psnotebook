@@ -19,6 +19,7 @@
                 <ContextMenu>
                     <MenuItem Header="Insert new" x:Name="InsertNewRoundtrip" Click="InsertNewRoundtrip_Click" />
                     <MenuItem Header="Delete" x:Name="DeleteRoundtrip" Click="DeleteRoundtrip_Click" />
+                    <MenuItem Header="Delete below" x:Name="DeleteBelowRoundtrip" Click="DeleteBelowRoundtrip_Click" />
                     <MenuItem Header="Clear output" x:Name="DeleteOutput" Click="ClearOutput_Click" />
                     <Separator/>
                     <MenuItem Header="Move up" x:Name="MoveUpRoundtrip" Click="MoveUpRoundtrip_Click" />

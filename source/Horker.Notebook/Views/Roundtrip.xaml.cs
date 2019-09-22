@@ -248,6 +248,12 @@ namespace Horker.Notebook.Views
             Container.ViewModel.RemoveRoundtrip(ViewModel);
         }
 
+        private void DeleteBelowRoundtrip_Click(object sender, RoutedEventArgs e)
+        {
+            for (var i = Container.ViewModel.ItemCount - 1; i >= ViewModel.Index + 1; --i)
+                Container.ViewModel.RemoveRoundtripAt(i);
+        }
+
         private void ClearOutput_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.Clear();

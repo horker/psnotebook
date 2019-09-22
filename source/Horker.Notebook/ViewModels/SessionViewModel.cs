@@ -251,6 +251,23 @@ namespace Horker.Notebook.ViewModels
             });
         }
 
+        public void RemoveRoundtripAt(int index)
+        {
+            _control.Dispatcher.Invoke(() => {
+                if (ViewItems.Count <= 1)
+                    return;
+
+                ViewItems.RemoveAt(index);
+
+                Reindex();
+
+                if (index == ViewItems.Count)
+                    ViewItems[ViewItems.Count - 1].Focus();
+                else
+                    ViewItems[index].Focus();
+            });
+        }
+
         public void MoveRoundtrip(RoundtripViewModel r, int newIndex)
         {
             _control.Dispatcher.Invoke(() => {
