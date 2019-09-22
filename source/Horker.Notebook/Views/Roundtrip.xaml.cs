@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -105,6 +106,7 @@ namespace Horker.Notebook.Views
         public static readonly RoutedCommand DownCommand = new RoutedCommand("DownCommand", typeof(Roundtrip));
         public static readonly RoutedCommand CursorToTopCommand = new RoutedCommand("CursorToTopCommand", typeof(Roundtrip));
         public static readonly RoutedCommand CursorToBottomCommand = new RoutedCommand("CursorToBottomCommand", typeof(Roundtrip));
+        public static readonly RoutedCommand ShowContextMenuCommand = new RoutedCommand("ShowContextMenuCommand", typeof(Roundtrip));
 
         private void InitializeCommandBindings()
         {
@@ -118,6 +120,7 @@ namespace Horker.Notebook.Views
             CommandBindings.Add(new CommandBinding(DownCommand, DownCommand_Execute));
             CommandBindings.Add(new CommandBinding(CursorToTopCommand, CursorToTopCommand_Execute));
             CommandBindings.Add(new CommandBinding(CursorToBottomCommand, CursorToBottomCommand_Execute));
+            CommandBindings.Add(new CommandBinding(ShowContextMenuCommand, ShowContextMenuCommand_Execute));
         }
 
         private void InitializeKeyBindings()
@@ -132,6 +135,7 @@ namespace Horker.Notebook.Views
             DefineKeyBinding(new KeyBinding(DownCommand, new KeyGesture(Key.Down)));
             DefineKeyBinding(new KeyBinding(CursorToTopCommand, new KeyGesture(Key.Left, ModifierKeys.Control)));
             DefineKeyBinding(new KeyBinding(CursorToBottomCommand, new KeyGesture(Key.Right, ModifierKeys.Control)));
+            DefineKeyBinding(new KeyBinding(ShowContextMenuCommand, new KeyGesture(Key.Q, ModifierKeys.Control)));
         }
 
         private void DefineKeyBinding(KeyBinding kb)
@@ -234,6 +238,13 @@ namespace Horker.Notebook.Views
         private void CursorToBottomCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
             CommandLine.TextArea.Caret.Offset = CommandLine.TextArea.Document.TextLength;
+        }
+
+        private void ShowContextMenuCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            Index.ContextMenu.Placement = PlacementMode.Bottom;
+            Index.ContextMenu.PlacementTarget = Index;
+            Index.ContextMenu.IsOpen = true;
         }
 
         // Menu items
