@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Horker.Notebook"
+             xmlns:models="clr-namespace:Horker.Notebook.Models"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -65,7 +66,7 @@
             <ProgressBar Grid.Column="2" x:Name="ProgressMeter" Minimum="0" Maximum="100" FontSize="10pt" Value="{Binding Progress}"/>
         </Grid>
     
-        <StatusBar DockPanel.Dock="Bottom" FontSize="10pt">
+        <StatusBar DockPanel.Dock="Bottom" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="10pt">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>

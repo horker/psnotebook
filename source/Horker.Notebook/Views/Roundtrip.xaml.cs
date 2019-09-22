@@ -402,7 +402,7 @@ namespace Horker.Notebook.Views
 
                     e.Handled = true;
                 }
-                else if (_inlineCompletion && (e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Left || e.Key == Key.Right))
+                else if (_inlineCompletion && (e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Enter))
                     _completionWindow.Close();
             };
 
