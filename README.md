@@ -2,18 +2,10 @@
 
 PowerShell Notebook is a console host application for PowerShell to bring Jupyter Notebook-like user experience to PowerShell scripting.
 
-The code editor uses [AvalonEdit](http://avalonedit.net) and provides code completion, syntax highlighting and automatic indentation.
+The code editor adopts [AvalonEdit](http://avalonedit.net) and provides code completion, syntax highlighting and automatic indentation.
 
-<table>
-<tr>
-<td>
 <img src="https://github.com/horker/psnotebook/blob/master/docs/images/screenshot.png" width=40%>
-</td>
-<td>
 <img src="https://github.com/horker/psnotebook/blob/master/docs/images/screenshot2.png" width=40%>
-</td>
-</tr>
-</table>
 
 ## Installation
 
@@ -80,9 +72,9 @@ Several commands to operate command line cells are available in the context menu
 
 The following limitations exist in the current version:
 
-- Keyboard input. The following operations do not work: `Read-Host`, `$ErrorActionPreference='Inquire'`, a debugger and native applications that perform any console I/O operations except writing to standard and error outputs.
+- Keyboard input. The following operations do not work: `Read-Host`, `$ErrorActionPreference='Inquire'`, a console debugger (`Set-PSBreakpoint`) and native applications that perform any console I/O operations except writing to standard and error outputs.
 - Terminal escape sequences.
-- Any customization is not available.
+- Any customization is not available for now.
 
 ## Notes
 
