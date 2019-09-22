@@ -256,7 +256,16 @@ namespace Horker.Notebook.Views
 
         private void DeleteRoundtrip_Click(object sender, RoutedEventArgs e)
         {
+            if (Container.ViewModel.ItemCount == 1)
+                return;
+
+            var index = ViewModel.Index;
             Container.ViewModel.RemoveRoundtrip(ViewModel);
+
+            if (index <= Container.ViewModel.ItemCount - 1)
+                Container.ViewModel[index].Focus();
+            else
+                Container.ViewModel.GetLastItem().Focus();
         }
 
         private void DeleteBelowRoundtrip_Click(object sender, RoutedEventArgs e)

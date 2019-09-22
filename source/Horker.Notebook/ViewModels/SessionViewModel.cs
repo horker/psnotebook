@@ -47,6 +47,18 @@ namespace Horker.Notebook.ViewModels
             }
         }
 
+        public RoundtripViewModel this[int index]
+        {
+            get
+            {
+                RoundtripViewModel result = null;
+                _control.Dispatcher.Invoke(() => {
+                    result = (ViewItems[index] as Views.Roundtrip).ViewModel;
+                });
+                return result;
+            }
+        }
+
         public int ItemCount => _control.StackPanel.Children.Count;
 
         private string _commandPrompt;
@@ -197,6 +209,7 @@ namespace Horker.Notebook.ViewModels
                 r.Index = ItemCount;
                 r.IsEditorMode = _isEditorModeByDefault;
                 _control.AddRoundtrip(r, position);
+                IsTextChanged = true;
             });
         }
 
@@ -229,6 +242,7 @@ namespace Horker.Notebook.ViewModels
             _control.Dispatcher.Invoke(() => {
                 Reindex();
                 ViewItems[index].Focus();
+                IsTextChanged = true;
             });
         }
 
@@ -248,6 +262,8 @@ namespace Horker.Notebook.ViewModels
                     ViewItems[ViewItems.Count - 1].Focus();
                 else
                     ViewItems[index].Focus();
+
+                IsTextChanged = true;
             });
         }
 
@@ -265,6 +281,8 @@ namespace Horker.Notebook.ViewModels
                     ViewItems[ViewItems.Count - 1].Focus();
                 else
                     ViewItems[index].Focus();
+
+                IsTextChanged = true;
             });
         }
 
@@ -282,6 +300,7 @@ namespace Horker.Notebook.ViewModels
                 Reindex();
 
                 r.Control.CommandLine.Focus();
+                IsTextChanged = true;
             });
         }
 
@@ -289,6 +308,7 @@ namespace Horker.Notebook.ViewModels
         {
             _control.Dispatcher.Invoke(() => {
                 ViewItems.Clear();
+                IsTextChanged = true;
             });
         }
 
@@ -336,7 +356,6 @@ namespace Horker.Notebook.ViewModels
                 if (!string.IsNullOrEmpty(fileName))
                     FileName = fileName;
                 Model.SaveSession();
-                IsTextChanged = false;
             }
             catch (Exception ex)
             {
@@ -344,6 +363,10 @@ namespace Horker.Notebook.ViewModels
                     MessageBox.Show(ex.Message, "Error Occurred on Saving");
                 });
             }
+
+            _control.Dispatcher.Invoke(() => {
+                IsTextChanged = false;
+            });
         }
 
         public void EnqueueLoadSessionRequest(string fileName)
