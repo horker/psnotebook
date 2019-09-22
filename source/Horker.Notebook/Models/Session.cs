@@ -241,7 +241,6 @@ namespace Horker.Notebook.Models
 
         private static readonly string _fileHeader = "#!Notebook v1";
         private static readonly string _commandLineHeader = "#!CommandLine";
-        private static readonly string _outputHeader = "#!Output";
 
         public void SaveSession(TextWriter writer)
         {
@@ -251,16 +250,8 @@ namespace Horker.Notebook.Models
             foreach (var item in _sessionViewModel.Items)
             {
                 writer.WriteLine(_commandLineHeader);
-                writer.Write(item.CommandLine);
-
-                writer.WriteLine(_outputHeader);
-
-                var lines = Regex.Split(item.Output, "\r?\n");
-                foreach (var line in lines)
-                {
-                    writer.Write("# ");
-                    writer.WriteLine(line);
-                }
+                if (!string.IsNullOrEmpty(item.CommandLine))
+                    writer.WriteLine(item.CommandLine);
             }
         }
 
@@ -276,59 +267,49 @@ namespace Horker.Notebook.Models
 
         public void LoadSession(TextReader reader)
         {
-            _sessionViewModel.Clear();
-
             var line = reader.ReadLine();
             if (line != _fileHeader)
                 throw new ApplicationException("Invalid file format");
 
-            var state = 0;
-            var lineNumber = 0;
-            Roundtrip r = null;
+            line = reader.ReadLine();
+            if (line != "")
+                throw new ApplicationException("Invalid file format");
+
+            line = reader.ReadLine();
+            if (line != _commandLineHeader)
+                throw new ApplicationException("Invalid file format");
+
+            var commandLines = new List<string>();
+            var builder = new StringBuilder();
 
             while (true)
             {
-                ++lineNumber;
                 line = reader.ReadLine();
                 if (line == null)
                     break;
 
-                switch (state)
+                if (line == _commandLineHeader)
                 {
-                    case 0:
-                        if (string.IsNullOrEmpty(line))
-                            break;
-                        if (line == _commandLineHeader)
-                        {
-                            r = CreateNewRoundtrip(true);
-                            state = 1;
-                        }
-                        else
-                            throw new ApplicationException($"Invalid command line header at line {lineNumber}");
-                        break;
-
-                    case 1:
-                        if (line == _outputHeader)
-                            state = 2;
-                        else
-                            r.ViewModel.WriteCommandLine(line);
-                        break;
-
-                    case 2:
-                        if (line == _commandLineHeader)
-                        {
-                            r = CreateNewRoundtrip(true);
-                            state = 1;
-                        }
-                        break;
-
-                    default:
-                        throw new ApplicationException($"Internal state error at line {lineNumber}");
+                    // Remove newline at end of code.
+                    builder.Remove(builder.Length - 2, 2);
+                    commandLines.Add(builder.ToString());
+                    builder.Clear();
+                }
+                else
+                {
+                    builder.AppendLine(line);
                 }
             }
 
-            if (state != 2)
-                throw new ApplicationException($"Premature end of file at line {lineNumber}");
+            commandLines.Add(builder.ToString());
+
+            _sessionViewModel.Clear();
+
+            foreach (var c in commandLines)
+            {
+                var r = CreateNewRoundtrip(true);
+                r.ViewModel.WriteCommandLine(c);
+            }
         }
 
         public void LoadSession()
@@ -349,7 +330,7 @@ namespace Horker.Notebook.Models
         public void EnqueueLoadSessionRequest(string fileName)
         {
             _sessionViewModel.FileName = fileName;
-            _executionQueue.Enqueue( new LoadSessionRequest());
+            _executionQueue.Enqueue(new LoadSessionRequest());
         }
 
         // Code completion
