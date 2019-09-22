@@ -8,7 +8,7 @@ Set-StrictMode -Version 4
 
 $PROJECT_NAME = "psnotebook"
 
-$SOURCE_PATH = "$PSScriptRoot\source\NotebookApp\bin\x64"
+$SOURCE_PATH = "$PSScriptRoot\source\bin\x64"
 $SCRIPT_PATH = "$PSScriptRoot\scripts"
 
 $MODULE_PATH = "$PSScriptRoot\module\psnotebook"
