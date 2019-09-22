@@ -9,7 +9,7 @@ The code editor adopts [AvalonEdit](http://avalonedit.net) and provides code com
 
 ## Installation
 
-This module is published in the [PowreShell Gallery](https://www.powershellgallery.com/packages/psnotebook)
+This module is published in the [PowreShell Gallery](https://www.powershellgallery.com/packages/psnotebook).
 
 ```PowerShell
 Install-Module psnotebook
@@ -56,7 +56,7 @@ You can set the Editor mode on and off in the 'Edit' menu or the context menu.
 
 By right-clicking on the cell index or enter Ctrl+Q in the code editor, the context menu will open.
 
-Several commands to operate command line cells are available in the context menu.
+Commands to insert, delete and move command line cells are available in the context menu.
 
 ## Helper cmdlets
 
@@ -68,13 +68,16 @@ Several commands to operate command line cells are available in the context menu
 |Get-NotebookWindowDispatcher|Get a Dispatcher object that the Notebook's GUI exposes.|
 |Invoke-WpfAction|Invoke a script block under the thread in which the Notebook application is running.|
 
-## Limitationas
+## Limitations
 
 The following limitations exist in the current version:
 
-- Keyboard input. The following operations do not work: `Read-Host`, `$ErrorActionPreference='Inquire'`, a console debugger (`Set-PSBreakpoint`) and native applications that perform any console I/O operations except writing to standard and error outputs.
-- Terminal escape sequences.
-- Any customization is not available for now.
+- Keyboard input
+- Terminal escape sequences
+
+By these limitations, the following cmdlets and operations do not work: `Read-Host`, `Set-PSBreakpoint` (console debugger) and `$ErrorActionPreference='Inquire'`.
+
+Native applications that perform any console I/O operations except writing to standard and error outputs do not work correctly.
 
 ## Notes
 
