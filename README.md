@@ -4,8 +4,16 @@ PowerShell Notebook is a console host application for PowerShell to bring Jupyte
 
 The code editor uses [AvalonEdit](http://avalonedit.net) and provides code completion, syntax highlighting and automatic indentation.
 
+<table>
+<tr>
+<td>
 <img src="https://github.com/horker/psnotebook/blob/master/docs/images/screenshot.png" width=40%>
+</td>
+<td>
 <img src="https://github.com/horker/psnotebook/blob/master/docs/images/screenshot2.png" width=40%>
+</td>
+</tr>
+</table>
 
 ## Installation
 
