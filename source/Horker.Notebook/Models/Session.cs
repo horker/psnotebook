@@ -310,6 +310,8 @@ namespace Horker.Notebook.Models
                 var r = CreateNewRoundtrip(true);
                 r.ViewModel.WriteCommandLine(c);
             }
+
+            _sessionViewModel.IsTextChanged = false;
         }
 
         public void LoadSession()
