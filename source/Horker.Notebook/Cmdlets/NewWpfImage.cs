@@ -38,7 +38,7 @@ namespace Horker.Notebook.Cmdlets
 
         private ImageSource GetImageSource(string path)
         {
-            using (var fs = new FileStream(path, FileMode.Open))
+            using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 var decoder = BitmapDecoder.Create(
                     fs,
