@@ -26,6 +26,8 @@ namespace Horker.Notebook
         private int _exitCode;
         private bool _sessionEnded;
 
+        public static string FileToLoadOnStartup { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -43,6 +45,10 @@ namespace Horker.Notebook
 
             var thread = new Thread(() => {
                 var session = new Models.Session(sessionViewModel);
+
+                if (!string.IsNullOrEmpty(FileToLoadOnStartup))
+                    session.EnqueueLoadSessionRequest(FileToLoadOnStartup);
+
                 _exitCode = session.StartExecutionLoop();
                 _sessionEnded = true;
 
@@ -54,6 +60,7 @@ namespace Horker.Notebook
             thread.SetApartmentState(ApartmentState.STA);
             thread.Name = "Notebook Execution loop thread";
             thread.Start();
+
         }
 
         private void Window_Closed(object sender, EventArgs e)

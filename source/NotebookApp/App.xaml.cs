@@ -6,12 +6,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace NotebookApp
+namespace Horker.Notebook
 {
-    /// <summary>
-    /// App.xaml の相互作用ロジック
-    /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            if (e.Args.Length >= 1)
+                Notebook.MainWindow.FileToLoadOnStartup = e.Args[0];
+        }
     }
 }
