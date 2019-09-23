@@ -1,11 +1,11 @@
-stop word wrap
 resize output pane
 "Scroll to top" and "Scroll to bottom" icons in the output area
 set focus when the notebook window is activated
 save/load Editor mode status
-change editor mode display (show small icon for example)
 start new session
 reload current session
+exit
+Check where to save the recently used file list
 
 invalidate "Delete this" in the context menu when there is one roundtrip
 Display an error correctly when $ErrorActionPreference = "Stop"
@@ -14,6 +14,8 @@ Hide progress bar when PercentComplete is not specified in Write-Progress
 keep the session when loading fails
 disable useless key bindings in command line
 move focus to output area when past command line is called by F5
+change editor mode display (show small icon for example)
+stop word wrap
 
 BIG ISSUES
 user input

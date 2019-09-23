@@ -31,6 +31,12 @@ namespace Horker.Notebook.Views
         {
             InitializeComponent();
             DataContext = ViewModel = new SessionViewModel(this);
+
+            RecentFileList.UseXmlPersister();
+            RecentFileList.MaxNumberOfFiles = 5;
+            RecentFileList.MenuClick += (s, e) => {
+                ViewModel.EnqueueLoadSessionRequest(e.Filepath);
+            };
         }
 
         public Roundtrip GetActiveRoundtrip()

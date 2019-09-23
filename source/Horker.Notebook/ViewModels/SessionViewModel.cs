@@ -176,6 +176,11 @@ namespace Horker.Notebook.ViewModels
 
         // Methods
 
+        public void AddRecentlyUsedFile(string path)
+        {
+            _control.RecentFileList.InsertFile(path);
+        }
+
         public void Reindex()
         {
             _control.Dispatcher.Invoke(() => {

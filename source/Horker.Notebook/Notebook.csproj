@@ -107,6 +107,7 @@
     <Compile Include="ViewModels\RoundtripViewModel.cs" />
     <Compile Include="ViewModels\SessionViewModel.cs" />
     <Compile Include="Views\CompletionData.cs" />
+    <Compile Include="Views\RecentFileList.cs" />
     <Compile Include="Views\Roundtrip.xaml.cs">
       <DependentUpon>Roundtrip.xaml</DependentUpon>
     </Compile>

@@ -259,10 +259,14 @@ namespace Horker.Notebook.Models
         {
             Debug.Assert(!string.IsNullOrEmpty(_sessionViewModel.FileName));
 
-            using (var writer = new StreamWriter(_sessionViewModel.FileName, false, Encoding.UTF8))
+            var name = _sessionViewModel.FileName;
+
+            using (var writer = new StreamWriter(name, false, Encoding.UTF8))
             {
                 SaveSession(writer);
             }
+
+            _sessionViewModel.AddRecentlyUsedFile(name);
         }
 
         public void LoadSession(TextReader reader)
@@ -326,6 +330,7 @@ namespace Horker.Notebook.Models
                 {
                     LoadSession(reader);
                 }
+                _sessionViewModel.AddRecentlyUsedFile(_sessionViewModel.FileName);
             }
             catch (Exception ex)
             {
