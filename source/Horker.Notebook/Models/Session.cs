@@ -267,41 +267,45 @@ namespace Horker.Notebook.Models
 
         public void LoadSession(TextReader reader)
         {
+            var commandLines = new List<string>();
             var line = reader.ReadLine();
             if (line != _fileHeader)
-                throw new ApplicationException("Invalid file format");
-
-            line = reader.ReadLine();
-            if (line != "")
-                throw new ApplicationException("Invalid file format");
-
-            line = reader.ReadLine();
-            if (line != _commandLineHeader)
-                throw new ApplicationException("Invalid file format");
-
-            var commandLines = new List<string>();
-            var builder = new StringBuilder();
-
-            while (true)
+            {
+                commandLines.Add(reader.ReadToEnd());
+            }
+            else
             {
                 line = reader.ReadLine();
-                if (line == null)
-                    break;
+                if (line != "")
+                    throw new ApplicationException("Invalid file format");
 
-                if (line == _commandLineHeader)
+                line = reader.ReadLine();
+                if (line != _commandLineHeader)
+                    throw new ApplicationException("Invalid file format");
+
+                var builder = new StringBuilder();
+
+                while (true)
                 {
-                    // Remove newline at end of code.
-                    builder.Remove(builder.Length - 2, 2);
-                    commandLines.Add(builder.ToString());
-                    builder.Clear();
+                    line = reader.ReadLine();
+                    if (line == null)
+                        break;
+
+                    if (line == _commandLineHeader)
+                    {
+                        // Remove newline at end of code.
+                        builder.Remove(builder.Length - 2, 2);
+                        commandLines.Add(builder.ToString());
+                        builder.Clear();
+                    }
+                    else
+                    {
+                        builder.AppendLine(line);
+                    }
                 }
-                else
-                {
-                    builder.AppendLine(line);
-                }
+
+                commandLines.Add(builder.ToString());
             }
-
-            commandLines.Add(builder.ToString());
 
             _sessionViewModel.Clear();
 

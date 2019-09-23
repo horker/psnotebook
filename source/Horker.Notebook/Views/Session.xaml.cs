@@ -114,11 +114,13 @@ namespace Horker.Notebook.Views
                 ViewModel.SaveSession();
         }
 
+        private static readonly string _filterString = "PowerShell Notebook script (*.nb.ps1)|*.nb.ps1|PowerShell script (*.ps1)|*.ps1|All files (*.*)|*.*";
+
         private void SaveAsCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
-                Filter = "PowerShell Notebook (*.nb.ps1)|*.nb.ps1",
+                Filter = _filterString,
                 InitialDirectory = Directory.GetCurrentDirectory(),
                 CheckFileExists = false
             };
@@ -131,7 +133,7 @@ namespace Horker.Notebook.Views
         {
             var openFileDialog = new OpenFileDialog()
             {
-                Filter = "PowerShell Notebook (*.nb.ps1)|*.nb.ps1",
+                Filter = _filterString,
                 InitialDirectory = Directory.GetCurrentDirectory()
             };
 
