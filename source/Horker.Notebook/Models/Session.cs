@@ -298,7 +298,8 @@ namespace Horker.Notebook.Models
                     if (line == _commandLineHeader)
                     {
                         // Remove newline at end of code.
-                        builder.Remove(builder.Length - 2, 2);
+                        if (builder.Length >= 2)
+                            builder.Remove(builder.Length - 2, 2);
                         commandLines.Add(builder.ToString());
                         builder.Clear();
                     }
