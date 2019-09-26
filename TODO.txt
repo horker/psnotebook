@@ -5,6 +5,7 @@ save/load Editor mode status
 start new session
 reload current session
 exit
+about
 Check where to save the recently used file list
 
 invalidate "Delete this" in the context menu when there is one roundtrip
@@ -22,13 +23,13 @@ user input
 debugger
 tab window
 text highlighting
-completion
 R studio-like side view
 save/restore output area
-undo
+undo for cell operations
 Emacs mode
 native executable example: git clone, doxygen incubator-mxnet
 
+DONE completion
 DONE removing character decoration on pasting text
 DONE show processing command line
 DONE Use Avalon edit: line number
