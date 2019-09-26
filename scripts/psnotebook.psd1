@@ -10,7 +10,7 @@
 RootModule = 'psnotebook.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.2.0'
+ModuleVersion = '0.2.1'
 
 # Supported PSEditions
 #CompatiblePSEditions = ''
@@ -121,6 +121,9 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = @"
+v0.2.1
+Fix IndexOutOfRangeException occurred on loading files
+
 v0.2.0
 Adopts AvalonEdit and supports code completion, syntax highlighting and automatic indentation
 Sevearl improvements and bug fixes
