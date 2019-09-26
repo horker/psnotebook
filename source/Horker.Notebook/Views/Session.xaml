@@ -18,6 +18,7 @@
         <RoutedCommand x:Key="RunAllCommand" />
         <RoutedCommand x:Key="CancelCommand" />
         <RoutedCommand x:Key="EditorModeByDefaultCommand" />
+        <RoutedCommand x:Key="AboutCommand" />
     </UserControl.Resources>
 
     <UserControl.CommandBindings>
@@ -28,6 +29,7 @@
         <CommandBinding Command="{StaticResource RunAllCommand}" Executed="RunAllCommand_Execute"/>
         <CommandBinding Command="{StaticResource CancelCommand}" Executed="CancelCommand_Execute"/>
         <CommandBinding Command="{StaticResource EditorModeByDefaultCommand}" Executed="EditorModeByDefaultCommand_Execute"/>
+        <CommandBinding Command="{StaticResource AboutCommand}" Executed="AboutCommand_Execute"/>
     </UserControl.CommandBindings>
 
     <UserControl.InputBindings>
@@ -53,6 +55,9 @@
                     <MenuItem Header="_Run" InputGestureText="F5" Command="{StaticResource RunCommand}"/>
                     <MenuItem Header="Run _All" InputGestureText="Ctrl+F5" Command="{StaticResource RunAllCommand}"/>
                     <MenuItem Header="Cancel" InputGestureText="ESC" Command="{StaticResource CancelCommand}"/>
+                </MenuItem>
+                <MenuItem Header="_Help">
+                    <MenuItem Header="_About" Command="{StaticResource AboutCommand}"/>
                 </MenuItem>
             </Menu>
         </Grid>
