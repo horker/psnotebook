@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -11,7 +13,7 @@ using Horker.Notebook.ViewModels;
 
 namespace Horker.Notebook.Models
 {
-    public class Startup
+    public class Application
     {
         public static int Start()
         {
@@ -60,6 +62,19 @@ namespace Horker.Notebook.Models
             });
 
             return exitCode;
+        }
+
+        public static void StartNotebookProcess(string fileName, bool run)
+        {
+            var executablePath = typeof(Application).Assembly.Location;
+            executablePath = executablePath.Substring(0, executablePath.LastIndexOf("\\"));
+            executablePath = Path.Combine(executablePath, "NotebookApp.exe");
+
+            var arguments = fileName;
+            if (run)
+                arguments = "-Run " + fileName;
+
+            Process.Start(executablePath, arguments);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Horker.Notebook.Views
             RecentFileList.UseXmlPersister();
             RecentFileList.MaxNumberOfFiles = 5;
             RecentFileList.MenuClick += (s, e) => {
-                ViewModel.EnqueueLoadSessionRequest(e.Filepath);
+                ViewModel.EnqueueLoadSessionRequest(e.Filepath, false);
             };
         }
 
@@ -112,6 +112,27 @@ namespace Horker.Notebook.Views
 
         // Commands
 
+        private bool Confirm(string message, string title)
+        {
+            if (ViewModel.IsTextChanged)
+            {
+                var ok = MessageBox.Show(message, title, MessageBoxButton.YesNo);
+                if (ok == MessageBoxResult.No)
+                    return false;
+            }
+
+            return true;
+        }
+
+        private void NewCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "New session"))
+                return;
+
+            ViewModel.Clear();
+            ViewModel.IsTextChanged = false;
+        }
+
         private void SaveCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
             if (!ViewModel.HasFileName())
@@ -144,7 +165,39 @@ namespace Horker.Notebook.Views
             };
 
             if (openFileDialog.ShowDialog() == true)
-                ViewModel.EnqueueLoadSessionRequest(openFileDialog.FileName);
+                ViewModel.EnqueueLoadSessionRequest(openFileDialog.FileName, false);
+        }
+
+        private void RestartCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Reload session"))
+                return;
+
+            ViewModel.NotifyRestart(null, false);
+        }
+
+        private void ReloadCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Reload session"))
+                return;
+
+            ViewModel.NotifyRestart(ViewModel.FileName, false);
+        }
+
+        private void ReloadAndRunCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Reload session"))
+                return;
+
+            ViewModel.NotifyRestart(ViewModel.FileName, true);
+        }
+
+        private void ExitCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Reload session"))
+                return;
+
+            ViewModel.NotifyExit();
         }
 
         private void RunCommand_Execute(object sender, ExecutedRoutedEventArgs e)

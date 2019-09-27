@@ -21,6 +21,9 @@ namespace Horker.Notebook.Cmdlets
         [Parameter(Position = 0, Mandatory = true)]
         public string Path { get; set; }
 
+        [Parameter(Position = 1, Mandatory = false)]
+        public SwitchParameter RunAfterLoad { get; set; }
+
         protected override void BeginProcessing()
         {
             var fullPath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
@@ -32,7 +35,7 @@ namespace Horker.Notebook.Cmdlets
                 return;
             }
 
-            sessionViewModel.EnqueueLoadSessionRequest(fullPath);
+            sessionViewModel.EnqueueLoadSessionRequest(fullPath, RunAfterLoad);
         }
     }
 }

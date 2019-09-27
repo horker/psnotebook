@@ -92,7 +92,7 @@
     <Compile Include="Models\ExecutionQueue.cs" />
     <Compile Include="Models\Roundtrip.cs" />
     <Compile Include="Models\Session.cs" />
-    <Compile Include="Models\Startup.cs" />
+    <Compile Include="Models\Application.cs" />
     <Compile Include="Models\CurrentState.cs" />
     <Compile Include="PowerShell\ConsoleReadLine.cs" />
     <Compile Include="PowerShell\Host.cs" />

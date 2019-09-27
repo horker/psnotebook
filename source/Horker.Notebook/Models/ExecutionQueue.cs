@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Horker.Notebook.Models
 {
-    public class ExecutionQueueItem
+    public interface ExecutionQueueItem
     {
     }
 
@@ -33,6 +33,12 @@ namespace Horker.Notebook.Models
 
     public class LoadSessionRequest : ExecutionQueueItem
     {
+        public bool RunAfterLoad { get; private set; }
+
+        public LoadSessionRequest(bool runAfterLoad)
+        {
+            RunAfterLoad = runAfterLoad;
+        }
     }
 
     public class ExecutionQueue
@@ -60,6 +66,7 @@ namespace Horker.Notebook.Models
 
         public ExecutionQueueItem Dequeue()
         {
+            // lock??
             return _queue.Take(_cancellationToken);
         }
 

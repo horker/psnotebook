@@ -88,7 +88,7 @@ namespace Horker.Notebook.Models
             {
                 // Import this module itself to define cmdlets.
 
-                _powerShell.AddCommand("Import-Module").AddParameter("Assembly", typeof(Startup).Assembly);
+                _powerShell.AddCommand("Import-Module").AddParameter("Assembly", typeof(Application).Assembly);
                 _powerShell.Commands.Commands[0].MergeMyResults(PipelineResultTypes.Error, PipelineResultTypes.Output);
                 _powerShell.Invoke();
 
@@ -144,16 +144,13 @@ namespace Horker.Notebook.Models
                 {
                     _sessionViewModel.CommandPrompt = GetPrompt();
 
-                    var input = new PSDataCollection<PSObject>();
-                    input.Complete();
-
-                    var output = new PSDataCollection<PSObject>();
-
                     var queueItem = _executionQueue.Dequeue();
 
-                    if (queueItem is LoadSessionRequest)
+                    if (queueItem is LoadSessionRequest loadSessionRequest)
                     {
                         LoadSession();
+                        if (loadSessionRequest.RunAfterLoad)
+                            NotifyExecuteAll();
                         continue;
                     }
 
@@ -162,6 +159,11 @@ namespace Horker.Notebook.Models
                         DoCodeCompletion(codeCompletionRequest);
                         continue;
                     }
+
+                    var input = new PSDataCollection<PSObject>();
+                    input.Complete();
+
+                    var output = new PSDataCollection<PSObject>();
 
                     var request = queueItem as ExecutionRequest;
                     roundtrip = request.Roundtrip;
@@ -231,10 +233,26 @@ namespace Horker.Notebook.Models
             _cancelled = false;
         }
 
+        public void NotifyExecuteAll()
+        {
+            _sessionViewModel.NotifyExecuteAll();
+        }
+
         public void NotifyCancel()
         {
             _cancelEvent.Set();
             _cancelled = true;
+        }
+
+        public void NotifyRestart(string fileName, bool run)
+        {
+            Application.StartNotebookProcess(fileName, run);
+            _executionQueue.Cancel();
+        }
+
+        public void NotifyExit()
+        {
+            _executionQueue.Cancel();
         }
 
         // Reader and writer
@@ -339,10 +357,10 @@ namespace Horker.Notebook.Models
             }
         }
 
-        public void EnqueueLoadSessionRequest(string fileName)
+        public void EnqueueLoadSessionRequest(string fileName, bool runAfterLoad)
         {
             _sessionViewModel.FileName = fileName;
-            _executionQueue.Enqueue(new LoadSessionRequest());
+            _executionQueue.Enqueue(new LoadSessionRequest(runAfterLoad));
         }
 
         // Code completion

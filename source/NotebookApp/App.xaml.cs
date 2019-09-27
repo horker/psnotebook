@@ -13,7 +13,16 @@ namespace Horker.Notebook
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             if (e.Args.Length >= 1)
-                Notebook.MainWindow.FileToLoadOnStartup = e.Args[0];
+            {
+                var i = 0;
+                if (e.Args[i].ToLower() == "-run")
+                {
+                    Notebook.MainWindow.RunOnStartup = true;
+                    ++i;
+                }
+
+                Notebook.MainWindow.FileToLoadOnStartup = e.Args[i];
+            }
         }
     }
 }

@@ -340,8 +340,10 @@ namespace Horker.Notebook.ViewModels
 
         public void NotifyExecuteAll()
         {
-            foreach (var item in Items)
-                item.NotifyExecute(false);
+            _control.Dispatcher.Invoke(() => {
+                foreach (var item in Items)
+                    item.NotifyExecute(false);
+            });
         }
 
         public void NotifyCancel()
@@ -374,9 +376,9 @@ namespace Horker.Notebook.ViewModels
             });
         }
 
-        public void EnqueueLoadSessionRequest(string fileName)
+        public void EnqueueLoadSessionRequest(string fileName, bool runAfterLoad)
         {
-            Model.EnqueueLoadSessionRequest(fileName);
+            Model.EnqueueLoadSessionRequest(fileName, runAfterLoad);
         }
 
         public void ShowMessageBox(string message, string caption)
@@ -384,6 +386,16 @@ namespace Horker.Notebook.ViewModels
             _control.Dispatcher.Invoke(() => {
                 MessageBox.Show(message, caption);
             });
+        }
+
+        public void NotifyRestart(string fileName, bool run)
+        {
+            Model.NotifyRestart(fileName, run);
+        }
+
+        public void NotifyExit()
+        {
+            Model.NotifyExit();
         }
     }
 }

@@ -11,9 +11,14 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
+        <RoutedCommand x:Key="NewCommand" />
         <RoutedCommand x:Key="SaveCommand" />
         <RoutedCommand x:Key="SaveAsCommand" />
         <RoutedCommand x:Key="LoadCommand" />
+        <RoutedCommand x:Key="RestartCommand" />
+        <RoutedCommand x:Key="ReloadCommand" />
+        <RoutedCommand x:Key="ReloadAndRunCommand" />
+        <RoutedCommand x:Key="ExitCommand" />
         <RoutedCommand x:Key="RunCommand" />
         <RoutedCommand x:Key="RunAllCommand" />
         <RoutedCommand x:Key="CancelCommand" />
@@ -22,9 +27,14 @@
     </UserControl.Resources>
 
     <UserControl.CommandBindings>
+        <CommandBinding Command="{StaticResource NewCommand}" Executed="NewCommand_Execute"/>
         <CommandBinding Command="{StaticResource SaveCommand}" Executed="SaveCommand_Execute"/>
         <CommandBinding Command="{StaticResource SaveAsCommand}" Executed="SaveAsCommand_Execute"/>
         <CommandBinding Command="{StaticResource LoadCommand}" Executed="LoadCommand_Execute"/>
+        <CommandBinding Command="{StaticResource RestartCommand}" Executed="RestartCommand_Execute"/>
+        <CommandBinding Command="{StaticResource ReloadCommand}" Executed="ReloadCommand_Execute"/>
+        <CommandBinding Command="{StaticResource ReloadAndRunCommand}" Executed="ReloadAndRunCommand_Execute"/>
+        <CommandBinding Command="{StaticResource ExitCommand}" Executed="ExitCommand_Execute"/>
         <CommandBinding Command="{StaticResource RunCommand}" Executed="RunCommand_Execute"/>
         <CommandBinding Command="{StaticResource RunAllCommand}" Executed="RunAllCommand_Execute"/>
         <CommandBinding Command="{StaticResource CancelCommand}" Executed="CancelCommand_Execute"/>
@@ -43,9 +53,14 @@
         <Grid DockPanel.Dock="Top" x:Name="Menu">
             <Menu FontSize="10pt">
                 <MenuItem Header="_File">
-                    <MenuItem Header="_Save Session..." Command="{StaticResource SaveCommand}"/>
-                    <MenuItem Header="Save Session _As..." Command="{StaticResource SaveAsCommand}"/>
-                    <MenuItem Header="_Load Session..." Command="{StaticResource LoadCommand}"/>
+                    <MenuItem Header="_New session" Command="{StaticResource NewCommand}"/>
+                    <MenuItem Header="_Save session..." Command="{StaticResource SaveCommand}"/>
+                    <MenuItem Header="Save session _As..." Command="{StaticResource SaveAsCommand}"/>
+                    <MenuItem Header="_Load session..." Command="{StaticResource LoadCommand}"/>
+                    <Separator/>
+                    <MenuItem Header="_Restart session" Command="{StaticResource RestartCommand}"/>
+                    <MenuItem Header="R_eload session" Command="{StaticResource ReloadCommand}"/>
+                    <MenuItem Header="Rel_oad session and run" Command="{StaticResource ReloadAndRunCommand}"/>
                     <views:RecentFileList x:Name="RecentFileList" />
                 </MenuItem>
                 <MenuItem Header="_Edit">

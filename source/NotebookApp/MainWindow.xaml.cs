@@ -18,15 +18,13 @@ using Horker.Notebook.ViewModels;
 
 namespace Horker.Notebook
 {
-    /// <summary>
-    /// MainWindow.xaml の相互作用ロジック
-    /// </summary>
     public partial class MainWindow : Window
     {
         private int _exitCode;
         private bool _sessionEnded;
 
         public static string FileToLoadOnStartup { get; set; }
+        public static bool RunOnStartup { get; set; }
 
         public MainWindow()
         {
@@ -47,7 +45,9 @@ namespace Horker.Notebook
                 var session = new Models.Session(sessionViewModel);
 
                 if (!string.IsNullOrEmpty(FileToLoadOnStartup))
-                    session.EnqueueLoadSessionRequest(FileToLoadOnStartup);
+                {
+                    session.EnqueueLoadSessionRequest(FileToLoadOnStartup, RunOnStartup);
+                }
 
                 _exitCode = session.StartExecutionLoop();
                 _sessionEnded = true;
@@ -72,7 +72,7 @@ namespace Horker.Notebook
         {
             if (!_sessionEnded && Session.ViewModel.IsTextChanged)
             {
-                var result = MessageBox.Show("Session is not saved yet. Are you sure to exit?", "PowrShell Notebook", MessageBoxButton.OKCancel);
+                var result = MessageBox.Show("Session is changed. Are you sure to exit?", "PowrShell Notebook", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.Cancel)
                     e.Cancel = true;
             }
