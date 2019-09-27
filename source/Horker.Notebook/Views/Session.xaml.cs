@@ -147,6 +147,7 @@ namespace Horker.Notebook.Views
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
+                Title = "Save session",
                 Filter = _filterString,
                 InitialDirectory = Directory.GetCurrentDirectory(),
                 CheckFileExists = false
@@ -160,20 +161,13 @@ namespace Horker.Notebook.Views
         {
             var openFileDialog = new OpenFileDialog()
             {
+                Title = "Load session",
                 Filter = _filterString,
                 InitialDirectory = Directory.GetCurrentDirectory()
             };
 
             if (openFileDialog.ShowDialog() == true)
                 ViewModel.EnqueueLoadSessionRequest(openFileDialog.FileName, false);
-        }
-
-        private void RestartCommand_Execute(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Reload session"))
-                return;
-
-            ViewModel.NotifyRestart(null, false);
         }
 
         private void ReloadCommand_Execute(object sender, ExecutedRoutedEventArgs e)
@@ -186,15 +180,23 @@ namespace Horker.Notebook.Views
 
         private void ReloadAndRunCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Reload session"))
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Reload and run session"))
                 return;
 
             ViewModel.NotifyRestart(ViewModel.FileName, true);
         }
 
+        private void RestartCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Restart"))
+                return;
+
+            ViewModel.NotifyRestart(null, false);
+        }
+
         private void ExitCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Reload session"))
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Exit"))
                 return;
 
             ViewModel.NotifyExit();

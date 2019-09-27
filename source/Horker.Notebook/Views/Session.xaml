@@ -15,9 +15,9 @@
         <RoutedCommand x:Key="SaveCommand" />
         <RoutedCommand x:Key="SaveAsCommand" />
         <RoutedCommand x:Key="LoadCommand" />
-        <RoutedCommand x:Key="RestartCommand" />
         <RoutedCommand x:Key="ReloadCommand" />
         <RoutedCommand x:Key="ReloadAndRunCommand" />
+        <RoutedCommand x:Key="RestartCommand" />
         <RoutedCommand x:Key="ExitCommand" />
         <RoutedCommand x:Key="RunCommand" />
         <RoutedCommand x:Key="RunAllCommand" />
@@ -31,9 +31,9 @@
         <CommandBinding Command="{StaticResource SaveCommand}" Executed="SaveCommand_Execute"/>
         <CommandBinding Command="{StaticResource SaveAsCommand}" Executed="SaveAsCommand_Execute"/>
         <CommandBinding Command="{StaticResource LoadCommand}" Executed="LoadCommand_Execute"/>
-        <CommandBinding Command="{StaticResource RestartCommand}" Executed="RestartCommand_Execute"/>
         <CommandBinding Command="{StaticResource ReloadCommand}" Executed="ReloadCommand_Execute"/>
         <CommandBinding Command="{StaticResource ReloadAndRunCommand}" Executed="ReloadAndRunCommand_Execute"/>
+        <CommandBinding Command="{StaticResource RestartCommand}" Executed="RestartCommand_Execute"/>
         <CommandBinding Command="{StaticResource ExitCommand}" Executed="ExitCommand_Execute"/>
         <CommandBinding Command="{StaticResource RunCommand}" Executed="RunCommand_Execute"/>
         <CommandBinding Command="{StaticResource RunAllCommand}" Executed="RunAllCommand_Execute"/>
@@ -58,10 +58,11 @@
                     <MenuItem Header="Save session _As..." Command="{StaticResource SaveAsCommand}"/>
                     <MenuItem Header="_Load session..." Command="{StaticResource LoadCommand}"/>
                     <Separator/>
-                    <MenuItem Header="_Restart session" Command="{StaticResource RestartCommand}"/>
-                    <MenuItem Header="R_eload session" Command="{StaticResource ReloadCommand}"/>
-                    <MenuItem Header="Rel_oad session and run" Command="{StaticResource ReloadAndRunCommand}"/>
+                    <MenuItem Header="_Reload session" Command="{StaticResource ReloadCommand}"/>
+                    <MenuItem Header="R_eload session and run" Command="{StaticResource ReloadAndRunCommand}"/>
                     <views:RecentFileList x:Name="RecentFileList" />
+                    <MenuItem Header="Re_start session" Command="{StaticResource RestartCommand}"/>
+                    <MenuItem Header="Exit" Command="{StaticResource ExitCommand}"/>
                 </MenuItem>
                 <MenuItem Header="_Edit">
                     <MenuItem Header="_Editor mode by default" x:Name="EditModeByDefault" IsCheckable="true" IsChecked="{Binding IsEditorModeByDefault}" Command="{StaticResource EditorModeByDefaultCommand}"/>
