@@ -94,8 +94,11 @@ namespace Horker.Notebook.Views
                 var textArea = Keyboard.FocusedElement as TextArea;
                 var transform = textArea.TransformToAncestor(scrollViewer);
                 var caretRect = textArea.Caret.CalculateCaretRectangle();
-                var rectangle = transform.TransformBounds(caretRect);
-                scrollViewer.ScrollToVerticalOffset(rectangle.Top + scrollViewer.VerticalOffset);
+                var rect = transform.TransformBounds(caretRect);
+
+                var viewport = new Rect(0.0, 0.0, scrollViewer.ActualWidth, scrollViewer.ActualHeight);
+                if (!viewport.IntersectsWith(rect))
+                    scrollViewer.ScrollToVerticalOffset(rect.Top + scrollViewer.VerticalOffset);
             };
         }
 
