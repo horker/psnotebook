@@ -65,8 +65,6 @@ namespace Horker.Notebook.Views
             Container = container;
             DataContext = viewModel;
             viewModel.Control = this;
-
-            UpdateEditorMode();
         }
 
         // Helper
@@ -301,13 +299,8 @@ namespace Horker.Notebook.Views
             Container.MoveRoundtrip(this, Container.StackPanel.Children.Count - 1);
         }
 
-        private void UpdateEditorMode()
-        {
-        }
-
         private void EditorMode_Click(object sender, RoutedEventArgs e)
         {
-            UpdateEditorMode();
             CommandLine.Focus();
         }
 
