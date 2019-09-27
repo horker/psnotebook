@@ -225,7 +225,7 @@ namespace Horker.Notebook.Views
 
         private void AboutCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("PowerShell Notebook v0.2.2\r\n\r\nIcons made by Smashicons from https://www.flaticon.com/", "About", MessageBoxButton.OK);
+            MessageBox.Show("PowerShell Notebook v0.3.0\r\n\r\nIcons made by Smashicons from https://www.flaticon.com/", "About", MessageBoxButton.OK);
         }
     }
 }

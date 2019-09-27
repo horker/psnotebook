@@ -10,7 +10,7 @@
 RootModule = 'psnotebook.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.2.1'
+ModuleVersion = '0.3.0'
 
 # Supported PSEditions
 #CompatiblePSEditions = ''
@@ -121,6 +121,13 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = @"
+v0.3.0
+Add the application icon
+Add the Restart/Reload menu items
+Get the required .NET Framework down to 4.5.2
+Fix the issue the caret is gone out of sight when editing
+Other improvements and bug fixes
+
 v0.2.1
 Fix IndexOutOfRangeException occurred on loading files
 

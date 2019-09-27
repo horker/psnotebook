@@ -53,14 +53,14 @@
         <Grid DockPanel.Dock="Top" x:Name="Menu">
             <Menu FontSize="10pt">
                 <MenuItem Header="_File">
-                    <MenuItem Header="_New session" Command="{StaticResource NewCommand}"/>
-                    <MenuItem Header="_Save session..." Command="{StaticResource SaveCommand}"/>
-                    <MenuItem Header="Save session _As..." Command="{StaticResource SaveAsCommand}"/>
-                    <MenuItem Header="_Load session..." Command="{StaticResource LoadCommand}"/>
+                    <MenuItem Header="_New" Command="{StaticResource NewCommand}"/>
+                    <MenuItem Header="_Save..." Command="{StaticResource SaveCommand}"/>
+                    <MenuItem Header="Save _As..." Command="{StaticResource SaveAsCommand}"/>
+                    <MenuItem Header="_Load..." Command="{StaticResource LoadCommand}"/>
                     <Separator/>
-                    <MenuItem Header="_Restart session" Command="{StaticResource RestartCommand}"/>
-                    <MenuItem Header="Reloa_d session" Command="{StaticResource ReloadCommand}"/>
-                    <MenuItem Header="Reload session and ru_n" Command="{StaticResource ReloadAndRunCommand}"/>
+                    <MenuItem Header="_Restart" Command="{StaticResource RestartCommand}"/>
+                    <MenuItem Header="Reloa_d" Command="{StaticResource ReloadCommand}"/>
+                    <MenuItem Header="Reload and ru_n" Command="{StaticResource ReloadAndRunCommand}"/>
                     <views:RecentFileList x:Name="RecentFileList" />
                     <MenuItem Header="_Exit" Command="{StaticResource ExitCommand}"/>
                 </MenuItem>
