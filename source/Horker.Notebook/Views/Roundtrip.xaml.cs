@@ -87,8 +87,15 @@ namespace Horker.Notebook.Views
             CommandLine.Document.TextChanged += CommandLine_Document_TextChanged;
             CommandLine.TextArea.TextEntering += CommandLine_TextArea_TextEntering;
 
-            CommandLine.TextArea.Caret.PositionChanged += (object s, EventArgs ee) => {
-                CommandLine.TextArea.Caret.BringCaretToView();
+            CommandLine.TextArea.Caret.PositionChanged += (object s, EventArgs e) => {
+                // Keep the caret in sight.
+                // ref. https://stackoverflow.com/questions/8467598/bringintoview-method
+                var scrollViewer = Container.ScrollViewer;
+                var textArea = Keyboard.FocusedElement as TextArea;
+                var transform = textArea.TransformToAncestor(scrollViewer);
+                var caretRect = textArea.Caret.CalculateCaretRectangle();
+                var rectangle = transform.TransformBounds(caretRect);
+                scrollViewer.ScrollToVerticalOffset(rectangle.Top + scrollViewer.VerticalOffset);
             };
         }
 
