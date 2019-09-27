@@ -208,13 +208,13 @@ namespace Horker.Notebook.ViewModels
             return result;
         }
 
-        public void AddRoundtripViewModel(RoundtripViewModel r, int position = -1)
+        public void AddRoundtripViewModel(RoundtripViewModel r, int position = -1, bool isTextChanged = true)
         {
             _control.Dispatcher.Invoke(() => {
                 r.Index = ItemCount;
                 r.IsEditorMode = _isEditorModeByDefault;
                 _control.AddRoundtrip(r, position);
-                IsTextChanged = true;
+                IsTextChanged = isTextChanged;
             });
         }
 

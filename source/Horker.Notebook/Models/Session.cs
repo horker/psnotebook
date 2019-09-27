@@ -50,10 +50,10 @@ namespace Horker.Notebook.Models
             _cancelEvent = new ManualResetEvent(false);
         }
 
-        public Roundtrip CreateNewRoundtrip(bool wait, int position = -1)
+        public Roundtrip CreateNewRoundtrip(bool wait, int position = -1, bool isTextChanged = true)
         {
             var r = new Roundtrip(_executionQueue);
-            _sessionViewModel.AddRoundtripViewModel(r.ViewModel, position);
+            _sessionViewModel.AddRoundtripViewModel(r.ViewModel, position, isTextChanged);
 
             if (wait)
                 r.ViewModel.CreatedEvent.WaitOne();
@@ -81,7 +81,7 @@ namespace Horker.Notebook.Models
 
         private void InitializeCurrentSession()
         {
-            var r = CreateNewRoundtrip(true);
+            var r = CreateNewRoundtrip(true, -1, false);
             SessionViewModel.ActiveOutput = r.ViewModel;
 
             try
