@@ -2,11 +2,9 @@ resize output pane
 "Scroll to top" and "Scroll to bottom" icons in the output area
 set focus when the notebook window is activated
 save/load Editor mode status
-start new session
-reload current session
-exit
-about
 Check where to save the recently used file list
+bug: on completion, enter key is not effective as normal key
+customization
 
 invalidate "Delete this" in the context menu when there is one roundtrip
 Display an error correctly when $ErrorActionPreference = "Stop"
@@ -22,13 +20,17 @@ BIG ISSUES
 user input
 debugger
 tab window
-text highlighting
+improve text highlighting
 R studio-like side view
 save/restore output area
-undo for cell operations
+undo cell operations
 Emacs mode
 native executable example: git clone, doxygen incubator-mxnet
 
+DONE start new session
+DONE reload current session
+DONE exit
+DONE about
 DONE completion
 DONE removing character decoration on pasting text
 DONE show processing command line
