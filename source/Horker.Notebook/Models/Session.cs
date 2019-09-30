@@ -176,7 +176,7 @@ namespace Horker.Notebook.Models
                     _powerShell.Commands.Commands[0].MergeMyResults(PipelineResultTypes.Error, PipelineResultTypes.Output);
 
                     roundtrip.ViewModel.Hidden();
-                    roundtrip.ViewModel.Clear();
+                    roundtrip.ViewModel.ClearOutput();
                     roundtrip.ViewModel.ShowExecuting();
 
                     try

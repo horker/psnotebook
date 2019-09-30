@@ -206,7 +206,15 @@ namespace Horker.Notebook.ViewModels
             });
         }
 
-        public void Clear()
+        public void ClearCommandLine()
+        {
+            Control.Dispatcher.Invoke(() => {
+                Control.CommandLine.Clear();
+                Control.Container.ViewModel.IsTextChanged = true;
+            });
+        }
+
+        public void ClearOutput()
         {
             Control.Dispatcher.Invoke(() => {
                 Control.Output.Document.Blocks.Clear();

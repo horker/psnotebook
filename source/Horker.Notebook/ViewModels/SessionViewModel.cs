@@ -312,8 +312,13 @@ namespace Horker.Notebook.ViewModels
         public void Clear()
         {
             _control.Dispatcher.Invoke(() => {
-                ViewItems.Clear();
-                IsTextChanged = true;
+                while (ViewItems.Count > 1)
+                    ViewItems.RemoveAt(ViewItems.Count - 1);
+                var firstItem = ViewItems[0] as Views.Roundtrip;
+                firstItem.ViewModel.ClearCommandLine();
+                firstItem.ViewModel.ClearOutput();
+                firstItem.ViewModel.Hidden();
+                firstItem.CommandLine.Focus();
             });
         }
 
@@ -386,6 +391,11 @@ namespace Horker.Notebook.ViewModels
             _control.Dispatcher.Invoke(() => {
                 MessageBox.Show(message, caption);
             });
+        }
+
+        public void StartNewApplication()
+        {
+            Models.Application.StartNotebookProcess("", false);
         }
 
         public void NotifyRestart(string fileName, bool run)

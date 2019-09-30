@@ -90,8 +90,11 @@ namespace Horker.Notebook.Views
             CommandLine.TextArea.Caret.PositionChanged += (object s, EventArgs e) => {
                 // Keep the caret in sight.
                 // ref. https://stackoverflow.com/questions/8467598/bringintoview-method
-                var scrollViewer = Container.ScrollViewer;
                 var textArea = Keyboard.FocusedElement as TextArea;
+                if (textArea == null || !textArea.IsVisible)
+                    return;
+
+                var scrollViewer = Container.ScrollViewer;
                 var transform = textArea.TransformToAncestor(scrollViewer);
                 var caretRect = textArea.Caret.CalculateCaretRectangle();
                 var rect = transform.TransformBounds(caretRect);
@@ -282,9 +285,17 @@ namespace Horker.Notebook.Views
                 Container.ViewModel.RemoveRoundtripAt(i);
         }
 
+        private void ClearCommandLine_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ClearCommandLine();
+            ViewModel.ClearOutput();
+            ViewModel.Hidden();
+            CommandLine.Focus();
+        }
+
         private void ClearOutput_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.Clear();
+            ViewModel.ClearOutput();
             ViewModel.Hidden();
             CommandLine.Focus();
         }

@@ -22,6 +22,7 @@
         <RoutedCommand x:Key="RunCommand" />
         <RoutedCommand x:Key="RunAllCommand" />
         <RoutedCommand x:Key="CancelCommand" />
+        <RoutedCommand x:Key="ClearCommand" />
         <RoutedCommand x:Key="EditorModeByDefaultCommand" />
         <RoutedCommand x:Key="AboutCommand" />
     </UserControl.Resources>
@@ -38,6 +39,7 @@
         <CommandBinding Command="{StaticResource RunCommand}" Executed="RunCommand_Execute"/>
         <CommandBinding Command="{StaticResource RunAllCommand}" Executed="RunAllCommand_Execute"/>
         <CommandBinding Command="{StaticResource CancelCommand}" Executed="CancelCommand_Execute"/>
+        <CommandBinding Command="{StaticResource ClearCommand}" Executed="ClearCommand_Execute"/>
         <CommandBinding Command="{StaticResource EditorModeByDefaultCommand}" Executed="EditorModeByDefaultCommand_Execute"/>
         <CommandBinding Command="{StaticResource AboutCommand}" Executed="AboutCommand_Execute"/>
     </UserControl.CommandBindings>
@@ -65,6 +67,8 @@
                     <MenuItem Header="_Exit" Command="{StaticResource ExitCommand}"/>
                 </MenuItem>
                 <MenuItem Header="_Edit">
+                    <MenuItem Header="_Clear session" Command="{StaticResource ClearCommand}"/>
+                    <Separator/>
                     <MenuItem Header="_Editor mode by default" x:Name="EditModeByDefault" IsCheckable="true" IsChecked="{Binding IsEditorModeByDefault}" Command="{StaticResource EditorModeByDefaultCommand}"/>
                 </MenuItem>
                 <MenuItem Header="_Run">

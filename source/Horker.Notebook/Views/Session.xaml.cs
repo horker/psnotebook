@@ -126,11 +126,7 @@ namespace Horker.Notebook.Views
 
         private void NewCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "New session"))
-                return;
-
-            ViewModel.Clear();
-            ViewModel.IsTextChanged = false;
+            ViewModel.StartNewApplication();
         }
 
         private void SaveCommand_Execute(object sender, ExecutedRoutedEventArgs e)
@@ -216,6 +212,15 @@ namespace Horker.Notebook.Views
         private void CancelCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
             ViewModel.NotifyCancel();
+        }
+
+        private void ClearCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Clear session"))
+                return;
+
+            ViewModel.Clear();
+            ViewModel.IsTextChanged = false;
         }
 
         private void EditorModeByDefaultCommand_Execute(object sender, ExecutedRoutedEventArgs e)
