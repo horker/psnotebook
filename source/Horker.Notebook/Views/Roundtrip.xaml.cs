@@ -262,7 +262,7 @@ namespace Horker.Notebook.Views
 
         private void InsertNewRoundtrip_Click(object sender, RoutedEventArgs e)
         {
-            Container.ViewModel.InsertRoundtrip(ViewModel);
+            Container.ViewModel.InsertRoundTripBefore(ViewModel);
         }
 
         private void DeleteRoundtrip_Click(object sender, RoutedEventArgs e)

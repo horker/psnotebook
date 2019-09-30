@@ -88,7 +88,7 @@ namespace Horker.Notebook.Views
 
             if (index == StackPanel.Children.Count - 1)
             {
-                ViewModel.InsertRoundtrip(r.ViewModel);
+                ViewModel.InsertRoundTripAfter(r.ViewModel);
                 return;
             }
 

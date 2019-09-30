@@ -240,9 +240,20 @@ namespace Horker.Notebook.ViewModels
             });
         }
 
-        public void InsertRoundtrip(RoundtripViewModel after)
+        public void InsertRoundTripAfter(RoundtripViewModel after)
         {
             var index = after.Index + 1;
+            Model.CreateNewRoundtrip(false, index);
+            _control.Dispatcher.Invoke(() => {
+                Reindex();
+                ViewItems[index].Focus();
+                IsTextChanged = true;
+            });
+        }
+
+        public void InsertRoundTripBefore(RoundtripViewModel before)
+        {
+            var index = before.Index;
             Model.CreateNewRoundtrip(false, index);
             _control.Dispatcher.Invoke(() => {
                 Reindex();
