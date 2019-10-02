@@ -15,7 +15,7 @@ namespace Horker.Notebook.Models
 {
     public class Application
     {
-        public static readonly string Version = "0.3.1";
+        public static readonly string Version = "0.3.2";
 
         public static int Start()
         {
