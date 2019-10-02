@@ -161,7 +161,7 @@ namespace Horker.Notebook.ViewModels
                     f = Regex.Replace(_fileName, "(.+[/\\\\])?(.+)$", "$2");
 
                 string changed = _isTextChanged ? "*" : "";
-                return f + changed + " - PowerShlell Notebook";
+                return f + changed + " - PowerShell Notebook";
             }
         }
 
