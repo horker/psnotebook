@@ -330,7 +330,7 @@ namespace Horker.Notebook.Models
                 commandLines.Add(builder.ToString());
             }
 
-            _sessionViewModel.Clear();
+            _sessionViewModel.Clear(false);
 
             foreach (var c in commandLines)
             {

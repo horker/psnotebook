@@ -320,17 +320,26 @@ namespace Horker.Notebook.ViewModels
             });
         }
 
-        public void Clear()
+        public void Clear(bool keepFirst)
         {
-            _control.Dispatcher.Invoke(() => {
-                while (ViewItems.Count > 1)
-                    ViewItems.RemoveAt(ViewItems.Count - 1);
-                var firstItem = ViewItems[0] as Views.Roundtrip;
-                firstItem.ViewModel.ClearCommandLine();
-                firstItem.ViewModel.ClearOutput();
-                firstItem.ViewModel.Hidden();
-                firstItem.CommandLine.Focus();
-            });
+            if (keepFirst)
+            {
+                _control.Dispatcher.Invoke(() => {
+                    while (ViewItems.Count > 1)
+                        ViewItems.RemoveAt(ViewItems.Count - 1);
+                    var firstItem = ViewItems[0] as Views.Roundtrip;
+                    firstItem.ViewModel.ClearCommandLine();
+                    firstItem.ViewModel.ClearOutput();
+                    firstItem.ViewModel.Hidden();
+                    firstItem.CommandLine.Focus();
+                });
+            }
+            else
+            {
+                _control.Dispatcher.Invoke(() => {
+                    ViewItems.Clear();
+                });
+            }
         }
 
         public void ShowProgress()

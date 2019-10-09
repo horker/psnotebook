@@ -219,7 +219,7 @@ namespace Horker.Notebook.Views
             if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Clear session"))
                 return;
 
-            ViewModel.Clear();
+            ViewModel.Clear(true);
             ViewModel.IsTextChanged = false;
         }
 
