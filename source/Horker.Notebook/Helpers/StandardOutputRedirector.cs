@@ -78,6 +78,7 @@ namespace Horker.Notebook
             if (_dup2(fd, 1) == -1)
                 throw new InvalidOperationException("_dup2(1) failed");
 
+            fd = _open_osfhandle(handle, _O_WRONLY | _O_TEXT);
             if (_dup2(fd, 2) == -1)
                 throw new InvalidOperationException("_dup2(2) failed");
 
