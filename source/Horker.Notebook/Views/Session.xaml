@@ -18,6 +18,7 @@
         <RoutedCommand x:Key="RestartCommand" />
         <RoutedCommand x:Key="ReloadCommand" />
         <RoutedCommand x:Key="ReloadAndRunCommand" />
+        <RoutedCommand x:Key="AutosaveCommand" />
         <RoutedCommand x:Key="ExitCommand" />
         <RoutedCommand x:Key="RunCommand" />
         <RoutedCommand x:Key="RunAllCommand" />
@@ -35,6 +36,7 @@
         <CommandBinding Command="{StaticResource RestartCommand}" Executed="RestartCommand_Execute"/>
         <CommandBinding Command="{StaticResource ReloadCommand}" Executed="ReloadCommand_Execute"/>
         <CommandBinding Command="{StaticResource ReloadAndRunCommand}" Executed="ReloadAndRunCommand_Execute"/>
+        <CommandBinding Command="{StaticResource AutosaveCommand}" Executed="AutosaveCommand_Execute"/>
         <CommandBinding Command="{StaticResource ExitCommand}" Executed="ExitCommand_Execute"/>
         <CommandBinding Command="{StaticResource RunCommand}" Executed="RunCommand_Execute"/>
         <CommandBinding Command="{StaticResource RunAllCommand}" Executed="RunAllCommand_Execute"/>
@@ -63,6 +65,8 @@
                     <MenuItem Header="_Restart" Command="{StaticResource RestartCommand}"/>
                     <MenuItem Header="Reloa_d" Command="{StaticResource ReloadCommand}"/>
                     <MenuItem Header="Reload and ru_n" Command="{StaticResource ReloadAndRunCommand}"/>
+                    <Separator/>
+                    <MenuItem Header="Auto_save" x:Name="Autosave" IsCheckable="true" IsChecked="{Binding IsAutosaveEnabled}" Command="{StaticResource AutosaveCommand}"/>
                     <views:RecentFileList x:Name="RecentFileList" />
                     <MenuItem Header="_Exit" Command="{StaticResource ExitCommand}"/>
                 </MenuItem>
@@ -73,7 +77,7 @@
                 </MenuItem>
                 <MenuItem Header="_Run">
                     <MenuItem Header="_Run" InputGestureText="F5" Command="{StaticResource RunCommand}"/>
-                    <MenuItem Header="Run _All" InputGestureText="Ctrl+F5" Command="{StaticResource RunAllCommand}"/>
+                    <MenuItem Header="Run _all" InputGestureText="Ctrl+F5" Command="{StaticResource RunAllCommand}"/>
                     <MenuItem Header="_Cancel" InputGestureText="ESC" Command="{StaticResource CancelCommand}"/>
                 </MenuItem>
                 <MenuItem Header="_Help">

@@ -114,8 +114,14 @@ namespace Horker.Notebook.Views
 
         // Commands
 
-        private bool Confirm(string message, string title)
+        private bool Confirm(string message, string title, bool autosave)
         {
+            if (autosave && ViewModel.HasFileName())
+            {
+                ViewModel.Autosave();
+                return true;
+            }
+
             if (ViewModel.IsTextChanged)
             {
                 var ok = MessageBox.Show(message, title, MessageBoxButton.YesNo);
@@ -170,7 +176,7 @@ namespace Horker.Notebook.Views
 
         private void ReloadCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Reload session"))
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Reload session", true))
                 return;
 
             ViewModel.NotifyRestart(ViewModel.FileName, false);
@@ -178,7 +184,7 @@ namespace Horker.Notebook.Views
 
         private void ReloadAndRunCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Reload and run session"))
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Reload and run session", true))
                 return;
 
             ViewModel.NotifyRestart(ViewModel.FileName, true);
@@ -186,15 +192,20 @@ namespace Horker.Notebook.Views
 
         private void RestartCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Restart"))
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Restart", true))
                 return;
 
             ViewModel.NotifyRestart(null, false);
         }
 
+        private void AutosaveCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            // Nothing to do.
+        }
+
         private void ExitCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Exit"))
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Exit", false))
                 return;
 
             ViewModel.NotifyExit();
@@ -202,12 +213,15 @@ namespace Horker.Notebook.Views
 
         private void RunCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
+            ViewModel.Autosave();
+
             var r = GetActiveRoundtrip();
             r.ViewModel.NotifyExecute(false);
         }
 
         private void RunAllCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
+            ViewModel.Autosave();
             ViewModel.NotifyExecuteAll();
         }
 
@@ -218,7 +232,7 @@ namespace Horker.Notebook.Views
 
         private void ClearCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Clear session"))
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Clear session", true))
                 return;
 
             ViewModel.Clear(true);

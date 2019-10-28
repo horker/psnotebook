@@ -150,6 +150,18 @@ namespace Horker.Notebook.ViewModels
             }
         }
 
+        private bool _isAutosaveEnabled = true;
+
+        public bool IsAutosaveEnabled
+        {
+            get => _isAutosaveEnabled;
+            set
+            {
+                _isAutosaveEnabled = value;
+                OnPropertyChanged(nameof(IsAutosaveEnabled));
+            }
+        }
+
         public string TitleString
         {
             get
@@ -399,6 +411,12 @@ namespace Horker.Notebook.ViewModels
             _control.Dispatcher.Invoke(() => {
                 IsTextChanged = false;
             });
+        }
+
+        public void Autosave()
+        {
+            if (_isAutosaveEnabled && HasFileName())
+                SaveSession();
         }
 
         public void EnqueueLoadSessionRequest(string fileName, bool runAfterLoad)

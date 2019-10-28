@@ -35,6 +35,7 @@ save/restore output area
 Emacs mode
 native executable example: git clone, doxygen incubator-mxnet
 
+DONE Save before run
 DONE Keep extensions .ps1 in the MRU list.
 DONE start new session
 DONE reload current session

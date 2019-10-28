@@ -166,13 +166,19 @@ namespace Horker.Notebook.Views
             if (ViewModel.IsEditorMode)
                 CommandLine.TextArea.PerformTextInput("\n");
             else
+            {
+                Container.ViewModel.Autosave();
                 ViewModel.NotifyExecute(true);
+            }
         }
 
         private void ShiftEnterCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
             if (ViewModel.IsEditorMode)
+            {
+                Container.ViewModel.Autosave();
                 ViewModel.NotifyExecute(true);
+            }
             else
                 CommandLine.TextArea.PerformTextInput("\n");
         }
@@ -180,7 +186,10 @@ namespace Horker.Notebook.Views
         private void CtrlEnterCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
             if (ViewModel.IsEditorMode)
+            {
+                Container.ViewModel.Autosave();
                 ViewModel.NotifyExecute(false);
+            }
             else
                 CommandLine.TextArea.PerformTextInput("\n");
         }
