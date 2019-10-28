@@ -77,7 +77,7 @@ The following limitations exist in the current version:
 
 By these limitations, the following cmdlets and operations do not work: `Read-Host`, `Set-PSBreakpoint` (console debugger) and `$ErrorActionPreference='Inquire'`.
 
-Native applications that perform any console I/O operations except writing to standard and error outputs do not work correctly.
+Native applications that perform any console operations except writing to stdout and stderr outputs do not work correctly on this console.
 
 ## Notes
 
@@ -88,6 +88,15 @@ To use [OxyPlot CLI](https://github.com/horker/oxyplotcli2) with this applicatio
 ```PowerShell
 Import-Module oxyplotcli
 Set-OxyPlotViewDispatcher (Get-NotebookWindowDispatcher)
+```
+
+The above commands should be written in `Notebook_profile.ps1`. As another way, you can write them in the usual `profile.ps1` as follows:
+
+```PowerShell
+if ($host.Name -match "PowerShell Notebook") {
+    Import-Module oxyplotcli
+    Set-OxyPlotViewDispatcher (Get-NotebookWindowDispatcher)
+}
 ```
 
 You should add the `-AsPlotView` parameter to each OxyPlot CLI cmdlet to show charts inline.
