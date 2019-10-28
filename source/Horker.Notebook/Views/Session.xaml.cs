@@ -37,6 +37,9 @@ namespace Horker.Notebook.Views
             RecentFileList.MenuItemFormatOneToNine = "_{0}:  {1}";
             RecentFileList.MenuItemFormatTenPlus = "{0}:  {1}";
             RecentFileList.MenuClick += (s, e) => {
+                if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Load", true))
+                    return;
+
                 ViewModel.EnqueueLoadSessionRequest(e.Filepath, false);
             };
         }
@@ -163,6 +166,9 @@ namespace Horker.Notebook.Views
 
         private void LoadCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Load", true))
+                return;
+
             var openFileDialog = new OpenFileDialog()
             {
                 Title = "Load session",
