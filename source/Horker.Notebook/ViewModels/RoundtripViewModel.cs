@@ -230,7 +230,6 @@ namespace Horker.Notebook.ViewModels
 
         public void NotifyExecute(bool moveToNext)
         {
-            SessionViewModel.ActiveOutput = this;
             Model.NotifyExecute(moveToNext);
         }
 
