@@ -86,6 +86,7 @@
     <Compile Include="Cmdlets\NewWpfImage.cs" />
     <Compile Include="Cmdlets\OutNotebookString.cs" />
     <Compile Include="Cmdlets\StartNotebook.cs" />
+    <Compile Include="Helpers\StandardOutputRedirector.cs" />
     <Compile Include="Views\PowerShellIndentationStrategy.cs" />
     <Compile Include="Models\CodeCompletionRequest.cs" />
     <Compile Include="Models\Configuration.cs" />
@@ -129,5 +130,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

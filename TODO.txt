@@ -1,3 +1,10 @@
+* Bugs
+crash when doing "Reload and run" with empty buffer
+clear execution queue when ESC is pressed
+Scrolling issue on partially out-of-screen cursor
+Keep extensions .ps1 in the MRU list.
+
+* Small improvements
 resize output pane
 "Scroll to top" and "Scroll to bottom" icons in the output area
 set focus when the notebook window is activated
@@ -5,10 +12,9 @@ Check where to save the recently used file list
 bug: on completion, enter key is not effective as normal key
 customization
 Activate command line after ESC
-bug: Scrolling on command line
 undo cell operations
 join/split cells
-bug: crash when doing "Reload and run" with empty buffer
+show variable types and contents on mouse hover
 
 invalidate "Delete this" in the context menu when there is one roundtrip
 Display an error correctly when $ErrorActionPreference = "Stop"
@@ -20,7 +26,7 @@ move focus to output area when past command line is called by F5
 change editor mode display (show small icon for example)
 stop word wrap
 
-BIG ISSUES
+* Big issues
 user input
 debugger
 tab window

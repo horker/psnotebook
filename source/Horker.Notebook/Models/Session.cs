@@ -22,6 +22,10 @@ namespace Horker.Notebook.Models
 
         private int _exitCode;
 
+        private StandardOutputRedirector _stdout;
+
+        public StandardOutputRedirector Stdout => _stdout;
+
         private Runspace _runspace;
         private PowerShell _powerShell;
 
@@ -34,6 +38,14 @@ namespace Horker.Notebook.Models
             sessionViewModel.Model = this;
 
             _executionQueue = new ExecutionQueue();
+
+            // Standard output
+
+            _stdout = new StandardOutputRedirector();
+            _stdout.StartToRead((line) =>
+            {
+                SessionViewModel.ActiveOutput.WriteLine(line);
+            });
 
             // Setting up the PowerShell engine.
 
@@ -187,6 +199,8 @@ namespace Horker.Notebook.Models
                         var asyncResult = _powerShell.BeginInvoke(input, output);
 
                         WaitHandle.WaitAny(new WaitHandle[] { asyncResult.AsyncWaitHandle, _cancelEvent });
+
+                        _stdout.FlushRemnants();
 
                         if (_cancelled)
                         {
