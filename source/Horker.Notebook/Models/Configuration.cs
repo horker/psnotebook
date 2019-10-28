@@ -13,7 +13,7 @@ namespace Horker.Notebook.Models
     {
         public static FontFamily FontFamily { get; set; } = new FontFamily("Consolas");
 
-        public static double FontSize { get; set; } = 14;
+        public static double FontSize { get; set; } = (96.0 / 72) * 11; // 11pt
 
         private static int _consoleWidthInChars = 96;
 

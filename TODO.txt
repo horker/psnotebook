@@ -14,6 +14,7 @@ Activate command line after ESC
 undo cell operations
 join/split cells
 show variable types and contents on mouse hover
+Remove a file that failed to load from the MRU list
 
 invalidate "Delete this" in the context menu when there is one roundtrip
 Display an error correctly when $ErrorActionPreference = "Stop"
