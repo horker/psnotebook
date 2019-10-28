@@ -34,6 +34,8 @@ namespace Horker.Notebook.Views
 
             RecentFileList.UseXmlPersister();
             RecentFileList.MaxNumberOfFiles = 5;
+            RecentFileList.MenuItemFormatOneToNine = "_{0}:  {1}";
+            RecentFileList.MenuItemFormatTenPlus = "{0}:  {1}";
             RecentFileList.MenuClick += (s, e) => {
                 ViewModel.EnqueueLoadSessionRequest(e.Filepath, false);
             };

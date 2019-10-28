@@ -2,14 +2,13 @@
 crash when doing "Reload and run" with empty buffer
 clear execution queue when ESC is pressed
 Scrolling issue on partially out-of-screen cursor
-Keep extensions .ps1 in the MRU list.
+on completion, enter key is not effective as normal key
 
 * Small improvements
 resize output pane
 "Scroll to top" and "Scroll to bottom" icons in the output area
 set focus when the notebook window is activated
 Check where to save the recently used file list
-bug: on completion, enter key is not effective as normal key
 customization
 Activate command line after ESC
 undo cell operations
@@ -36,6 +35,7 @@ save/restore output area
 Emacs mode
 native executable example: git clone, doxygen incubator-mxnet
 
+DONE Keep extensions .ps1 in the MRU list.
 DONE start new session
 DONE reload current session
 DONE exit
