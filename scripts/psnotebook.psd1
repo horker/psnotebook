@@ -10,7 +10,7 @@
 RootModule = 'psnotebook.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.3.3'
+ModuleVersion = '0.3.4'
 
 # Supported PSEditions
 #CompatiblePSEditions = ''
@@ -121,18 +121,21 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = @"
+v0.3.4
+Fix several bugs
+
 v0.3.3
 Implement autosave
 Implement redirection of stdout and stderr
 Fix inserting an unnecessary cell when loading
 Fix a timing bug that causes output to wrong cells
-Change the UI font size to  11pt
+Change the UI font size to 11pt
 
 v0.3.2
 Several improvements and bug fixes
 
 v0.3.1
-Fix scroll issue
+Fix scrolling issue
 
 v0.3.0
 Add the application icon
