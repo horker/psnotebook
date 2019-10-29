@@ -28,36 +28,30 @@ $handle
 #!CommandLine
 [Horker.Notebook.StandardOutputRedirector]::GetStdHandle(-12)
 #!CommandLine
+$msvcrt::_get_osfhandle(1)
+#!CommandLine
+$stdout = $host.PrivateData.Model.Stdout
+$stdout.Writer.BaseStream.SafePipeHandle.DangerousGetHandle()
+#!CommandLine
+# Win32API: WriteFIle()
+
 $written = [int]0
 $msvcrt::WriteFile($handle, [byte[]]@([byte][char]'a', [byte][char]'b', [byte][char]'c', [byte][char]"`n"), 4, [ref]$written, [IntPtr]::Zero)
 #!CommandLine
 $written
 #!CommandLine
+# Low level I/O: _write()
+
+$msvcrt::_write(1, "hello`n", 5)
+#!CommandLine
+# msvcrt: printf
+# Console.WriteLine
+
 $msvcrt::printf("good bye`n")
 [console]::WriteLine("good night")
 $msvcrt::printf("good bye")
 [console]::WriteLine("good night 2")
 #!CommandLine
-$msvcrt::_write(1, "hello`n", 5)
-#!CommandLine
 [console]::Write("hello")
 #[console]::Out.Flush()
 #!CommandLine
-$msvcrt::_get_osfhandle(1) 
-#!CommandLine
-$stdout = $host.PrivateData.Model.Stdout
-#!CommandLine
-$stdout.Writer.BaseStream.SafePipeHandle.DangerousGetHandle()
-#!CommandLine
-
-
-
-
-
-
-
-
-
-
-
-
