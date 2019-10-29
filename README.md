@@ -9,7 +9,7 @@ The code editor adopts [AvalonEdit](http://avalonedit.net) and provides code com
 
 ## Installation
 
-This module is published in the [PowreShell Gallery](https://www.powershellgallery.com/packages/psnotebook).
+This module is published in the [PowerShell Gallery](https://www.powershellgallery.com/packages/psnotebook).
 
 ```PowerShell
 Install-Module psnotebook
@@ -24,7 +24,7 @@ Import-Module psnotebook
 Start-Notebook
 ```
 
-As another way, execute `NotebookApp.exe` in the module directory (`$HOME\Documents\WindowsPowerShell\Modules\psnotebook` in the usual environment).
+As another way, you can execute `NotebookApp.exe` in the module directory (`$HOME\Documents\WindowsPowerShell\Modules\psnotebook` in the usual environment).
 
 ## Key Bindings
 
@@ -77,7 +77,7 @@ The following limitations exist in the current version:
 
 By these limitations, the following cmdlets and operations do not work: `Read-Host`, `Set-PSBreakpoint` (console debugger) and `$ErrorActionPreference='Inquire'`.
 
-Native applications that perform any console operations except writing to stdout and stderr outputs do not work correctly on this console.
+Native applications that perform any console operations except just writing to stdout and stderr outputs do not work correctly on this console.
 
 ## Notes
 
@@ -90,7 +90,7 @@ Import-Module oxyplotcli
 Set-OxyPlotViewDispatcher (Get-NotebookWindowDispatcher)
 ```
 
-The above commands should be written in `Notebook_profile.ps1`. As another way, you can write them in the usual `profile.ps1` as follows:
+The above commands should be written in `Notebook_profile.ps1`. You can also put them in `profile.ps1` as follows:
 
 ```PowerShell
 if ($host.Name -match "PowerShell Notebook") {
