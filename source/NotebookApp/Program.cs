@@ -34,6 +34,7 @@ namespace Horker.Notebook
             var p = new Process();
             var pi = p.StartInfo;
             pi.FileName = "Horker.Notebook.App.exe";
+            pi.Arguments = string.Join(" ", args);
             pi.RedirectStandardOutput = true;
             pi.RedirectStandardError = true;
             pi.UseShellExecute = false;
