@@ -200,7 +200,7 @@ namespace Horker.Notebook.Models
 
                         WaitHandle.WaitAny(new WaitHandle[] { asyncResult.AsyncWaitHandle, _cancelEvent });
 
-                        _stdout.FlushRemnants();
+                        _stdout.Flush();
 
                         if (_cancelled)
                         {

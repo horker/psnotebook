@@ -23,6 +23,8 @@ $OBJECT_FILES = @(
     "NotebookApp.exe"
     "NotebookApp.exe.config"
     "NotebookApp.pdb"
+    "NotebookHelpers.dll"
+    "NotebookHelpers.pdb"
 )
 
 #$TEMPLATE_INPUT_PATH = "$PSScriptRoot\templates"

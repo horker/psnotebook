@@ -28,6 +28,9 @@ namespace Horker.Notebook
         public static extern IntPtr _get_osfhandle(int fd);
 
         [DllImport("msvcrt.dll")]
+        public static extern IntPtr freopen(string FileName, string Mode, IntPtr Stream);
+
+        [DllImport("msvcrt.dll")]
         public static extern int _flushall();
 
         public const int STD_OUTPUT_HANDLE = -11;
@@ -49,7 +52,7 @@ namespace Horker.Notebook
         private AnonymousPipeClientStream _writeStream;
         private StreamReader _reader;
         private StreamWriter _writer;
-        private bool _flushing;
+        private StringBuilder _buffer;
 
         public StreamReader Reader => _reader;
         public StreamWriter Writer => _writer;
@@ -64,65 +67,83 @@ namespace Horker.Notebook
             _writer = new StreamWriter(_writeStream, encoding);
             _writer.AutoFlush = true;
 
+            _buffer = new StringBuilder();
+
             var handle = _writeStream.SafePipeHandle.DangerousGetHandle();
 
-            // Update C-runtime file descriptors.
-            // Note: We need to duplicate file handles for stdout and stderr respectively and
-            // call SetStdHandle() to update Win32API-level stdout and stderr; fortunately,
-            // _dup2() does both internally on behalf of us.
+            // Update standard output
 
             var fd = _open_osfhandle(handle, _O_WRONLY | _O_TEXT);
+
             if (fd == -1)
                 throw new InvalidOperationException("_open_osfhandle() failed");
 
             if (_dup2(fd, 1) == -1)
                 throw new InvalidOperationException("_dup2(1) failed");
 
+            if (SetStdHandle(STD_OUTPUT_HANDLE, _get_osfhandle(fd)) == 0)
+                throw new InvalidOperationException("SetStdHandle(STD_OUTPUT_HANDLE) failed");
+
+            Console.SetOut(_writer);
+
+            // Update standard error[:w
+
             fd = _open_osfhandle(handle, _O_WRONLY | _O_TEXT);
+
+            if (fd == -1)
+                throw new InvalidOperationException("_open_osfhandle() failed");
+
             if (_dup2(fd, 2) == -1)
                 throw new InvalidOperationException("_dup2(2) failed");
 
-            // Update .NET console output.
+            if (SetStdHandle(STD_ERROR_HANDLE, _get_osfhandle(fd)) == 0)
+                throw new InvalidOperationException("SetStdHandle(STD_OUTPUT_HANDLE) failed");
 
-            Console.SetOut(_writer);
+            Console.SetError(_writer);
         }
 
         public void StartToRead(Action<string> action)
         {
             Task.Run(() =>
             {
+                var buffer = new char[1];
+                var lastCh = '\0';
                 while (true)
                 {
-                    var line = _reader.ReadLine();
+                    var count = _reader.Read(buffer, 0, 1);
+                    Debug.Assert(count == 1);
 
-                    if (_flushing &&
-                        (line.Length == 0 ||
-                         (line.Length == 1 && line[0] == '\n') ||
-                         (line.Length == 2 && line[0] == '\r' && line[1] == '\n')))
+                    var ch = buffer[0];
+                    if (ch == '\n')
                     {
-                        _flushing = false;
-                        continue;
+                        if (lastCh == '\r')
+                            _buffer.Remove(_buffer.Length - 1, 1);
+                        action.Invoke(_buffer.ToString());
+                        _buffer.Clear();
                     }
-                    action.Invoke(line);
+                    else if (ch == '\0')
+                    {
+                        if (_buffer.Length > 0)
+                        {
+                            action.Invoke(_buffer.ToString());
+                            _buffer.Clear();
+                        }
+                    }
+                    else
+                    {
+                        _buffer.Append(ch);
+                    }
+
+                    lastCh = ch;
                 }
             });
         }
 
-        public void FlushRemnants()
+        public void Flush()
         {
             _flushall();
             _writer.Flush();
-
-            // To force to flush remnant buffer, write an empty newline.
-            _flushing = true;
-            _writer.WriteLine();
-            _writer.Flush();
-        }
-
-        public void Close()
-        {
-            _readStream.Close();
-            _reader.Close();
+            _writer.Write('\0');
         }
     }
 }
