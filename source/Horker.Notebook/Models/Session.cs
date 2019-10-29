@@ -341,6 +341,8 @@ namespace Horker.Notebook.Models
                     }
                 }
 
+                if (builder.Length >= 2)
+                    builder.Remove(builder.Length - 2, 2);
                 commandLines.Add(builder.ToString());
             }
 
