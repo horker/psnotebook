@@ -20,11 +20,12 @@ $OBJECT_FILES = @(
     "ICSharpCode.AvalonEdit.dll"
     "Horker.Notebook.dll"
     "Horker.Notebook.pdb"
+    "Horker.Notebook.App.exe"
+    "Horker.Notebook.App.exe.config"
+    "Horker.Notebook.App.pdb"
     "NotebookApp.exe"
     "NotebookApp.exe.config"
     "NotebookApp.pdb"
-    "NotebookHelpers.dll"
-    "NotebookHelpers.pdb"
 )
 
 #$TEMPLATE_INPUT_PATH = "$PSScriptRoot\templates"

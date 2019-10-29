@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notebook", "Horker.Notebook\Notebook.csproj", "{4FCD69F5-A3D4-4170-92FB-B88798DAEA4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotebookApp", "NotebookApp\NotebookApp.csproj", "{61DC062F-FDA0-4614-A87C-AABAA7CA8296}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horker.Notebook.App", "Horker.Notebook.App\Horker.Notebook.App.csproj", "{61DC062F-FDA0-4614-A87C-AABAA7CA8296}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher", "Launcher\Launcher.csproj", "{DA872EFB-E8F9-414D-89F9-10EA85C1C8BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotebookApp", "NotebookApp\NotebookApp.csproj", "{DA872EFB-E8F9-414D-89F9-10EA85C1C8BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
