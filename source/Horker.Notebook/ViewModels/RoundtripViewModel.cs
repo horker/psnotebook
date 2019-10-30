@@ -137,9 +137,10 @@ namespace Horker.Notebook.ViewModels
 
                 par.Inlines.Add(run);
 
-                _newlinePending = newLine;
-
                 Control.ScrollToBottom();
+                par.BringIntoView();
+
+                _newlinePending = newLine;
             });
         }
 
@@ -170,9 +171,11 @@ namespace Horker.Notebook.ViewModels
                 }
 
                 par.Inlines.Add(run);
-                _newlinePending = true;
 
                 Control.ScrollToBottom();
+                par.BringIntoView();
+
+                _newlinePending = true;
             });
         }
 
