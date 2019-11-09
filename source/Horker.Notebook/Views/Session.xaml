@@ -57,7 +57,7 @@
 
     <DockPanel>
         <Grid DockPanel.Dock="Top" x:Name="Menu">
-            <Menu FontSize="10pt">
+            <Menu FontSize="10pt" IsMainMenu="true">
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Command="{StaticResource NewCommand}"/>
                     <MenuItem Header="_Save..." Command="{StaticResource SaveCommand}"/>
