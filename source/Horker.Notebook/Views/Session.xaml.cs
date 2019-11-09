@@ -219,9 +219,11 @@ namespace Horker.Notebook.Views
 
         private void RunCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            ViewModel.Autosave();
-
             var r = GetActiveRoundtrip();
+            if (r == null)
+                return;
+
+            ViewModel.Autosave();
             r.ViewModel.NotifyExecute(false);
         }
 
@@ -229,6 +231,16 @@ namespace Horker.Notebook.Views
         {
             ViewModel.Autosave();
             ViewModel.NotifyExecuteAll();
+        }
+
+        private void RunBelowCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        {
+            var r = GetActiveRoundtrip();
+            if (r == null)
+                return;
+
+            ViewModel.Autosave();
+            ViewModel.NotifyExecuteBelow(r.ViewModel);
         }
 
         private void CancelCommand_Execute(object sender, ExecutedRoutedEventArgs e)

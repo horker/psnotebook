@@ -22,6 +22,7 @@
         <RoutedCommand x:Key="ExitCommand" />
         <RoutedCommand x:Key="RunCommand" />
         <RoutedCommand x:Key="RunAllCommand" />
+        <RoutedCommand x:Key="RunBelowCommand" />
         <RoutedCommand x:Key="CancelCommand" />
         <RoutedCommand x:Key="ClearCommand" />
         <RoutedCommand x:Key="EditorModeByDefaultCommand" />
@@ -40,6 +41,7 @@
         <CommandBinding Command="{StaticResource ExitCommand}" Executed="ExitCommand_Execute"/>
         <CommandBinding Command="{StaticResource RunCommand}" Executed="RunCommand_Execute"/>
         <CommandBinding Command="{StaticResource RunAllCommand}" Executed="RunAllCommand_Execute"/>
+        <CommandBinding Command="{StaticResource RunBelowCommand}" Executed="RunBelowCommand_Execute"/>
         <CommandBinding Command="{StaticResource CancelCommand}" Executed="CancelCommand_Execute"/>
         <CommandBinding Command="{StaticResource ClearCommand}" Executed="ClearCommand_Execute"/>
         <CommandBinding Command="{StaticResource EditorModeByDefaultCommand}" Executed="EditorModeByDefaultCommand_Execute"/>
@@ -47,8 +49,8 @@
     </UserControl.CommandBindings>
 
     <UserControl.InputBindings>
-        <KeyBinding Gesture="F5" Command="{StaticResource RunCommand}"/>
-        <KeyBinding Gesture="Ctrl+F5" Command="{StaticResource RunAllCommand}"/>
+        <KeyBinding Gesture="F5" Command="{StaticResource RunAllCommand}"/>
+        <KeyBinding Gesture="Ctrl+F5" Command="{StaticResource RunBelowCommand}"/>
         <KeyBinding Gesture="ESC" Command="{StaticResource CancelCommand}"/>
         <KeyBinding Gesture="Ctrl+S" Command="{StaticResource SaveCommand}"/>
     </UserControl.InputBindings>
@@ -76,8 +78,9 @@
                     <MenuItem Header="_Editor mode by default" x:Name="EditModeByDefault" IsCheckable="true" IsChecked="{Binding IsEditorModeByDefault}" Command="{StaticResource EditorModeByDefaultCommand}"/>
                 </MenuItem>
                 <MenuItem Header="_Run">
-                    <MenuItem Header="_Run" InputGestureText="F5" Command="{StaticResource RunCommand}"/>
-                    <MenuItem Header="Run _all" InputGestureText="Ctrl+F5" Command="{StaticResource RunAllCommand}"/>
+                    <MenuItem Header="_Run" Command="{StaticResource RunCommand}"/>
+                    <MenuItem Header="Run _all" InputGestureText="F5" Command="{StaticResource RunAllCommand}"/>
+                    <MenuItem Header="Run _below" InputGestureText="Ctrl+F5" Command="{StaticResource RunBelowCommand}"/>
                     <MenuItem Header="_Cancel" InputGestureText="ESC" Command="{StaticResource CancelCommand}"/>
                 </MenuItem>
                 <MenuItem Header="_Help">
