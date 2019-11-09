@@ -383,6 +383,20 @@ namespace Horker.Notebook.ViewModels
             });
         }
 
+        public void NotifyExecuteBelow(RoundtripViewModel r)
+        {
+            _control.Dispatcher.Invoke(() => {
+                bool run = false;
+                foreach (var item in Items)
+                {
+                    if (item == r)
+                        run = true;
+                    if (run)
+                        item.NotifyExecute(false);
+                }
+            });
+        }
+
         public void NotifyCancel()
         {
             Model.NotifyCancel();

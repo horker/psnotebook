@@ -269,6 +269,11 @@ namespace Horker.Notebook.Views
 
         // Menu items
 
+        private void RunBlow_Click(object sender, RoutedEventArgs e)
+        {
+            Container.ViewModel.NotifyExecuteBelow(this.ViewModel);
+        }
+
         private void InsertNewRoundtrip_Click(object sender, RoutedEventArgs e)
         {
             Container.ViewModel.InsertRoundTripBefore(ViewModel);
