@@ -188,7 +188,7 @@ namespace Horker.Notebook.Views
             if (ViewModel.IsEditorMode)
             {
                 Container.ViewModel.Autosave();
-                ViewModel.NotifyExecute(false);
+                Container.ViewModel.NotifyExecuteBelow(this.ViewModel);
             }
             else
                 CommandLine.TextArea.PerformTextInput("\n");
