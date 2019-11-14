@@ -3,6 +3,7 @@ crash when doing "Reload and run" with empty buffer
 clear execution queue when ESC is pressed
 Scrolling issue on partially out-of-screen cursor
 on completion, enter key is not effective as normal key
+reliable execution stop
 
 * Small improvements
 resize output pane
@@ -15,7 +16,8 @@ undo cell operations
 join/split cells
 show variable types and contents on mouse hover
 Remove a file that failed to load from the MRU list
-"Run below"
+Context menu in editor
+PSReadline key bindings support
 
 invalidate "Delete this" in the context menu when there is one roundtrip
 Display an error correctly when $ErrorActionPreference = "Stop"
@@ -37,6 +39,7 @@ save/restore output area
 Emacs mode
 native executable example: git clone, doxygen incubator-mxnet
 
+DONE "Run below"
 DONE Save before run
 DONE Keep extensions .ps1 in the MRU list.
 DONE start new session

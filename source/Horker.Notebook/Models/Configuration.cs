@@ -15,7 +15,7 @@ namespace Horker.Notebook.Models
 
         public static double FontSize { get; set; } = (96.0 / 72) * 11; // 11pt
 
-        private static int _consoleWidthInChars = 96;
+        private static int _consoleWidthInChars = 120;
 
         public static int ConsoleWidthInChars
         {
@@ -45,6 +45,8 @@ namespace Horker.Notebook.Models
 
         // Crude adjustment for the margins, paddings and borders
         public static double WindowWidth => CommandLineWidth + 100;
+
+        public static double WindowHeight => 1000;
 
         public static int MaxOutputHeightInLines { get; set; } = 30;
 
