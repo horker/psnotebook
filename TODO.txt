@@ -4,6 +4,8 @@ clear execution queue when ESC is pressed
 Scrolling issue on partially out-of-screen cursor
 on completion, enter key is not effective as normal key
 reliable execution stop
+Show toaster after command execution completes
+Show elapsed times in a timely manner
 
 * Small improvements
 resize output pane
