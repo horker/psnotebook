@@ -269,7 +269,7 @@ namespace Horker.Notebook.Views
 
         // Menu items
 
-        private void RunBlow_Click(object sender, RoutedEventArgs e)
+        private void RunFromHere_Click(object sender, RoutedEventArgs e)
         {
             Container.ViewModel.NotifyExecuteBelow(this.ViewModel);
         }

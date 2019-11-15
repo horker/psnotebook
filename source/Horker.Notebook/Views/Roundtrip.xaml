@@ -17,7 +17,7 @@
         <TextBox Grid.Column="0" x:Name="Index" Text="{Binding IndexString, Mode=OneWay}" Background="Gainsboro" IsReadOnly="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" Foreground="DarkGray" Margin="0,0,2,0">
             <TextBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Run below" x:Name="RunBelow" Click="RunBlow_Click" />
+                    <MenuItem Header="Run from here" x:Name="RunFromHere" Click="RunFromHere_Click" />
                     <Separator/>
                     <MenuItem Header="Insert new" x:Name="InsertNewRoundtrip" Click="InsertNewRoundtrip_Click" />
                     <MenuItem Header="Delete" x:Name="DeleteRoundtrip" Click="DeleteRoundtrip_Click" />

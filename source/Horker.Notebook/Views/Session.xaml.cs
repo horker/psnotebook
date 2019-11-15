@@ -233,7 +233,7 @@ namespace Horker.Notebook.Views
             ViewModel.NotifyExecuteAll();
         }
 
-        private void RunBelowCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        private void RunFromHereCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
             var r = GetActiveRoundtrip();
             if (r == null)
