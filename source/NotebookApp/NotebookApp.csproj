@@ -51,8 +51,7 @@
     <StartupObject>Horker.Notebook.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -78,7 +77,8 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <Win32Resource>C:\Users\msumi\work\notebook\source\NotebookApp\NotebookApp.res</Win32Resource>
+    <Win32Resource>
+    </Win32Resource>
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />

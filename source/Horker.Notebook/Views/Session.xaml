@@ -12,9 +12,9 @@
 
     <UserControl.Resources>
         <RoutedCommand x:Key="NewCommand" />
+        <RoutedCommand x:Key="OpenCommand" />
         <RoutedCommand x:Key="SaveCommand" />
         <RoutedCommand x:Key="SaveAsCommand" />
-        <RoutedCommand x:Key="LoadCommand" />
         <RoutedCommand x:Key="RestartCommand" />
         <RoutedCommand x:Key="ReloadCommand" />
         <RoutedCommand x:Key="ReloadAndRunCommand" />
@@ -31,9 +31,9 @@
 
     <UserControl.CommandBindings>
         <CommandBinding Command="{StaticResource NewCommand}" Executed="NewCommand_Execute"/>
+        <CommandBinding Command="{StaticResource OpenCommand}" Executed="OpenCommand_Execute"/>
         <CommandBinding Command="{StaticResource SaveCommand}" Executed="SaveCommand_Execute"/>
         <CommandBinding Command="{StaticResource SaveAsCommand}" Executed="SaveAsCommand_Execute"/>
-        <CommandBinding Command="{StaticResource LoadCommand}" Executed="LoadCommand_Execute"/>
         <CommandBinding Command="{StaticResource RestartCommand}" Executed="RestartCommand_Execute"/>
         <CommandBinding Command="{StaticResource ReloadCommand}" Executed="ReloadCommand_Execute"/>
         <CommandBinding Command="{StaticResource ReloadAndRunCommand}" Executed="ReloadAndRunCommand_Execute"/>
@@ -60,9 +60,9 @@
             <Menu FontSize="10pt" IsMainMenu="true">
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Command="{StaticResource NewCommand}"/>
+                    <MenuItem Header="_Open..." Command="{StaticResource OpenCommand}"/>
                     <MenuItem Header="_Save..." Command="{StaticResource SaveCommand}"/>
                     <MenuItem Header="Save _As..." Command="{StaticResource SaveAsCommand}"/>
-                    <MenuItem Header="_Load..." Command="{StaticResource LoadCommand}"/>
                     <Separator/>
                     <MenuItem Header="_Restart" Command="{StaticResource RestartCommand}"/>
                     <MenuItem Header="Reloa_d" Command="{StaticResource ReloadCommand}"/>

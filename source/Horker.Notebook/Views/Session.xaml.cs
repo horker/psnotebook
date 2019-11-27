@@ -164,14 +164,14 @@ namespace Horker.Notebook.Views
                 ViewModel.SaveSession(openFileDialog.FileName);
         }
 
-        private void LoadCommand_Execute(object sender, ExecutedRoutedEventArgs e)
+        private void OpenCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Load", true))
+            if (!Confirm("Seesion is changed and not saved yet.\nAre you sure to continue?", "Open", true))
                 return;
 
             var openFileDialog = new OpenFileDialog()
             {
-                Title = "Load session",
+                Title = "Open session",
                 Filter = _filterString,
                 InitialDirectory = Directory.GetCurrentDirectory()
             };

@@ -6,11 +6,14 @@ on completion, enter key is not effective as normal key
 reliable execution stop
 Show toaster after command execution completes
 Show elapsed times in a timely manner
+Set script names for better error messages
+Selection unexpectedly enabled when the command line is activated by mouse click
+Display stream outputs correctly when the command ends abnormally
 
 * Small improvements
 resize output pane
 "Scroll to top" and "Scroll to bottom" icons in the output area
-set focus when the notebook window is activated
+set focus on last active command line when the notebook window is activated
 Check where to save the recently used file list
 customization
 Activate command line after ESC
@@ -40,6 +43,7 @@ R studio-like side view
 save/restore output area
 Emacs mode
 native executable example: git clone, doxygen incubator-mxnet
+programmable side windows
 
 DONE "Run below"
 DONE Save before run
