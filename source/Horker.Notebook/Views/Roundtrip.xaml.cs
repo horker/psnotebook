@@ -57,14 +57,14 @@ namespace Horker.Notebook.Views
         {
             InitializeComponent();
 
+            Container = container;
+            DataContext = viewModel;
+            viewModel.Control = this;
+
             InitializeCommandLine();
             InitializeCommandBindings();
             InitializeKeyBindings();
             InitializeCodeCompletion();
-
-            Container = container;
-            DataContext = viewModel;
-            viewModel.Control = this;
         }
 
         // Helper
@@ -345,7 +345,7 @@ namespace Horker.Notebook.Views
         {
             // Address RichTextBox's known limitation that its document's width is not stretched automatically.
             // (source: https://stackoverflow.com/questions/350863/wpf-richtextbox-with-no-width-set)
-            Output.Document.PageWidth = Models.Configuration.ConsoleWidth;
+            Output.Document.PageWidth = ViewModel.Session.Configuration.ConsoleWidth;
 
             CommandLine.Focus();
             CommandLine.TextArea.Caret.BringCaretToView();
@@ -426,7 +426,7 @@ namespace Horker.Notebook.Views
 
         void InitializeCodeCompletion()
         {
-            _inlineCompletion = Models.Configuration.InlineCompletion;
+            _inlineCompletion = ViewModel.Session.Configuration.InlineCompletion;
         }
 
         void OpenCompletionWindow(CommandCompletion completion, bool byUserAction)
@@ -436,7 +436,7 @@ namespace Horker.Notebook.Views
 
             _completionWindow = new CompletionWindow(CommandLine.TextArea)
             {
-                FontFamily = Models.Configuration.FontFamily,
+                FontFamily = ViewModel.Session.Configuration.FontFamily,
                 SizeToContent = SizeToContent.WidthAndHeight,
                 MinWidth = 75,
                 MaxWidth = 500

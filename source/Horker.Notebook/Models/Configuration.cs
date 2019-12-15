@@ -11,13 +11,13 @@ namespace Horker.Notebook.Models
 {
     public class Configuration
     {
-        public static FontFamily FontFamily { get; set; } = new FontFamily("Consolas");
+        public FontFamily FontFamily { get; set; } = new FontFamily("Consolas");
 
-        public static double FontSize { get; set; } = (96.0 / 72) * 11; // 11pt
+        public double FontSize { get; set; } = (96.0 / 72) * 11; // 11pt
 
-        private static int _consoleWidthInChars = 120;
+        private int _consoleWidthInChars = 120;
 
-        public static int ConsoleWidthInChars
+        public int ConsoleWidthInChars
         {
             get => _consoleWidthInChars;
             set
@@ -27,9 +27,9 @@ namespace Horker.Notebook.Models
             }
         }
 
-        private static double _consoleWidth = double.NaN;
+        private double _consoleWidth = double.NaN;
 
-        public static double ConsoleWidth
+        public double ConsoleWidth
         {
             get
             {
@@ -41,28 +41,50 @@ namespace Horker.Notebook.Models
         }
 
         // Crude adjustment for the vertical scrollbar
-        public static double CommandLineWidth => ConsoleWidth + 30;
+        public double CommandLineWidth => ConsoleWidth + 30;
 
         // Crude adjustment for the margins, paddings and borders
-        public static double WindowWidth => CommandLineWidth + 100;
+        public double WindowWidth => CommandLineWidth + 100;
 
-        public static double WindowHeight => 1000;
+        public double WindowHeight => 1000;
 
-        public static int MaxOutputHeightInLines { get; set; } = 30;
+        public int MaxOutputHeightInLines { get; set; } = 30;
 
-        public static double MaxOutputHeight => FontSize * MaxOutputHeightInLines;
+        public double MaxOutputHeight => FontSize * MaxOutputHeightInLines;
 
-        public static double DefaultWpfElementWidth { get; set; } = ConsoleWidth * .7;
+        private double _defaultWpfElementWidth = double.NaN;
 
-        public static double DefaultWpfElementHeight { get; set; } = MaxOutputHeight * .9;
+        public double DefaultWpfElementWidth
+        {
+            get
+            {
+                if (double.IsNaN(_defaultWpfElementWidth))
+                    return ConsoleWidth * .7;
+                return _defaultWpfElementWidth;
+            }
+            set => _defaultWpfElementWidth = value;
+        }
 
-        public static bool IgnoreBackgroundColor => true;
+        private double _defaultWpfElementHeight = double.NaN;
 
-        public static bool InlineCompletion = true;
+        public double DefaultWpfElementHeight
+        {
+            get
+            {
+                if (double.IsNaN(_defaultWpfElementHeight))
+                    return MaxOutputHeight * .7;
+                return _defaultWpfElementHeight;
+            }
+            set => _defaultWpfElementHeight = value;
+        }
+
+        public bool IgnoreBackgroundColor => true;
+
+        public bool InlineCompletion = true;
 
         // Helper methods
 
-        private static double GetWidthBasedOnNumberOfCharacters(int charCount)
+        private double GetWidthBasedOnNumberOfCharacters(int charCount)
         {
             var l = new Label()
             {

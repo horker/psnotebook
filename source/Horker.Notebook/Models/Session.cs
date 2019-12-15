@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using Horker.Notebook.ViewModels;
 
@@ -16,6 +17,9 @@ namespace Horker.Notebook.Models
 {
     public class Session
     {
+        public Configuration Configuration { get; private set; }
+
+        private Host _host;
         private SessionViewModel _sessionViewModel;
 
         private ExecutionQueue _executionQueue;
@@ -23,7 +27,6 @@ namespace Horker.Notebook.Models
         private int _exitCode;
 
         private StandardOutputRedirector _stdout;
-
         public StandardOutputRedirector Stdout => _stdout;
 
         private Runspace _runspace;
@@ -32,26 +35,12 @@ namespace Horker.Notebook.Models
         private ManualResetEvent _cancelEvent;
         private bool _cancelled;
 
-        public Session(SessionViewModel sessionViewModel)
+        public Session()
         {
-            _sessionViewModel = sessionViewModel;
-            sessionViewModel.Model = this;
-
             _executionQueue = new ExecutionQueue();
 
-            // Standard output
-
-            _stdout = new StandardOutputRedirector();
-            _stdout.StartToRead((line) =>
-            {
-                SessionViewModel.ActiveOutput.WriteLine(line);
-            });
-
-            // Setting up the PowerShell engine.
-
-            var host = new Host(sessionViewModel, (int e) => { _exitCode = e; _executionQueue.Cancel(); });
-
-            _runspace = RunspaceFactory.CreateRunspace(host);
+            _host = new Host();
+            _runspace = RunspaceFactory.CreateRunspace(_host);
             _runspace.ApartmentState = ApartmentState.STA;
             _runspace.ThreadOptions = PSThreadOptions.UseNewThread;
             _runspace.Open();
@@ -60,6 +49,38 @@ namespace Horker.Notebook.Models
             _powerShell.Runspace = _runspace;
 
             _cancelEvent = new ManualResetEvent(false);
+
+            Configuration = new Configuration();
+        }
+
+        public void ExecuteConfigurationScript(string path, Configuration config)
+        {
+            try
+            {
+                _powerShell.AddCommand(path, false);
+                _powerShell.AddParameter("Config", config);
+                _powerShell.Invoke();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n" + ex.StackTrace, "Error on executing startup script");
+            }
+        }
+
+        public void InitializeViewModel(SessionViewModel sessionViewModel)
+        {
+            _sessionViewModel = sessionViewModel;
+            sessionViewModel.Model = this;
+
+            _host.InitializeUI(sessionViewModel, (int e) => { _exitCode = e; _executionQueue.Cancel(); });
+
+            // Standard output
+
+            _stdout = new StandardOutputRedirector();
+            _stdout.StartToRead((line) =>
+            {
+                SessionViewModel.ActiveOutput.WriteLine(line);
+            });
         }
 
         public Roundtrip CreateNewRoundtrip(bool wait, int position = -1, bool isTextChanged = true)

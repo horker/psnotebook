@@ -17,10 +17,16 @@ namespace Horker.Notebook
         private HostUserInterface _hostUserInterface;
         private Action<int> _exitCallback;
 
-        public Host(SessionViewModel sessionViewModel, Action<int> exitCallback)
+        public Host()
+        {
+            _hostUserInterface = new HostUserInterface();
+        }
+
+        public void InitializeUI(SessionViewModel sessionViewModel, Action<int> exitCallback)
         {
             _sessionViewModel = sessionViewModel;
-            _hostUserInterface = new HostUserInterface(sessionViewModel);
+            _hostUserInterface.InitializeSessionViewModel(sessionViewModel);
+
             _exitCallback = exitCallback;
         }
 

@@ -40,6 +40,9 @@ namespace Horker.Notebook.ViewModels
 
         public Models.Roundtrip Model { get; }
 
+        public ViewModels.SessionViewModel SessionViewModel => Control.Container.ViewModel;
+        public Models.Session Session => Control.Container.ViewModel.Model;
+
         private int _index;
 
         public int Index
@@ -192,8 +195,8 @@ namespace Horker.Notebook.ViewModels
                 {
                     var grid = new Grid()
                     {
-                        Width = Models.Configuration.DefaultWpfElementWidth,
-                        Height = Models.Configuration.DefaultWpfElementHeight
+                        Width = Session.Configuration.DefaultWpfElementWidth,
+                        Height = Session.Configuration.DefaultWpfElementHeight
                     };
                     grid.Children.Add(uiElement);
                     uiElement = grid;

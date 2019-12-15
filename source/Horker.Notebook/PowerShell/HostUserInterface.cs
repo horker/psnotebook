@@ -15,12 +15,17 @@ namespace Horker.Notebook
 {
     class HostUserInterface : PSHostUserInterface
     {
-        private SessionViewModel _session;
+        private SessionViewModel _sessionViewModel;
 
-        public HostUserInterface(SessionViewModel session)
+        public HostUserInterface()
         {
-            _session = session;
             _rawUI = new HostRawUserInterface();
+        }
+
+        public void InitializeSessionViewModel(SessionViewModel sessionViewModel)
+        {
+            _sessionViewModel = sessionViewModel;
+            _rawUI.InitializeConfiguration(sessionViewModel.Model.Configuration);
         }
 
         private HostRawUserInterface _rawUI;
@@ -65,7 +70,7 @@ namespace Horker.Notebook
         public override void Write(ConsoleColor foregroundColor, ConsoleColor backgroundColor, string value)
         {
             var f = ConsoleColorToBrushConverter.GetBrush(foregroundColor);
-            var b = Models.Configuration.IgnoreBackgroundColor ? null : ConsoleColorToBrushConverter.GetBrush(backgroundColor);
+            var b = _sessionViewModel.Model.Configuration.IgnoreBackgroundColor ? null : ConsoleColorToBrushConverter.GetBrush(backgroundColor);
 
             SessionViewModel.ActiveOutput.Write(value, f, b);
         }
@@ -96,7 +101,7 @@ namespace Horker.Notebook
 
             var percent = record.PercentComplete >= 0 ? record.PercentComplete : 0;
 
-            _session.WriteProgress(message, percent);
+            _sessionViewModel.WriteProgress(message, percent);
         }
 
         public override void WriteVerboseLine(string message)

@@ -28,21 +28,20 @@ namespace Horker.Notebook
 
         public MainWindow()
         {
+            DataContext = App.Session;
             InitializeComponent();
         }
 
         private void Session_Loaded(object sender, RoutedEventArgs e)
         {
-            var homePath = Environment.GetEnvironmentVariable("HOMEDRIVE") + Environment.GetEnvironmentVariable("HOMEPATH");
-            Directory.SetCurrentDirectory(homePath);
-
             var sessionControl = (Views.Session)sender;
             var sessionViewModel = sessionControl.ViewModel;
 
             Models.CurrentState.Dispatcher = Dispatcher;
 
             var thread = new Thread(() => {
-                var session = new Models.Session(sessionViewModel);
+                var session = App.Session;
+                session.InitializeViewModel(sessionViewModel);
 
                 if (!string.IsNullOrEmpty(FileToLoadOnStartup))
                 {
@@ -60,7 +59,6 @@ namespace Horker.Notebook
             thread.SetApartmentState(ApartmentState.STA);
             thread.Name = "Notebook Execution loop thread";
             thread.Start();
-
         }
 
         private void Window_Closed(object sender, EventArgs e)

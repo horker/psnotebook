@@ -14,7 +14,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBox Grid.Column="0" x:Name="Index" Text="{Binding IndexString, Mode=OneWay}" Background="Gainsboro" IsReadOnly="true" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" Foreground="DarkGray" Margin="0,0,2,0">
+        <TextBox Grid.Column="0" x:Name="Index" Text="{Binding IndexString, Mode=OneWay}" Background="Gainsboro" IsReadOnly="true"
+                 FontFamily="{Binding Session.Configuration.FontFamily}"
+                 FontSize="{Binding Session.Configuration.FontSize}"
+                 Foreground="DarkGray" Margin="0,0,2,0">
             <TextBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Run from here" x:Name="RunFromHere" Click="RunFromHere_Click" />
@@ -43,8 +46,8 @@
             <Border BorderThickness="1" BorderBrush="#FFABADB3">
                 <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
                                    x:Name="CommandLine"
-                                   FontFamily="{x:Static models:Configuration.FontFamily}"
-                                   FontSize="{x:Static models:Configuration.FontSize}"
+                                   FontFamily="{Binding Session.Configuration.FontFamily}"
+                                   FontSize="{Binding Session.Configuration.FontSize}"
                                    SyntaxHighlighting="PowerShell"
                                    ShowLineNumbers="true"
                                    HorizontalScrollBarVisibility="Hidden"
@@ -54,15 +57,22 @@
                                    LostKeyboardFocus="CommandLine_LostKeyboardFocus" />
             </Border>
 
-            <FlowDocumentScrollViewer Grid.Row="1" x:Name="Output" VerticalAlignment="Top" MaxHeight="{x:Static models:Configuration.MaxOutputHeight}" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="{x:Static models:Configuration.FontSize}" VerticalScrollBarVisibility="Auto" Margin="5,2,5,0" Visibility="Collapsed" MinWidth="{x:Static models:Configuration.CommandLineWidth}" BorderBrush="Gray">
+            <FlowDocumentScrollViewer Grid.Row="1" x:Name="Output" VerticalAlignment="Top"
+                                      MaxHeight="{Binding Session.Configuration.MaxOutputHeight}"
+                                      FontFamily="{Binding Session.Configuration.FontFamily}"
+                                      FontSize="{Binding Session.Configuration.FontSize}"
+                                      VerticalScrollBarVisibility="Auto"
+                                      Margin="5,2,5,0" Visibility="Collapsed"
+                                      MinWidth="{Binding Session.Configuration.CommandLineWidth}"
+                                      BorderBrush="Gray">
                 <FlowDocument PagePadding="0">
                     <FlowDocument.Resources>
                         <Style TargetType="{x:Type Paragraph}">
                             <Setter Property="Margin" Value="0"/>
                             <Setter Property="Padding" Value="0"/>
                             <Setter Property="TextAlignment" Value="Left"/>
-                            <Setter Property="FontFamily" Value="{x:Static models:Configuration.FontFamily}"/>
-                            <Setter Property="FontSize" Value="{x:Static models:Configuration.FontSize}"/>
+                            <Setter Property="FontFamily" Value="{Binding Session.Configuration.FontFamily}"/>
+                            <Setter Property="FontSize" Value="{Binding Session.Configuration.FontSize}"/>
                         </Style>
                     </FlowDocument.Resources>
                 </FlowDocument>

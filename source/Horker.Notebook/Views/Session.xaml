@@ -101,7 +101,7 @@
             <ProgressBar Grid.Column="2" x:Name="ProgressMeter" Minimum="0" Maximum="100" FontSize="10pt" Value="{Binding Progress}"/>
         </Grid>
     
-        <StatusBar DockPanel.Dock="Bottom" FontFamily="{x:Static models:Configuration.FontFamily}" FontSize="10pt">
+        <StatusBar DockPanel.Dock="Bottom" FontFamily="{Binding Model.FontFamily}" FontSize="10pt">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>

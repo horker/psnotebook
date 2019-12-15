@@ -9,6 +9,18 @@ Show elapsed times in a timely manner
 Set script names for better error messages
 Selection unexpectedly enabled when the command line is activated by mouse click
 Display stream outputs correctly when the command ends abnormally
+Deleting a commandline in execution queue
+Stop making an active output visible
+
+Indentation bug:
+function Get-AggregatedFeatures([DataMap]$Data) {
+    } // won't dedent
+
+Indentation bug:
+function Get-AggregatedFeatures([DataMap]$Data) {
+    if (xxx) {
+    } // will dedent to the beginning of the line
+    }
 
 * Small improvements
 resize output pane
@@ -18,11 +30,12 @@ Check where to save the recently used file list
 customization
 Activate command line after ESC
 undo cell operations
-join/split cells
+join/split cells ("Join above")
 show variable types and contents on mouse hover
 Remove a file that failed to load from the MRU list
 Context menu in editor
 PSReadline key bindings support
+Find/Replace
 
 invalidate "Delete this" in the context menu when there is one roundtrip
 Display an error correctly when $ErrorActionPreference = "Stop"

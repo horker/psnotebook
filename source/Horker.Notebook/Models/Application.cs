@@ -16,7 +16,7 @@ namespace Horker.Notebook.Models
     public class Application
     {
         public static readonly string Version = "0.3.4";
-
+/*
         public static int Start()
         {
             Window window = null;
@@ -55,7 +55,8 @@ namespace Horker.Notebook.Models
 
             var sessionViewModel = sessionControl.ViewModel;
 
-            var session = new Models.Session(sessionViewModel);
+            var session = new Models.Session();
+            session.InitializeViewModel(sessionViewModel);
 
             var exitCode = session.StartExecutionLoop();
 
@@ -65,7 +66,7 @@ namespace Horker.Notebook.Models
 
             return exitCode;
         }
-
+*/
         public static void StartNotebookProcess(string fileName, bool run)
         {
             var executablePath = typeof(Application).Assembly.Location;

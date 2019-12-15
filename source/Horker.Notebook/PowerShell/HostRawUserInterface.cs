@@ -10,6 +10,21 @@ namespace Horker.Notebook
 {
     public class HostRawUserInterface : PSHostRawUserInterface
     {
+        public HostRawUserInterface()
+        { }
+
+        public void InitializeConfiguration(Models.Configuration config)
+        {
+            _config = config;
+
+            _bufferSize = new Size(_config.ConsoleWidthInChars, 80);
+            _windowSize = new Size(_config.ConsoleWidthInChars, 80);
+            _maxWindowSize = new Size(_config.ConsoleWidthInChars, 80);
+            _maxPhysicalWindowSize = new Size(_config.ConsoleWidthInChars, 80);
+        }
+
+        private Models.Configuration _config;
+
         private ConsoleColor _foregroundColor = ConsoleColor.Black;
 
         public override ConsoleColor ForegroundColor
@@ -40,7 +55,7 @@ namespace Horker.Notebook
         {
             get
             {
-                if (Models.Configuration.IgnoreBackgroundColor)
+                if (_config.IgnoreBackgroundColor)
                     return null;
                 return _backgroundBrush;
             }
@@ -70,7 +85,7 @@ namespace Horker.Notebook
             set => _cursorSize = value;
         }
 
-        private Size _bufferSize = new Size(Models.Configuration.ConsoleWidthInChars, 80);
+        private Size _bufferSize;
 
         public override Size BufferSize
         {
@@ -78,7 +93,7 @@ namespace Horker.Notebook
             set => _bufferSize = value;
         }
 
-        private Size _windowSize = new Size(Models.Configuration.ConsoleWidthInChars, 80);
+        private Size _windowSize;
 
         public override Size WindowSize
         {
@@ -86,11 +101,11 @@ namespace Horker.Notebook
             set => _windowSize = value;
         }
 
-        private Size _maxWindowSize = new Size(Models.Configuration.ConsoleWidthInChars, 80);
+        private Size _maxWindowSize;
 
         public override Size MaxWindowSize => _maxWindowSize;
 
-        private Size _maxPhysicalWindowSize = new Size(Models.Configuration.ConsoleWidthInChars, 80);
+        private Size _maxPhysicalWindowSize;
 
         public override Size MaxPhysicalWindowSize => _maxPhysicalWindowSize;
 

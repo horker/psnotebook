@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Horker.Notebook.Models;
+using Horker.Notebook;
 
 namespace Horker.Notebook.Cmdlets
 {
@@ -25,11 +25,12 @@ namespace Horker.Notebook.Cmdlets
             var fullPath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Source);
 
             Image image = null;
-            CurrentState.Dispatcher.Invoke(() => {
+            var sessionViewModel = (ViewModels.SessionViewModel)Host.PrivateData.BaseObject;
+            Models.CurrentState.Dispatcher.Invoke(() => {
                 image = new Image()
                 {
                     Source = GetImageSource(fullPath),
-                    MaxHeight = Configuration.MaxOutputHeight
+                    MaxHeight = sessionViewModel.Model.Configuration.MaxOutputHeight
                 };
             });
 
