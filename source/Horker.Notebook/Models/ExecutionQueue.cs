@@ -74,5 +74,10 @@ namespace Horker.Notebook.Models
         {
             _cancellationTokenSource.Cancel();
         }
+
+        public IEnumerable<ExecutionQueueItem> Enumerate()
+        {
+            return _queue.GetConsumingEnumerable();
+        }
     }
 }

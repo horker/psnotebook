@@ -229,6 +229,12 @@ namespace Horker.Notebook.Models
                         {
                             _powerShell.Stop();
                             roundtrip.ViewModel.WriteWholeLine("^C");
+                            roundtrip.ViewModel.ShowEditing();
+                            foreach (var item in _executionQueue.Enumerate())
+                            {
+                                if (item is ExecutionRequest r)
+                                    r.Roundtrip.ViewModel.ShowEditing();
+                            }
                         }
 
                         _powerShell.EndInvoke(asyncResult);
