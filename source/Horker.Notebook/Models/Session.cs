@@ -33,7 +33,9 @@ namespace Horker.Notebook.Models
         private PowerShell _powerShell;
 
         private ManualResetEvent _cancelEvent;
-        private bool _cancelled;
+        private volatile bool _cancelled;
+
+        public bool IsCancelled => _cancelled;
 
         public Session()
         {

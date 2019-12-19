@@ -13,8 +13,13 @@ namespace Horker.Notebook.Cmdlets
     [Cmdlet("Out", "NotebookInternal")]
     public class OutNotebookInernal : OutDefaultCommand
     {
+        public static Models.Session Session { get; set; }
+
         protected override void ProcessRecord()
         {
+            if (Session.IsCancelled)
+                throw new TerminateException();
+
             var obj = InputObject?.BaseObject;
             if (obj != null && obj is UIElement uiElement)
                 SessionViewModel.ActiveOutput.WriteUIElement(uiElement);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Horker.Notebook.Cmdlets;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -32,6 +33,7 @@ namespace Horker.Notebook
             Directory.SetCurrentDirectory(homePath);
 
             Session = new Models.Session();
+            OutNotebookInernal.Session = Session;
 
             var assem = Assembly.GetEntryAssembly();
             var path = Path.GetDirectoryName(assem.Location);

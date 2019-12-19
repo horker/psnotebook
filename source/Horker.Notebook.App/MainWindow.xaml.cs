@@ -75,5 +75,11 @@ namespace Horker.Notebook
                     e.Cancel = true;
             }
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                App.Session.NotifyCancel();
+        }
     }
 }

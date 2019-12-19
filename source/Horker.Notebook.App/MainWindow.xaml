@@ -9,7 +9,7 @@
         Title="{Binding ElementName=Session, Path=ViewModel.TitleString}"
         Width="{Binding Configuration.WindowWidth}"
         Height="{Binding Configuration.WindowHeight}"
-        Closed="Window_Closed" Closing="Window_Closing">
+        Closed="Window_Closed" Closing="Window_Closing" KeyDown="Window_KeyDown">
     <Grid>
 
         <Views:Session x:Name="Session" Loaded="Session_Loaded"/>
