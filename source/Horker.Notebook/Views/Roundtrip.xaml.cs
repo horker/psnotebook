@@ -355,6 +355,7 @@ namespace Horker.Notebook.Views
 
         private void CommandLine_GotKeyboardFocus(object sender, RoutedEventArgs e)
         {
+            CommandLine.TextArea.ClearSelection();
             if (ViewModel.IsEditorMode)
                 CommandLine.Background = Brushes.FloralWhite;
             else
@@ -363,6 +364,7 @@ namespace Horker.Notebook.Views
 
         private void CommandLine_LostKeyboardFocus(object sender, RoutedEventArgs e)
         {
+            CommandLine.TextArea.ClearSelection();
             CommandLine.Background = Brushes.WhiteSmoke;
         }
 
