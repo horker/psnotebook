@@ -266,5 +266,20 @@ namespace Horker.Notebook.Views
         {
             MessageBox.Show($"PowerShell Notebook v{Models.Application.Version}\r\n\r\nIcons made by Smashicons from https://www.flaticon.com/", "About", MessageBoxButton.OK);
         }
+
+        private void ScrollViewer_PreviewDragEnter(object sender, DragEventArgs e)
+        {
+            ViewModel.ScrolledByUser = true;
+        }
+
+        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ViewModel.ScrolledByUser = true;
+        }
+
+        private void ScrollViewer_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ViewModel.ScrolledByUser = true;
+        }
     }
 }

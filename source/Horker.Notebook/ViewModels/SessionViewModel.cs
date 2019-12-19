@@ -177,6 +177,8 @@ namespace Horker.Notebook.ViewModels
             }
         }
 
+        public bool ScrolledByUser { get; set; }
+
         // Constructor
 
         public SessionViewModel(Views.Session sessionControl)

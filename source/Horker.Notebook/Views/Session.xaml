@@ -122,7 +122,7 @@
             </StatusBarItem>
         </StatusBar>
 
-        <ScrollViewer x:Name="ScrollViewer">
+        <ScrollViewer x:Name="ScrollViewer" PreviewDragEnter="ScrollViewer_PreviewDragEnter" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" PreviewMouseLeftButtonDown="ScrollViewer_PreviewMouseLeftButtonDown">
             <StackPanel x:Name="StackPanel"/>
         </ScrollViewer>
     </DockPanel>

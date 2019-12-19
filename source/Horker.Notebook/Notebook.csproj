@@ -87,6 +87,7 @@
     <Compile Include="Cmdlets\OutNotebookInernal.cs" />
     <Compile Include="Cmdlets\StartNotebook.cs" />
     <Compile Include="Helpers\StandardOutputRedirector.cs" />
+    <Compile Include="Helpers\WpfHelpers.cs" />
     <Compile Include="Views\PowerShellIndentationStrategy.cs" />
     <Compile Include="Models\CodeCompletionRequest.cs" />
     <Compile Include="Models\Configuration.cs" />

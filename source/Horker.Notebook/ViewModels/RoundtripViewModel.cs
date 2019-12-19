@@ -1,3 +1,4 @@
+using Horker.Notebook.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -141,7 +142,9 @@ namespace Horker.Notebook.ViewModels
                 par.Inlines.Add(run);
 
                 Control.ScrollToBottom();
-                par.BringIntoView();
+
+                if (!SessionViewModel.ScrolledByUser)
+                    par.BringIntoView();
 
                 _newlinePending = newLine;
             });
@@ -176,7 +179,9 @@ namespace Horker.Notebook.ViewModels
                 par.Inlines.Add(run);
 
                 Control.ScrollToBottom();
-                par.BringIntoView();
+
+                if (!SessionViewModel.ScrolledByUser)
+                    par.BringIntoView();
 
                 _newlinePending = true;
             });
@@ -236,6 +241,7 @@ namespace Horker.Notebook.ViewModels
 
         public void NotifyExecute(bool moveToNext)
         {
+            SessionViewModel.ScrolledByUser = false;
             Model.NotifyExecute(moveToNext);
         }
 
