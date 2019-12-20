@@ -16,6 +16,10 @@ namespace Horker.Notebook.Models
     public class Application
     {
         public static readonly string Version = "0.3.4";
+
+        public static Session Session { get; set; }
+        public static Dispatcher Dispatcher { get; set; }
+
 /*
         public static int Start()
         {

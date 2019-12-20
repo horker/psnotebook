@@ -52,31 +52,9 @@ namespace Horker.Notebook.Models
 
         public double MaxOutputHeight => FontSize * MaxOutputHeightInLines;
 
-        private double _defaultWpfElementWidth = double.NaN;
+        public double DefaultWpfElementWidth { get; set; } = double.NaN;
 
-        public double DefaultWpfElementWidth
-        {
-            get
-            {
-                if (double.IsNaN(_defaultWpfElementWidth))
-                    return ConsoleWidth * .7;
-                return _defaultWpfElementWidth;
-            }
-            set => _defaultWpfElementWidth = value;
-        }
-
-        private double _defaultWpfElementHeight = double.NaN;
-
-        public double DefaultWpfElementHeight
-        {
-            get
-            {
-                if (double.IsNaN(_defaultWpfElementHeight))
-                    return MaxOutputHeight * .7;
-                return _defaultWpfElementHeight;
-            }
-            set => _defaultWpfElementHeight = value;
-        }
+        public double DefaultWpfElementHeight { get; set; } = double.NaN;
 
         public bool IgnoreBackgroundColor => true;
 

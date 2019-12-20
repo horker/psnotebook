@@ -370,6 +370,7 @@ namespace Horker.Notebook.Views
 
         private void Roundtrip_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
+            /*
             if (OutputScrollViewer?.ComputedVerticalScrollBarVisibility != Visibility.Visible)
             {
                 e.Handled = true;
@@ -377,6 +378,7 @@ namespace Horker.Notebook.Views
                 args.RoutedEvent = MouseWheelEvent;
                 RaiseEvent(args);
             }
+            */
         }
 
         void CommandLine_TextArea_TextEntering(object sender, TextCompositionEventArgs e)

@@ -79,6 +79,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cmdlets\NewWpfDataGrid.cs" />
     <Compile Include="Cmdlets\GetNotebookWindowDispatcher.cs" />
     <Compile Include="Cmdlets\ImportNotebookSession.cs" />
     <Compile Include="Cmdlets\InvokeWpfAction.cs" />
@@ -95,7 +96,6 @@
     <Compile Include="Models\Roundtrip.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\Application.cs" />
-    <Compile Include="Models\CurrentState.cs" />
     <Compile Include="PowerShell\ConsoleReadLine.cs" />
     <Compile Include="PowerShell\Host.cs" />
     <Compile Include="PowerShell\HostRawUserInterface.cs" />

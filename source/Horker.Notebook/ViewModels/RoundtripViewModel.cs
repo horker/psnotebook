@@ -203,6 +203,7 @@ namespace Horker.Notebook.ViewModels
                         Width = Session.Configuration.DefaultWpfElementWidth,
                         Height = Session.Configuration.DefaultWpfElementHeight
                     };
+
                     grid.Children.Add(uiElement);
                     uiElement = grid;
                 }

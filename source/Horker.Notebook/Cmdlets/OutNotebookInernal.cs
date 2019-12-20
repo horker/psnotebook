@@ -13,11 +13,9 @@ namespace Horker.Notebook.Cmdlets
     [Cmdlet("Out", "NotebookInternal")]
     public class OutNotebookInernal : OutDefaultCommand
     {
-        public static Models.Session Session { get; set; }
-
         protected override void ProcessRecord()
         {
-            if (Session.IsCancelled)
+            if (Models.Application.Session.IsCancelled)
                 throw new TerminateException();
 
             var obj = InputObject?.BaseObject;

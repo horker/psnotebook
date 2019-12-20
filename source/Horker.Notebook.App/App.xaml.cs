@@ -33,7 +33,7 @@ namespace Horker.Notebook
             Directory.SetCurrentDirectory(homePath);
 
             Session = new Models.Session();
-            OutNotebookInernal.Session = Session;
+            Models.Application.Session = Session;
 
             var assem = Assembly.GetEntryAssembly();
             var path = Path.GetDirectoryName(assem.Location);

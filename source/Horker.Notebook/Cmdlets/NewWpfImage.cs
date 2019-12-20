@@ -26,7 +26,7 @@ namespace Horker.Notebook.Cmdlets
 
             Image image = null;
             var sessionViewModel = (ViewModels.SessionViewModel)Host.PrivateData.BaseObject;
-            Models.CurrentState.Dispatcher.Invoke(() => {
+            Models.Application.Dispatcher.Invoke(() => {
                 image = new Image()
                 {
                     Source = GetImageSource(fullPath),

@@ -81,6 +81,7 @@ CmdletsToExport = @(
     "Invoke-WpfAction"
     "New-WpfGrid"
     "New-WpfImage"
+    "New-WpfDataGrid"
     "Out-NotebookInternal"
     "Start-Notebook"
 )
