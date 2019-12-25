@@ -35,7 +35,10 @@ namespace Horker.Notebook.Cmdlets
         [Parameter(Position = 3, Mandatory = false)]
         public double MaxHeight = -1;
 
-        [Parameter(Position = 2, Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Position = 4, Mandatory = false)]
+        public string FloatingNumberFormat = null;
+
+        [Parameter(Position = 5, Mandatory = true, ValueFromPipeline = true)]
         public PSObject InputObject;
 
         protected override void BeginProcessing()
@@ -94,6 +97,12 @@ namespace Horker.Notebook.Cmdlets
             WriteObject(_dataGrid);
         }
 
+        private static bool isNumeric(object value)
+        {
+            return value is byte || value is sbyte || value is short || value is int || value is long ||
+                value is float || value is double || value is decimal;
+        }
+
         protected override void ProcessRecord()
         {
             if (InputObject == null)
@@ -115,8 +124,7 @@ namespace Horker.Notebook.Cmdlets
                     Models.Application.Dispatcher.Invoke(() =>
                     {
                         Style style;
-                        if (value is byte || value is sbyte || value is short || value is int || value is long ||
-                            value is float || value is double || value is decimal)
+                        if (isNumeric(value))
                             style = _numericCellStyle;
                         else
                             style = _stringCellStyle;
@@ -135,7 +143,17 @@ namespace Horker.Notebook.Cmdlets
                 while (index >= row.Count)
                     row.Add(null);
 
-                row[index] = p.Value;
+                if (FloatingNumberFormat != null)
+                {
+                    if (value is double d)
+                        value = d.ToString(FloatingNumberFormat);
+                    else if (value is float f)
+                        value = f.ToString(FloatingNumberFormat);
+                    else if (value is decimal dec)
+                        value = dec.ToString(FloatingNumberFormat);
+                }
+
+                row[index] = value;
             }
 
             Models.Application.Dispatcher.Invoke(() =>
