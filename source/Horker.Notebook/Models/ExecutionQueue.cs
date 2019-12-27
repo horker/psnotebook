@@ -77,7 +77,8 @@ namespace Horker.Notebook.Models
 
         public IEnumerable<ExecutionQueueItem> Enumerate()
         {
-            return _queue.GetConsumingEnumerable();
+            while (_queue.TryTake(out var item))
+                yield return item;
         }
     }
 }
