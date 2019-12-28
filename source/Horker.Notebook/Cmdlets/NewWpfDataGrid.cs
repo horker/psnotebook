@@ -132,7 +132,7 @@ namespace Horker.Notebook.Cmdlets
                         _dataGrid.Columns.Add(new DataGridTextColumn()
                         {
                             DisplayIndex = index,
-                            Header = name,
+                            Header = "_" + name,
                             IsReadOnly = true,
                             Binding = new Binding("[" + index + "]"),
                             CellStyle = style
