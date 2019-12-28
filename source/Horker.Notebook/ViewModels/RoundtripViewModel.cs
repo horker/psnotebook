@@ -126,17 +126,19 @@ namespace Horker.Notebook.ViewModels
         private void WriteInternal(string text, Brush foreground, Brush background, bool newLine)
         {
             Control.Dispatcher.Invoke(() => {
+                var blocks = Control.Output.Document.Blocks;
+
                 Control.Output.Visibility = Visibility.Visible;
 
                 ResolveNewline();
 
                 var run = GetRun(text, foreground, background);
 
-                var par = Control.Output.Document.Blocks.LastBlock as Paragraph;
+                var par = blocks.LastBlock as Paragraph;
                 if (par == null)
                 {
                     par = new Paragraph();
-                    Control.Output.Document.Blocks.Add(par);
+                    blocks.Add(par);
                 }
 
                 par.Inlines.Add(run);
@@ -158,33 +160,6 @@ namespace Horker.Notebook.ViewModels
         public void WriteLine(string text, Brush foreground = null, Brush background = null)
         {
             WriteInternal(text, foreground, background, true);
-        }
-
-        public void WriteWholeLine(string text, Brush foreground = null, Brush background = null)
-        {
-            Control.Dispatcher.Invoke(() => {
-                Control.Output.Visibility = Visibility.Visible;
-
-                ResolveNewline();
-
-                var run = GetRun(text, foreground, background);
-
-                var par = (Paragraph)Control.Output.Document.Blocks.LastBlock;
-                if (par == null || par.Inlines.Count > 0)
-                {
-                    par = new Paragraph();
-                    Control.Output.Document.Blocks.Add(par);
-                }
-
-                par.Inlines.Add(run);
-
-                Control.ScrollToBottom();
-
-                if (!SessionViewModel.ScrolledByUser)
-                    par.BringIntoView();
-
-                _newlinePending = true;
-            });
         }
 
         public void WriteUIElement(UIElement uiElement)

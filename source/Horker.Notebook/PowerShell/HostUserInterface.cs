@@ -77,14 +77,14 @@ namespace Horker.Notebook
 
         public override void WriteDebugLine(string message)
         {
-            SessionViewModel.ActiveOutput.WriteWholeLine(
+            SessionViewModel.ActiveOutput.WriteLine(
                 string.Format(CultureInfo.CurrentCulture, "DEBUG: {0}", message),
                 Brushes.Goldenrod, null);
         }
 
         public override void WriteErrorLine(string message)
         {
-            SessionViewModel.ActiveOutput.WriteWholeLine(
+            SessionViewModel.ActiveOutput.WriteLine(
                 message, Brushes.IndianRed, null);
         }
 
@@ -106,14 +106,14 @@ namespace Horker.Notebook
 
         public override void WriteVerboseLine(string message)
         {
-            SessionViewModel.ActiveOutput.WriteWholeLine(
+            SessionViewModel.ActiveOutput.WriteLine(
                 string.Format(CultureInfo.CurrentCulture, "VERBOSE: {0}", message),
                 Brushes.Goldenrod, null);
         }
 
         public override void WriteWarningLine(string message)
         {
-            SessionViewModel.ActiveOutput.WriteWholeLine(
+            SessionViewModel.ActiveOutput.WriteLine(
                 string.Format(CultureInfo.CurrentCulture, "WARNING: {0}", message),
                 Brushes.Goldenrod, null);
         }

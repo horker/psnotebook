@@ -111,7 +111,7 @@ namespace Horker.Notebook.Models
                 ex.ErrorRecord.CategoryInfo,
                 ex.ErrorRecord.FullyQualifiedErrorId);
 
-            SessionViewModel.ActiveOutput.WriteWholeLine(message, Brushes.IndianRed);
+            SessionViewModel.ActiveOutput.WriteLine(message, Brushes.IndianRed);
         }
 
         private void InitializeCurrentSession()
@@ -228,7 +228,7 @@ namespace Horker.Notebook.Models
                         if (_cancelled)
                         {
                             _powerShell.Stop();
-                            roundtrip.ViewModel.WriteWholeLine("^C");
+                            roundtrip.ViewModel.WriteLine("^C");
                         }
 
                         _powerShell.EndInvoke(asyncResult);

@@ -1,15 +1,11 @@
 * Bugs
 crash when doing "Reload and run" with empty buffer
-clear execution queue when ESC is pressed
 Scrolling issue on partially out-of-screen cursor
 on completion, enter key is not effective as normal key
 reliable execution stop
-Show toaster after command execution completes
-Show elapsed times in a timely manner
-Set script names for better error messages
 Selection unexpectedly enabled when the command line is activated by mouse click
 Display stream outputs correctly when the command ends abnormally
-Deleting a commandline in execution queue
+treat properly deleting a commandline in execution queue
 Stop making an active output visible
 
 Indentation bug:
@@ -22,7 +18,13 @@ function Get-AggregatedFeatures([DataMap]$Data) {
     } // will dedent to the beginning of the line
     }
 
+limit maximum output line
+Save before "Run from here"
+
 * Small improvements
+Show toaster after command execution completes
+Show elapsed times in a timely manner
+Set script names for better error messages
 resize output pane
 "Scroll to top" and "Scroll to bottom" icons in the output area
 set focus on last active command line when the notebook window is activated
@@ -36,6 +38,7 @@ Remove a file that failed to load from the MRU list
 Context menu in editor
 PSReadline key bindings support
 Find/Replace
+asynchronous output
 
 invalidate "Delete this" in the context menu when there is one roundtrip
 Display an error correctly when $ErrorActionPreference = "Stop"
@@ -58,6 +61,7 @@ Emacs mode
 native executable example: git clone, doxygen incubator-mxnet
 programmable side windows
 
+DONE clear execution queue when ESC is pressed
 DONE "Run below"
 DONE Save before run
 DONE Keep extensions .ps1 in the MRU list.
