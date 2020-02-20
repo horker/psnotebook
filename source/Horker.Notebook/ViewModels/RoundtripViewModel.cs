@@ -149,11 +149,20 @@ namespace Horker.Notebook.ViewModels
                     par.BringIntoView();
 
                 _newlinePending = newLine;
+
+                while (blocks.Count > 2000)
+                    blocks.Remove(blocks.FirstBlock);
             });
         }
 
         public void Write(string text, Brush foreground = null, Brush background = null)
         {
+            if (text == "\n" || text == "\r\n")
+            {
+                ResolveNewline();
+                _newlinePending = true;
+                return;
+            }
             WriteInternal(text, foreground, background, false);
         }
 
