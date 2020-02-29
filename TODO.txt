@@ -7,6 +7,7 @@ Selection unexpectedly enabled when the command line is activated by mouse click
 Display stream outputs correctly when the command ends abnormally
 treat properly deleting a commandline in execution queue
 Stop making an active output visible
+Remove acceleration key of DataGrid
 
 Indentation bug:
 function Get-AggregatedFeatures([DataMap]$Data) {
@@ -39,6 +40,11 @@ Context menu in editor
 PSReadline key bindings support
 Find/Replace
 asynchronous output
+make active command line visible during execution
+"pinned cell"
+"Enclose as function" and "Remove function"
+Introduce cmdlet "Clear-NotebookOutput"
+Buffering output for better performance
 
 invalidate "Delete this" in the context menu when there is one roundtrip
 Display an error correctly when $ErrorActionPreference = "Stop"
