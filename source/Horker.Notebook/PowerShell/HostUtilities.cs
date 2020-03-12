@@ -139,7 +139,7 @@ namespace Microsoft.Samples.PowerShell.Host
             if (forCurrentUser)
             {
                 basePath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                basePath = System.IO.Path.Combine(basePath, "WindowsPowerShell");
+                basePath = System.IO.Path.Combine(basePath, "PowerShell");
             }
             else
             {

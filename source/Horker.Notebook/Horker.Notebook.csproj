@@ -6,6 +6,7 @@
     <RootNamespace>Horker.Notebook</RootNamespace>
     <AssemblyName>Horker.Notebook</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -18,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.0.1" />
-    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.0.0-rc.3" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
