@@ -64,7 +64,8 @@ namespace Horker.Notebook.ViewModels
             get
             {
                 string text = null;
-                Control.Dispatcher.Invoke(() => {
+                Control.Dispatcher.Invoke(() =>
+                {
                     text = Control.CommandLine.Text;
                 });
                 return text;
@@ -75,9 +76,14 @@ namespace Horker.Notebook.ViewModels
         {
             get
             {
-                return new TextRange(
-                    Control.Output.Document.ContentStart,
-                    Control.Output.Document.ContentEnd).Text;
+                string output = null;
+                Control.Dispatcher.Invoke(() =>
+                {
+                    output = new TextRange(
+                        Control.Output.Document.ContentStart,
+                        Control.Output.Document.ContentEnd).Text;
+                });
+                return output;
             }
         }
 

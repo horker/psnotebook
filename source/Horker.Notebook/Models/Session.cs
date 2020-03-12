@@ -123,7 +123,7 @@ namespace Horker.Notebook.Models
             {
                 // Import this module itself to define cmdlets.
 
-                _powerShell.AddCommand("Import-Module").AddParameter("Assembly", typeof(Application).Assembly);
+                _powerShell.AddCommand("Import-Module").AddParameter("Assembly", typeof(ApplicationInstance).Assembly);
                 _powerShell.Commands.Commands[0].MergeMyResults(PipelineResultTypes.Error, PipelineResultTypes.Output);
                 _powerShell.Invoke();
 
@@ -292,7 +292,7 @@ namespace Horker.Notebook.Models
 
         public void NotifyRestart(string fileName, bool run)
         {
-            Application.StartNotebookProcess(fileName, run);
+            ApplicationInstance.StartNotebookProcess(fileName, run);
             _executionQueue.Cancel();
         }
 

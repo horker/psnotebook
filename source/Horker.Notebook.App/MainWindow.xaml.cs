@@ -37,7 +37,8 @@ namespace Horker.Notebook
             var sessionControl = (Views.Session)sender;
             var sessionViewModel = sessionControl.ViewModel;
 
-            Models.Application.Dispatcher = Dispatcher;
+            Models.ApplicationInstance.Dispatcher = Dispatcher;
+            Models.ApplicationInstance.SessionViewModel = sessionViewModel;
 
             var thread = new Thread(() => {
                 var session = App.Session;

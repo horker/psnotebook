@@ -15,7 +15,7 @@ namespace Horker.Notebook.Cmdlets
     {
         protected override void ProcessRecord()
         {
-            if (Models.Application.Session.IsCancelled)
+            if (Models.ApplicationInstance.Session.IsCancelled)
                 throw new TerminateException();
 
             var obj = InputObject?.BaseObject;

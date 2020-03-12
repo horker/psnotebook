@@ -449,7 +449,7 @@ namespace Horker.Notebook.ViewModels
 
         public void StartNewApplication()
         {
-            Models.Application.StartNotebookProcess("", false);
+            Models.ApplicationInstance.StartNotebookProcess("", false);
         }
 
         public void NotifyRestart(string fileName, bool run)

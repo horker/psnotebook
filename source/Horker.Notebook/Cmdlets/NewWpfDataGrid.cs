@@ -43,7 +43,7 @@ namespace Horker.Notebook.Cmdlets
 
         protected override void BeginProcessing()
         {
-            Models.Application.Dispatcher.Invoke(() =>
+            Models.ApplicationInstance.Dispatcher.Invoke(() =>
             {
                 _data = new ObservableCollection<List<object>>();
                 _dataGrid = new DataGrid()
@@ -72,7 +72,7 @@ namespace Horker.Notebook.Cmdlets
                 if (!double.IsNaN(MaxWidth)) _dataGrid.MaxWidth = MaxWidth;
 
                 if (MaxHeight == -1)
-                    _dataGrid.MaxHeight = Models.Application.Session.Configuration.MaxOutputHeight;
+                    _dataGrid.MaxHeight = Models.ApplicationInstance.Session.Configuration.MaxOutputHeight;
                 else if (!double.IsNaN(MaxHeight))
                     _dataGrid.MaxHeight = MaxHeight;
 
@@ -121,7 +121,7 @@ namespace Horker.Notebook.Cmdlets
                     index = _indexMap.Count;
                     _indexMap.Add(name, index);
 
-                    Models.Application.Dispatcher.Invoke(() =>
+                    Models.ApplicationInstance.Dispatcher.Invoke(() =>
                     {
                         Style style;
                         if (isNumeric(value))
@@ -156,7 +156,7 @@ namespace Horker.Notebook.Cmdlets
                 row[index] = value;
             }
 
-            Models.Application.Dispatcher.Invoke(() =>
+            Models.ApplicationInstance.Dispatcher.Invoke(() =>
             {
                 _data.Add(row);
                 _dataGrid.ItemsSource = _data;

@@ -13,11 +13,12 @@ using Horker.Notebook.ViewModels;
 
 namespace Horker.Notebook.Models
 {
-    public class Application
+    public class ApplicationInstance
     {
         public static readonly string Version = "0.4.0";
 
         public static Session Session { get; set; }
+        public static SessionViewModel SessionViewModel { get; set; }
         public static Dispatcher Dispatcher { get; set; }
 
 /*
@@ -73,7 +74,7 @@ namespace Horker.Notebook.Models
 */
         public static void StartNotebookProcess(string fileName, bool run)
         {
-            var executablePath = typeof(Application).Assembly.Location;
+            var executablePath = typeof(ApplicationInstance).Assembly.Location;
             executablePath = executablePath.Substring(0, executablePath.LastIndexOf("\\"));
             executablePath = Path.Combine(executablePath, "NotebookApp.exe");
 

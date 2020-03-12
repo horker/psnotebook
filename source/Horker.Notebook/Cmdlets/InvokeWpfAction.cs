@@ -16,7 +16,7 @@ namespace Horker.Notebook.Cmdlets
         protected override void BeginProcessing()
         {
             System.Collections.ObjectModel.Collection<PSObject> results = null;
-            Models.Application.Dispatcher.Invoke(() => {
+            Models.ApplicationInstance.Dispatcher.Invoke(() => {
                 results = InvokeCommand.InvokeScript(false, Action, null);
             });
 

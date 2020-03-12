@@ -109,7 +109,7 @@ namespace Horker.Notebook.Cmdlets
 
             Grid grid = null;
 
-            Models.Application.Dispatcher.Invoke(() => {
+            Models.ApplicationInstance.Dispatcher.Invoke(() => {
                 grid = new Grid()
                 {
                     HorizontalAlignment = HorizontalAlignment.Stretch,

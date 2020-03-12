@@ -44,7 +44,7 @@ namespace Horker.Notebook
 
         public override PSHostUserInterface UI => _hostUserInterface;
 
-        private Version _version = new Version(Models.Application.Version);
+        private Version _version = new Version(Models.ApplicationInstance.Version);
 
         public override Version Version => _version;
 

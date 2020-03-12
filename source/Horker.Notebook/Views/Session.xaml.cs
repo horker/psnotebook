@@ -264,7 +264,7 @@ namespace Horker.Notebook.Views
 
         private void AboutCommand_Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show($"PowerShell Notebook v{Models.Application.Version}\r\n\r\nIcons made by Smashicons from https://www.flaticon.com/", "About", MessageBoxButton.OK);
+            MessageBox.Show($"PowerShell Notebook v{Models.ApplicationInstance.Version}\r\n\r\nIcons made by Smashicons from https://www.flaticon.com/", "About", MessageBoxButton.OK);
         }
 
         private void ScrollViewer_PreviewDragEnter(object sender, DragEventArgs e)
